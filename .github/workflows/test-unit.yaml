@@ -24,7 +24,7 @@ jobs:
         env:
           cache-name: cache-node
         with:
-          path: '**/node_modules'
+          path: 'node_modules'
           key: ${{ runner.os }}-cache-node-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-cache-node-
@@ -34,4 +34,4 @@ jobs:
         if: ${{ steps.cache-node.outputs.cache-hit != 'true' }}
         run: pnpm i
       - name: Unit Test
-        run: pnpm run test --dir=unit
+        run: pnpm run test-unit

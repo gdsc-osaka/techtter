@@ -6,12 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint src test -c eslint.config.mjs && prettier --check \"src/**/*.ts\" \"src/**/*.tsx\" \"test/**/*.ts\"",
-    "fix": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"test/**/*.ts\" && eslint --fix src test",
-    "test": "vitest test/$npm_config_dir"
+    "lint": "eslint src tests -c eslint.config.mjs && prettier --check \"src/**/*.ts\" \"src/**/*.tsx\" \"tests/**/*.ts\"",
+    "fix": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"tests/**/*.ts\" && eslint --fix src tests",
+    "test-unit": "vitest tests/unit",
+    "test-integration": "vitest tests/integration"
   },
   "dependencies": {
     "firebase": "^10.12.3",
+    "firebase-admin": "^12.2.0",
     "log4js": "^6.9.1",
     "next": "14.2.5",
     "path": "^0.12.7",
