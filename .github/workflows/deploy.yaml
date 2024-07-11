@@ -4,6 +4,10 @@ description: Deploy firebase
 on:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      environment:
+        required: false
+        type: string
     secrets:
       GCP_SA_KEY:
         required: true
@@ -13,6 +17,7 @@ jobs:
     name: Deploy Firebase Rules
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     defaults:
       run:
         working-directory: firebase

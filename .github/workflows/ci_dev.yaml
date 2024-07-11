@@ -17,13 +17,15 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/build.yaml
-    environment: development
     secrets: inherit
+    with:
+      environment: development
   lint:
     uses: ./.github/workflows/lint.yaml
   unit-test:
     uses: ./.github/workflows/test-unit.yaml
   integration-test:
     uses: ./.github/workflows/test-integration.yaml
-    environment: development
     secrets: inherit
+    with:
+      environment: development

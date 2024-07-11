@@ -3,12 +3,17 @@ name: Integration Test
 on:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      environment:
+        required: false
+        type: string
 
 jobs:
   integration:
     name: Integration Test
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
