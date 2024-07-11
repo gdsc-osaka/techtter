@@ -1,0 +1,17 @@
+name: CD (dev)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/build.yaml
+    environment: development
+    secrets: inherit
