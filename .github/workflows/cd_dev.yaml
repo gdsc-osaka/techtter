@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   deploy:
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/deploy.yaml
     secrets: inherit
     with:
       environment: development
