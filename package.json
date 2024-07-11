@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint src test -c eslint.config.mjs && prettier --check \"src/**/*.ts\" \"src/**/*.tsx\" \"test/**/*.ts\"",
     "fix": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"test/**/*.ts\" && eslint --fix src test",
-    "test": "vitest test/$npm_config_dir"
+    "test-unit": "vitest tests/unit",
+    "test-integration": "vitest tests/integration"
   },
   "dependencies": {
     "firebase": "^10.12.3",
