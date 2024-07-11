@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "firebase": "^10.12.3",
+    "firebase-admin": "^12.2.0",
     "log4js": "^6.9.1",
     "next": "14.2.5",
     "path": "^0.12.7",

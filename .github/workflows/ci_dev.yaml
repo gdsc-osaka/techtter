@@ -17,6 +17,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/build.yaml
+    environment: development
     secrets: inherit
   lint:
     uses: ./.github/workflows/lint.yaml
@@ -24,3 +25,5 @@ jobs:
     uses: ./.github/workflows/test-unit.yaml
   integration-test:
     uses: ./.github/workflows/test-integration.yaml
+    environment: development
+    secrets: inherit
