@@ -30,7 +30,6 @@ jobs:
           cache: 'pnpm'
       - name: Create .env file
         shell: bash
-        # TODO: GitHub の Team プランを契約して, environment を設定し, "DEV_" 接頭辞を削除する
         run: |
           cat > .env <<EOF
           FIRE_CONFIG=${{ secrets.FIRE_CONFIG }}
@@ -42,7 +41,7 @@ jobs:
         env:
           cache-name: cache-node
         with:
-          path: '**/node_modules'
+          path: 'node_modules'
           key: ${{ runner.os }}-cache-node-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-cache-node-

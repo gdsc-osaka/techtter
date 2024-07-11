@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint src test -c eslint.config.mjs && prettier --check \"src/**/*.ts\" \"src/**/*.tsx\" \"test/**/*.ts\"",
-    "fix": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"test/**/*.ts\" && eslint --fix src test",
+    "lint": "eslint src tests -c eslint.config.mjs && prettier --check \\\"src/**/*.ts\\\" \\\"src/**/*.tsx\\\" \\\"test/**/*.ts\\\"",
+    "fix": "prettier --write \\\\\\\"src/**/*.ts\\\\\\\" \\\\\\\"src/**/*.tsx\\\\\\\" \\\\\\\"tests/**/*.ts\\\\\\\" && eslint --fix src tests",
     "test-unit": "vitest tests/unit",
     "test-integration": "vitest tests/integration"
   },
