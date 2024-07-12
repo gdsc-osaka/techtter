@@ -1,8 +1,8 @@
-"use client";
-import {ReactNode, useCallback, useMemo, useState} from "react";
-import {KeyboardArrowDown} from "@/components/icons";
-import Link from "next/link";
-import {usePathname} from "next/navigation";
+'use client';
+import { ReactNode, useMemo, useState } from 'react';
+import { KeyboardArrowDownIcon } from '@/components/icons';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface Props {
     id: string;
@@ -11,16 +11,15 @@ interface Props {
     children?: ReactNode;
 }
 
-export default function TopicItem({children, id, label, href}: Props) {
+export default function TopicItem({ children, id, label, href }: Props) {
     const openable = children !== undefined;
 
     const [open, setOpen] = useState(!openable);
     const pathname = usePathname();
 
     const handleClick = () => {
-        if (openable)
-            setOpen(prev => !prev);
-    }
+        if (openable) setOpen((prev) => !prev);
+    };
 
     const currentTopicId = useMemo(() => {
         const splits = pathname.split('/');
@@ -31,21 +30,25 @@ export default function TopicItem({children, id, label, href}: Props) {
 
     return (
         <details open={open}>
-            <summary className={"block list-none"}>
+            <summary className={'block list-none'}>
                 <Link href={href}>
-                    <button onClick={handleClick}
-                            className={"px-2 py-1 flex gap-1 w-full rounded text-sm text-stone-500 transition-colors " +
-                                "hover:text-stone-900 hover:bg-stone-200 " +
-                                `${open ? "text-stone-900" : ""} ` +
-                                `${isThisTopic ? "border border-stone-500" : ""}`}>
-                        <KeyboardArrowDown className={`transition-transform ${open ? "" : "-rotate-90"} ${openable ? "" : "text-transparent"}`}/>
+                    <button
+                        onClick={handleClick}
+                        className={
+                            'px-2 py-1 flex gap-1 w-full rounded text-sm text-stone-500 transition-colors ' +
+                            'hover:text-stone-900 hover:bg-stone-200 ' +
+                            `${open ? 'text-stone-900' : ''} ` +
+                            `${isThisTopic ? 'border border-stone-500' : ''}`
+                        }
+                    >
+                        <KeyboardArrowDownIcon
+                            className={`transition-transform ${open ? '' : '-rotate-90'} ${openable ? '' : 'text-transparent'}`}
+                        />
                         {label}
                     </button>
                 </Link>
             </summary>
-            <div className={"ml-2 flex flex-col gap-1"}>
-                {children}
-            </div>
+            <div className={'ml-2 flex flex-col gap-1'}>{children}</div>
         </details>
     );
 }

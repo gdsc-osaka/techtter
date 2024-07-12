@@ -1,5 +1,5 @@
-import {ForCreate, ForUpdate} from "@/domain/_utils";
-import {Topic} from "@/domain/topic";
+import { ForCreate, ForUpdate } from '@/domain/_utils';
+import { Topic } from '@/domain/topic';
 
 export interface ITopicRepository {
     create(topic: ForCreate<Topic>): Promise<void>;

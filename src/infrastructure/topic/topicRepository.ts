@@ -1,16 +1,22 @@
-import {ITopicRepository} from "@/infrastructure/topic/ITopicRepository";
-import {ForCreate, ForUpdate} from "@/domain/_utils";
-import {Topic} from "@/domain/topic";
-import {db} from "@/firebase";
-import {addDoc, collection, deleteDoc, doc, setDoc, updateDoc} from "firebase/firestore";
-import {topicConverter} from "@/infrastructure/topic/topicConverter";
-import {logger} from "@/logger";
+import { ITopicRepository } from '@/infrastructure/topic/ITopicRepository';
+import { ForCreate, ForUpdate } from '@/domain/_utils';
+import { Topic } from '@/domain/topic';
+import { db } from '@/firebase';
+import {
+    addDoc,
+    collection,
+    deleteDoc,
+    doc,
+    updateDoc,
+} from 'firebase/firestore';
+import { topicConverter } from '@/infrastructure/topic/topicConverter';
+import { logger } from '@/logger';
 
 export class TopicRepository implements ITopicRepository {
-    private readonly colRef = () => collection(db, `categories`)
-        .withConverter(topicConverter);
-    private readonly docRef = (categoryId: string) => doc(db, `categories/${categoryId}`)
-        .withConverter(topicConverter)
+    private readonly colRef = () =>
+        collection(db, `categories`).withConverter(topicConverter);
+    private readonly docRef = (categoryId: string) =>
+        doc(db, `categories/${categoryId}`).withConverter(topicConverter);
 
     async create(topic: ForCreate<Topic>): Promise<void> {
         try {
@@ -38,5 +44,4 @@ export class TopicRepository implements ITopicRepository {
             return Promise.reject(e);
         }
     }
-
 }

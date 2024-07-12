@@ -1,7 +1,9 @@
+import PostForm from '@/components/postForm';
+
 interface Props {
     params: {
         topicId: string[];
-    }
+    };
 }
 
 export default function PostListPage(props: Props) {
@@ -9,5 +11,5 @@ export default function PostListPage(props: Props) {
         <div>
             PostListPage
         </div>
-    )
+    );
 }

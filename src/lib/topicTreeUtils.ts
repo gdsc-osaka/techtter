@@ -1,5 +1,5 @@
-import {Topic} from "@/domain/topic";
-import {Timestamp} from "firebase/firestore";
+import { Topic } from '@/domain/topic';
+import { Timestamp } from 'firebase/firestore';
 
 export interface TopicTreeNode {
     topic: Topic;
@@ -8,17 +8,17 @@ export interface TopicTreeNode {
 }
 
 const rootTopic: Topic = {
-    id: "root",
-    name: "Root",
+    id: 'root',
+    name: 'Root',
     left: Number.NEGATIVE_INFINITY,
     right: Number.POSITIVE_INFINITY,
     created_at: Timestamp.now(),
     updated_at: Timestamp.now(),
-}
+};
 
 export function generateTopicTree(topics: Topic[]): TopicTreeNode {
     // right 降順にソートしたあと, left 昇順にソート
-    topics.sort((a, b) => (a.left - b.left) || (b.right - a.right));
+    topics.sort((a, b) => a.left - b.left || b.right - a.right);
 
     const root: TopicTreeNode = {
         topic: rootTopic,
@@ -28,14 +28,14 @@ export function generateTopicTree(topics: Topic[]): TopicTreeNode {
     let node = root;
 
     for (const topic of topics) {
-        while (node.topic.right <= topic.left && node.parent != null) {
+        while (node.topic.right <= topic.left && node.parent !== null) {
             node = node.parent;
         }
 
         const child = {
             topic: topic,
             children: [],
-            parent: node
+            parent: node,
         };
         node.children.push(child);
         node = child;
@@ -45,10 +45,10 @@ export function generateTopicTree(topics: Topic[]): TopicTreeNode {
 }
 
 export function generateTopicLink(node: TopicTreeNode): string {
-    let href = "";
+    let href = '';
 
-    while (node.parent != null) {
-        href = node.topic.id + "/" + href;
+    while (node.parent !== null) {
+        href = node.topic.id + '/' + href;
         node = node.parent;
     }
 
