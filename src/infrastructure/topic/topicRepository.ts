@@ -1,20 +1,20 @@
-import {ICategoryRepository} from "@/infrastructure/category/iCategoryRepository";
+import {ITopicRepository} from "@/infrastructure/topic/ITopicRepository";
 import {ForCreate, ForUpdate} from "@/domain/_utils";
-import {Category} from "@/domain/category";
+import {Topic} from "@/domain/topic";
 import {db} from "@/firebase";
 import {addDoc, collection, deleteDoc, doc, setDoc, updateDoc} from "firebase/firestore";
-import {categoryConverter} from "@/infrastructure/category/categoryConverter";
+import {topicConverter} from "@/infrastructure/topic/topicConverter";
 import {logger} from "@/logger";
 
-export class CategoryRepository implements ICategoryRepository {
+export class TopicRepository implements ITopicRepository {
     private readonly colRef = () => collection(db, `categories`)
-        .withConverter(categoryConverter);
+        .withConverter(topicConverter);
     private readonly docRef = (categoryId: string) => doc(db, `categories/${categoryId}`)
-        .withConverter(categoryConverter)
+        .withConverter(topicConverter)
 
-    async create(category: ForCreate<Category>): Promise<void> {
+    async create(topic: ForCreate<Topic>): Promise<void> {
         try {
-            await addDoc(this.colRef(), category);
+            await addDoc(this.colRef(), topic);
         } catch (e) {
             logger.error(e);
             return Promise.reject(e);
@@ -30,9 +30,9 @@ export class CategoryRepository implements ICategoryRepository {
         }
     }
 
-    async update(category: ForUpdate<Category>): Promise<void> {
+    async update(topic: ForUpdate<Topic>): Promise<void> {
         try {
-            await updateDoc(this.docRef(category.id), category);
+            await updateDoc(this.docRef(topic.id), topic);
         } catch (e) {
             logger.error(e);
             return Promise.reject(e);

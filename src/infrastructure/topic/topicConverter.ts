@@ -1,7 +1,7 @@
 import {FirestoreDataConverter, Timestamp} from "firebase/firestore";
-import {Category} from "@/domain/category";
+import {Topic} from "@/domain/topic";
 
-function assertsCategory(data: any): asserts data is Category {
+function assertsTopic(data: any): asserts data is Topic {
     if (
         typeof data.id === 'string' &&
         typeof data.name === 'string' &&
@@ -16,11 +16,11 @@ function assertsCategory(data: any): asserts data is Category {
     }
 }
 
-export const categoryConverter: FirestoreDataConverter<Category> = {
-    fromFirestore(snapshot, options): Category {
+export const topicConverter: FirestoreDataConverter<Topic> = {
+    fromFirestore(snapshot, options): Topic {
         const data = snapshot.data(options);
         const category = {...data, id: snapshot.id};
-        assertsCategory(category);
+        assertsTopic(category);
         return category;
     },
     toFirestore(modelObject) {
