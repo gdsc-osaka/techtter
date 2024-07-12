@@ -1,5 +1,5 @@
 import TopicItem from "@/components/topicItem";
-import {generateTopicTree, TopicTreeNode} from "@/lib/generateTopicTree";
+import {generateTopicLink, generateTopicTree, TopicTreeNode} from "@/lib/topicTreeUtils";
 import {Topic} from "@/domain/topic";
 
 function generateTopicItem(node: TopicTreeNode) {
@@ -8,7 +8,10 @@ function generateTopicItem(node: TopicTreeNode) {
     return (
         <>
             {node.children.map(child => (
-                <TopicItem key={child.topic.id} label={child.topic.name}>
+                <TopicItem key={child.topic.id}
+                           id={child.topic.id}
+                           label={child.topic.name}
+                           href={`/posts/${generateTopicLink(child)}`}>
                     {generateTopicItem(child)}
                 </TopicItem>
             ))}
@@ -25,6 +28,7 @@ export default function TopicSideMenu({topics}: Props) {
 
     return (
         <aside className={"h-screen w-48 bg-stone-100 px-2 py-4 flex flex-col gap-1"}>
+            <p className={"px-3 pb-2 text-stone-900"}>Topics</p>
             {generateTopicItem(root)}
         </aside>
     );

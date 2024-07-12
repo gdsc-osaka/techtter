@@ -43,3 +43,14 @@ export function generateTopicTree(topics: Topic[]): TopicTreeNode {
 
     return root;
 }
+
+export function generateTopicLink(node: TopicTreeNode): string {
+    let href = "";
+
+    while (node.parent != null) {
+        href = node.topic.id + "/" + href;
+        node = node.parent;
+    }
+
+    return href;
+}
