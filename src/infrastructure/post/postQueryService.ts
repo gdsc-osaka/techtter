@@ -22,7 +22,7 @@ export class PostQueryService implements IPostQueryService {
     );
 
     async findManyByTopic(
-        topic: Topic,
+        topic?: Topic,
         lim: number = 10,
         start?: Post
     ): Promise<Post[]> {
@@ -86,13 +86,18 @@ export class PostQueryService implements IPostQueryService {
             ];
 
             const constraints: QueryConstraint[] = [
-                where('topic_center', '<', topic.left),
-                where('topic_center', '>', topic.right),
                 limit(lim),
                 orderBy('created_at', 'desc'),
             ];
-            if (start)
+            if (topic !== undefined) {
+                constraints.push(
+                    where('topic_center', '<', topic.left),
+                    where('topic_center', '>', topic.right)
+                );
+            }
+            if (start !== undefined) {
                 constraints.push(startAfter('created_at', start.created_at));
+            }
             const q = query(this.colGroupRef, ...constraints);
             const posts = await getDocs(q);
 

@@ -1,8 +1,9 @@
 import { PostQueryService } from '@/infrastructure/post/postQueryService';
-import { Timestamp } from 'firebase/firestore';
 import PostItem from '@/components/postItem';
+import { TopicRepository } from '@/infrastructure/topic/topicRepository';
 
 const postQueryService = new PostQueryService();
+const topicRepository = new TopicRepository();
 
 interface Props {
     params: {
@@ -10,16 +11,11 @@ interface Props {
     };
 }
 
-export default async function PostListPage(_: Props) {
-    const posts = await postQueryService.findManyByTopic({
-        id: 'react',
-        name: 'React',
-        left: 0,
-        right: 50,
-        icon_path: undefined,
-        created_at: Timestamp.now(),
-        updated_at: Timestamp.now(),
-    });
+export default async function PostListPage({ params }: Props) {
+    const topicId = params.topicId.at(params.topicId.length - 1);
+    const topic =
+        topicId !== undefined ? await topicRepository.find(topicId) : undefined;
+    const posts = await postQueryService.findManyByTopic(topic);
 
     return (
         <ol className={'h-full align-bottom'}>

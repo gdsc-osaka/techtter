@@ -44,6 +44,11 @@ export function generateTopicTree(topics: Topic[]): TopicTreeNode {
     return root;
 }
 
+/**
+ * TopicTreeNode からトピックの URL に対応するリンクを生成する.
+ * @example front-end(react(remix), next) で remix を入力すると /front-end/react/remix/ が返る.
+ * @param node 生成したい Topic のノード
+ */
 export function generateTopicLink(node: TopicTreeNode): string {
     let href = '';
 

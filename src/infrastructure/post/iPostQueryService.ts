@@ -3,7 +3,7 @@ import { Topic } from '@/domain/topic';
 
 export interface IPostQueryService {
     findManyByTopic(
-        topic: Topic,
+        topic?: Topic,
         limit?: number,
         startAfter?: Post
     ): Promise<Post[]>;
