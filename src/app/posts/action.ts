@@ -7,6 +7,5 @@ export async function createPost(formData: FormData) {
         return Promise.reject(new Error('Invalid content'));
     }
 
-    console.log(content)
-
+    console.log(content);
 }

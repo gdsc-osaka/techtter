@@ -1,5 +1,5 @@
 export function countLines(str: string) {
-    let count = str === "" ? 0 : 1;
+    let count = str === '' ? 0 : 1;
     const len = str.length;
 
     for (let i = 0; i < len; i++) {

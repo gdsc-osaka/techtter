@@ -2,8 +2,8 @@ import { ReactNode } from 'react';
 import TopicSideMenu from '@/components/topicSideMenu';
 import { Topic } from '@/domain/topic';
 import { Timestamp } from 'firebase/firestore';
-import PostForm from "@/components/postForm";
-import Header from "@/components/header";
+import PostForm from '@/components/postForm';
+import Header from '@/components/header';
 
 function topicFactory(
     topic: Pick<Topic, 'id' | 'name' | 'left' | 'right'>
@@ -57,17 +57,25 @@ export default function Layout({ children }: { children: ReactNode }) {
     ];
 
     return (
-        <div className={"h-screen flex flex-row items-stretch"}>
+        <div className={'h-screen flex flex-row items-stretch'}>
             <TopicSideMenu topics={topics} />
-            <div className={"w-full flex flex-col overflow-hidden"}>
-                <Header/>
-                <main className={'h-full px-4 w-full relative flex flex-col flex-auto'}>
-                    <div className={"relative h-full"}>
-                        <div className={"absolute inset-0 bottom-0 overflow-y-scroll scroll"}>
+            <div className={'w-full flex flex-col overflow-hidden'}>
+                <Header />
+                <main
+                    className={
+                        'h-full px-4 w-full relative flex flex-col flex-auto'
+                    }
+                >
+                    <div className={'relative h-full'}>
+                        <div
+                            className={
+                                'absolute inset-0 bottom-0 overflow-y-scroll scroll'
+                            }
+                        >
                             {children}
                         </div>
                     </div>
-                    <div className={"shrink-0 pb-4"}>
+                    <div className={'shrink-0 pb-4'}>
                         <PostForm />
                     </div>
                 </main>

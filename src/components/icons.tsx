@@ -28,8 +28,8 @@ export const KeyboardArrowDownIcon = (props: MaterialSymbolProp) => {
 
 export const SendIcon = (props: MaterialSymbolProp) => {
     return <MaterialSymbol {...props}>send</MaterialSymbol>;
-}
+};
 
 export const AccountCircleIcon = (props: MaterialSymbolProp) => {
     return <MaterialSymbol {...props}>account_circle</MaterialSymbol>;
-}
+};
