@@ -9,7 +9,6 @@ import {
     query,
     QueryConstraint,
     startAfter,
-    Timestamp,
     where,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
@@ -27,64 +26,6 @@ export class PostQueryService implements IPostQueryService {
         start?: Post
     ): Promise<Post[]> {
         try {
-            return [
-                {
-                    id: 'dummy',
-                    topic_id: 'react',
-                    topic_center: 25,
-                    tags: [],
-                    content: 'This is a dummy post',
-                    created_at: Timestamp.now(),
-                    updated_at: Timestamp.now(),
-                },
-                {
-                    id: 'dummy2',
-                    topic_id: 'react',
-                    topic_center: 25,
-                    tags: [],
-                    content: 'This is a dummy post 2\nabc\ndef',
-                    created_at: Timestamp.now(),
-                    updated_at: Timestamp.now(),
-                },
-                {
-                    id: 'dummy3',
-                    topic_id: 'react',
-                    topic_center: 25,
-                    tags: [],
-                    content:
-                        'This is a dummy post 3\nabc\ndef\nghi\njkl\nmno\npqr\nstu\nvwx\nyz',
-                    created_at: Timestamp.now(),
-                    updated_at: Timestamp.now(),
-                },
-                // {
-                //     id: "dummy",
-                //     topic_id: "react",
-                //     topic_center: 25,
-                //     tags: [],
-                //     content: "This is a dummy post",
-                //     created_at: Timestamp.now(),
-                //     updated_at: Timestamp.now(),
-                // },
-                // {
-                //     id: "dummy",
-                //     topic_id: "react",
-                //     topic_center: 25,
-                //     tags: [],
-                //     content: "This is a dummy post",
-                //     created_at: Timestamp.now(),
-                //     updated_at: Timestamp.now(),
-                // },
-                // {
-                //     id: "dummy",
-                //     topic_id: "react",
-                //     topic_center: 25,
-                //     tags: [],
-                //     content: "This is a dummy post",
-                //     created_at: Timestamp.now(),
-                //     updated_at: Timestamp.now(),
-                // },
-            ];
-
             const constraints: QueryConstraint[] = [
                 limit(lim),
                 orderBy('created_at', 'desc'),
