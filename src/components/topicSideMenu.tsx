@@ -35,7 +35,7 @@ export default function TopicSideMenu({ topics }: Props) {
     return (
         <aside
             className={
-                'h-screen w-48 bg-stone-100 px-2 py-4 flex flex-col gap-1'
+                'h-full min-w-56 bg-stone-100 px-2 py-4 flex flex-col'
             }
         >
             {generateTopicItem(root)}

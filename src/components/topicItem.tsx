@@ -30,25 +30,21 @@ export default function TopicItem({ children, id, label, href }: Props) {
 
     return (
         <details open={open}>
-            <summary className={'block list-none'}>
-                <Link href={href}>
-                    <button
-                        onClick={handleClick}
-                        className={
-                            'px-2 py-1 flex gap-1 w-full rounded text-sm text-stone-500 transition-colors ' +
-                            'hover:text-stone-900 hover:bg-stone-200 ' +
-                            `${open ? 'text-stone-900' : ''} ` +
-                            `${isThisTopic ? 'border border-stone-500' : ''}`
-                        }
-                    >
-                        <KeyboardArrowDownIcon
-                            className={`transition-transform ${open ? '' : '-rotate-90'} ${openable ? '' : 'text-transparent'}`}
-                        />
-                        {label}
-                    </button>
+            <summary className={'block list-none mb-1'}>
+                <Link href={href} onClick={handleClick}
+                      className={
+                          'px-2 py-1 flex gap-1 w-full rounded text-sm text-stone-500 transition-colors ' +
+                          'hover:text-stone-900 hover:bg-stone-200 ' +
+                          `${open ? 'text-stone-900' : ''} ` +
+                          `${isThisTopic ? 'border border-stone-500' : ''}`
+                      }>
+                    <KeyboardArrowDownIcon
+                        className={`transition-transform ${open ? '' : '-rotate-90'} ${openable ? '' : 'text-transparent'}`}
+                    />
+                    {label}
                 </Link>
             </summary>
-            <div className={'ml-2 flex flex-col gap-1'}>{children}</div>
+            <div className={'ml-2 flex flex-col'}>{children}</div>
         </details>
     );
 }

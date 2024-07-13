@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 
-type MaterialSymbolProp = {
+interface MaterialSymbolProp {
     className?: string;
-    size?: 20 | 24 | 48;
-};
+    size?: number;
+}
 
 const MaterialSymbol = ({
     className = '',
@@ -28,4 +28,8 @@ export const KeyboardArrowDownIcon = (props: MaterialSymbolProp) => {
 
 export const SendIcon = (props: MaterialSymbolProp) => {
     return <MaterialSymbol {...props}>send</MaterialSymbol>;
+}
+
+export const AccountCircleIcon = (props: MaterialSymbolProp) => {
+    return <MaterialSymbol {...props}>account_circle</MaterialSymbol>;
 }

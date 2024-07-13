@@ -1,12 +1,12 @@
 'use client';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {Form, FormControl, FormField, FormItem, FormLabel,} from '@/components/ui/form';
+import {Form, FormControl, FormField, FormItem,} from '@/components/ui/form';
 import {useForm} from 'react-hook-form';
-import {Textarea} from '@/components/ui/textarea';
 import {countLines} from "@/lib/strlib";
 import {Button} from "@/components/ui/button";
 import {SendIcon} from "@/components/icons";
+import {createPost} from "@/app/posts/action";
 
 const formSchema = z.object({
     content: z.string(),
@@ -20,9 +20,9 @@ export default function PostForm() {
         },
     });
 
-    const createPost = (formData: FormData) => {
-        console.log(formData);
-    }
+    // const createPost = (formData: FormData) => {
+    //     console.log(formData);
+    // }
 
     const row = countLines(form.watch().content) + 1;
 

@@ -3,6 +3,7 @@ import TopicSideMenu from '@/components/topicSideMenu';
 import { Topic } from '@/domain/topic';
 import { Timestamp } from 'firebase/firestore';
 import PostForm from "@/components/postForm";
+import Header from "@/components/header";
 
 function topicFactory(
     topic: Pick<Topic, 'id' | 'name' | 'left' | 'right'>
@@ -56,14 +57,21 @@ export default function Layout({ children }: { children: ReactNode }) {
     ];
 
     return (
-        <main className={'flex flex-row'}>
+        <div className={"h-screen flex flex-row items-stretch"}>
             <TopicSideMenu topics={topics} />
-            <div className={'flex flex-col px-4 py-6 w-full'}>
-                <div className={"h-full"}>
-                    {children}
-                </div>
-                <PostForm />
+            <div className={"w-full flex flex-col overflow-hidden"}>
+                <Header/>
+                <main className={'h-full px-4 w-full relative flex flex-col flex-auto'}>
+                    <div className={"relative h-full"}>
+                        <div className={"absolute inset-0 overflow-y-scroll scroll"}>
+                            {children}
+                        </div>
+                    </div>
+                    <div className={"shrink-0"}>
+                        <PostForm />
+                    </div>
+                </main>
             </div>
-        </main>
+        </div>
     );
 }
