@@ -24,7 +24,7 @@ export default function PostForm() {
     //     console.log(formData);
     // }
 
-    const row = countLines(form.watch().content) + 1;
+    const row = countLines(form.watch().content);
 
     return (
         <Form {...form}>

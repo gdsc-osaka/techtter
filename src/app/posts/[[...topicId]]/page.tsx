@@ -22,10 +22,10 @@ export default async function PostListPage(props: Props) {
     });
 
     return (
-        <>
+        <ol className={"h-full align-bottom"}>
             {posts.map((post) => (
                 <PostItem post={post} key={post.id}/>
             ))}
-        </>
+        </ol>
     );
 }
