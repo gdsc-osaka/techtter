@@ -1,11 +1,40 @@
 'use server';
 
-export async function createPost(formData: FormData) {
-    const content = formData.get('content');
+import { PostService } from '@/application/post/postService';
+import { AdminPostRepository } from '@/infrastructure/post/adminPostRepository';
+import { TopicRepository } from '@/infrastructure/topic/topicRepository';
+import { Admin } from '@/firebaseAdmin';
+import { parseWithZod } from '@conform-to/zod';
+import { postFormSchema } from '@/app/posts/schema';
+import { logger } from '@/logger';
 
-    if (typeof content !== 'string') {
-        return Promise.reject(new Error('Invalid content'));
+const postService = new PostService(
+    new AdminPostRepository(),
+    new TopicRepository()
+);
+
+export async function createPostAction(formData: FormData) {
+    const submission = parseWithZod(formData, {
+        schema: postFormSchema,
+    });
+
+    console.log(formData);
+
+    if (submission.status !== 'success') {
+        return submission.reply();
     }
 
-    console.log(content);
+    const { content, topicId, idToken } = submission.value;
+    const decoded = await Admin.auth.verifyIdToken(idToken);
+    const user = await Admin.auth.getUser(decoded.uid);
+    console.log(user);
+
+    const post = await postService.createPost({
+        user_id: user.uid,
+        topic_id: topicId,
+        content,
+        tags: [],
+    });
+    logger.log(`Post created. (${post.id})`);
+    return post;
 }

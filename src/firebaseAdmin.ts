@@ -13,4 +13,5 @@ const app =
 export namespace Admin {
     export const auth = app.auth();
     export const messaging = app.messaging();
+    export const db = app.firestore();
 }

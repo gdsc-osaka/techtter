@@ -5,7 +5,7 @@ export interface Topic {
     name: string;
     left: number;
     right: number;
-    icon_path?: string;
+    icon_path: string | null;
     created_at: Timestamp;
     updated_at: Timestamp;
 }

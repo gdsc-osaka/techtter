@@ -1,30 +1,42 @@
 import { ITopicRepository } from '@/infrastructure/topic/ITopicRepository';
-import { ForCreate, ForUpdate } from '@/domain/_utils';
+import { ForCreateWithId, ForUpdate } from '@/domain/_utils';
 import { Topic } from '@/domain/topic';
 import { db } from '@/firebase';
 import {
-    addDoc,
     collection,
     deleteDoc,
     doc,
     getDoc,
     getDocs,
+    serverTimestamp,
+    setDoc,
+    Timestamp,
     updateDoc,
 } from 'firebase/firestore';
 import { topicConverter } from '@/infrastructure/topic/topicConverter';
-import { logger } from '@/logger';
 
 export class TopicRepository implements ITopicRepository {
     private readonly colRef = () =>
-        collection(db, `categories`).withConverter(topicConverter);
+        collection(db, `topics`).withConverter(topicConverter);
     private readonly docRef = (categoryId: string) =>
-        doc(db, `categories/${categoryId}`).withConverter(topicConverter);
+        doc(db, `topics/${categoryId}`).withConverter(topicConverter);
 
-    async create(topic: ForCreate<Topic>): Promise<void> {
+    async create(topic: ForCreateWithId<Topic>): Promise<Topic> {
         try {
-            await addDoc(this.colRef(), topic);
+            await setDoc(this.docRef(topic.id), {
+                ...topic,
+                created_at: serverTimestamp(),
+                updated_at: serverTimestamp(),
+            });
+            console.log(`Topic created. (${topic.id})`);
+            return {
+                ...topic,
+                id: topic.id,
+                created_at: Timestamp.now(),
+                updated_at: Timestamp.now(),
+            };
         } catch (e) {
-            logger.error(e);
+            console.error(e);
             return Promise.reject(e);
         }
     }
@@ -33,7 +45,7 @@ export class TopicRepository implements ITopicRepository {
         try {
             await deleteDoc(this.docRef(id));
         } catch (e) {
-            logger.error(e);
+            console.error(e);
             return Promise.reject(e);
         }
     }
@@ -42,7 +54,7 @@ export class TopicRepository implements ITopicRepository {
         try {
             await updateDoc(this.docRef(topic.id), topic);
         } catch (e) {
-            logger.error(e);
+            console.error(e);
             return Promise.reject(e);
         }
     }
@@ -52,7 +64,7 @@ export class TopicRepository implements ITopicRepository {
             const snapshot = await getDoc(this.docRef(id));
             return snapshot.data();
         } catch (e) {
-            logger.error(e);
+            console.error(e);
             return Promise.reject(e);
         }
     }
@@ -61,7 +73,7 @@ export class TopicRepository implements ITopicRepository {
             const snapshot = await getDocs(this.colRef());
             return snapshot.docs.map((d) => d.data());
         } catch (e) {
-            logger.error(e);
+            console.error(e);
             return Promise.reject(e);
         }
     }
