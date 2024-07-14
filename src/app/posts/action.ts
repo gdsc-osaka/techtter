@@ -18,7 +18,6 @@ export async function createPostAction(formData: FormData) {
         schema: postFormSchema,
     });
 
-    console.log(formData);
 
     if (submission.status !== 'success') {
         return submission.reply();
@@ -27,7 +26,6 @@ export async function createPostAction(formData: FormData) {
     const { content, topicId, idToken } = submission.value;
     const decoded = await Admin.auth.verifyIdToken(idToken);
     const user = await Admin.auth.getUser(decoded.uid);
-    console.log(user);
 
     const post = await postService.createPost({
         user_id: user.uid,

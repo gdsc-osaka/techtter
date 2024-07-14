@@ -17,8 +17,8 @@ export async function GET(
     const idToken = split[1];
 
     try {
-        const decoded = await Admin.auth.verifyIdToken(idToken);
-        const resultUser = await Admin.auth.getUser(decoded.uid);
+        await Admin.auth.verifyIdToken(idToken);
+        const resultUser = await Admin.auth.getUser(params.uid);
         const fireUser: FireUser = {
             uid: resultUser.uid,
             displayName: resultUser.displayName || null,

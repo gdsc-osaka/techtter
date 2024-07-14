@@ -37,7 +37,6 @@ export const usersFamily = atomFamily((uid: string) =>
             const json = await res.json();
             const parsed = fireUserSchema.safeParse(json.user);
 
-            console.log(parsed.error);
             if (!parsed.success) {
                 return null;
             }
