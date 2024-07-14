@@ -7,7 +7,7 @@ import { Topic } from '@/domain/topic';
 /**
  * Topic ID を引数に取る Family
  */
-export const postsFamily = atomFamily((topicId: string) => atom<Post[]>([]));
+export const postsFamily = atomFamily(() => atom<Post[]>([]));
 
 const postQueryService = new PostQueryService();
 export const subscribePostsFamily = atomFamily((topicId: string) =>

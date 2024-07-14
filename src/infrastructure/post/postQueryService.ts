@@ -6,7 +6,6 @@ import { Topic } from '@/domain/topic';
 import { Post } from '@/domain/post';
 import {
     collectionGroup,
-    getDocs,
     limit,
     onSnapshot,
     orderBy,

@@ -1,5 +1,5 @@
 import { IPostRepository } from '@/infrastructure/post/iPostRepository';
-import { ForCreate, ForUpdate } from '@/domain/_utils';
+import { ForCreate } from '@/domain/_utils';
 import { Post } from '@/domain/post';
 import {
     collection,
@@ -12,7 +12,6 @@ import {
 import { db } from '@/firebase';
 import { postConverter } from '@/infrastructure/post/postConverter';
 import { logger } from '@/logger';
-import { Admin } from '@/firebaseAdmin';
 
 export class AdminPostRepository implements IPostRepository {
     private readonly docRef = (userId: string, postId: string) =>

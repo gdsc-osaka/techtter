@@ -2,10 +2,10 @@
 import { Button } from '@/components/ui/button';
 import { GoogleIcon } from '@/components/icons';
 import { signInWithGoogle } from '@/infrastructure/auth/auth';
-import {userAtom} from "@/app/atoms";
-import {useAtom} from "jotai";
-import {useEffect} from "react";
-import {redirect} from "next/navigation";
+import { userAtom } from '@/app/atoms';
+import { useAtom } from 'jotai';
+import { useEffect } from 'react';
+import { redirect } from 'next/navigation';
 
 // const formSchema = z.object({
 //     email: z.string(),

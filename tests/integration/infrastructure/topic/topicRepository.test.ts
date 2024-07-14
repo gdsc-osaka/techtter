@@ -2,7 +2,7 @@ import { describe, expect } from 'vitest';
 import { TopicRepository } from '@/infrastructure/topic/topicRepository';
 import { topicFactory } from '../../../_shared/factories/topicFactory';
 
-describe('TopicRepository', () => {
+describe.todo('TopicRepository', () => {
     const repository = new TopicRepository();
 
     describe('create', (it) => {

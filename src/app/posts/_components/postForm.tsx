@@ -1,5 +1,4 @@
 'use client';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
@@ -8,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { SendIcon } from '@/components/icons';
 import { createPostAction } from '@/app/posts/action';
 import { auth } from '@/firebase';
-import { KeyboardEventHandler, useEffect } from 'react';
+import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { postFormSchema, PostFormType } from '@/app/posts/schema';
 

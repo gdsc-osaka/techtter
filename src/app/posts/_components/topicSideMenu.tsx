@@ -14,10 +14,14 @@ export default function TopicSideMenu({ topics }: Props) {
     const root = generateTopicTree(topics);
 
     return (
-        <aside
-            className={'h-full min-w-56 bg-stone-100 px-2 flex flex-col'}
-        >
-            <div className={'flex items-center px-2 h-12 border-b border-stone-300'}>Topics</div>
+        <aside className={'h-full min-w-56 bg-stone-100 px-2 flex flex-col'}>
+            <div
+                className={
+                    'flex items-center px-2 h-12 border-b border-stone-300'
+                }
+            >
+                Topics
+            </div>
             {generateTopicItem(root)}
         </aside>
     );

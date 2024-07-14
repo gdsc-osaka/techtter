@@ -1,9 +1,6 @@
-import { PostQueryService } from '@/infrastructure/post/postQueryService';
-import PostItem from '@/app/posts/[[...topicId]]/_components/postItem';
 import { TopicRepository } from '@/infrastructure/topic/topicRepository';
 import PostList from '@/app/posts/[[...topicId]]/_components/postList';
 
-const postQueryService = new PostQueryService();
 const topicRepository = new TopicRepository();
 
 interface Props {

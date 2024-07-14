@@ -33,7 +33,6 @@ export default function TopicItem({ children, id, label, href }: Props) {
         }
     };
 
-
     const isThisTopic = currentTopicId === id;
 
     return (

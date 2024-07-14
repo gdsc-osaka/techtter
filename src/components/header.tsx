@@ -1,10 +1,10 @@
-"use client";
+'use client';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import {useAtom} from "jotai";
-import {userAtom} from "@/app/atoms";
-import {useEffect} from "react";
-import {auth} from "@/firebase";
+import { useAtom } from 'jotai';
+import { userAtom } from '@/app/atoms';
+import { useEffect } from 'react';
+import { auth } from '@/firebase';
 
 export default function Header() {
     const [user, subscribe] = useAtom(userAtom);
@@ -15,7 +15,7 @@ export default function Header() {
 
     const handleSignOut = () => {
         auth.signOut();
-    }
+    };
 
     return (
         <header
@@ -23,9 +23,7 @@ export default function Header() {
                 'flex justify-between items-center px-4 py-1 border-b border-stone-300 min-h-12'
             }
         >
-            <div>
-                Techtter
-            </div>
+            <div>Techtter</div>
             <div className={'flex gap-2'}>
                 {user === null && (
                     <>
@@ -41,12 +39,20 @@ export default function Header() {
                 )}
                 {user !== null && (
                     <>
-                        <button className={"w-8 h-8"}>
-                            {user.photoURL !== null &&
-                                <img src={user.photoURL} alt={"User Icon"} className={'rounded-full'}/>
-                            }
+                        <button className={'w-8 h-8'}>
+                            {user.photoURL !== null && (
+                                <img
+                                    src={user.photoURL}
+                                    alt={'User Icon'}
+                                    className={'rounded-full'}
+                                />
+                            )}
                         </button>
-                        <Button variant={'secondary'} size={'sm'} onClick={handleSignOut}>
+                        <Button
+                            variant={'secondary'}
+                            size={'sm'}
+                            onClick={handleSignOut}
+                        >
                             ログアウト
                         </Button>
                     </>
