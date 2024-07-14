@@ -1,9 +1,9 @@
-import Link from 'next/link';
-import { AccountCircleIcon } from '@/components/icons';
-import { Post } from '@/domain/post';
-import { useAtom } from 'jotai';
-import { usersFamily } from '@/app/posts/[[...topicId]]/atoms';
-import { Skeleton } from '@/components/ui/skeleton';
+import {AccountCircleIcon} from '@/components/icons';
+import {Post} from '@/domain/post';
+import {useAtom} from 'jotai';
+import {usersFamily} from '@/app/posts/[[...topicId]]/atoms';
+import {Skeleton} from '@/components/ui/skeleton';
+import Markdown from "@/app/posts/[[...topicId]]/_components/markdown";
 
 interface Props {
     post: Post;
@@ -14,9 +14,8 @@ export default function PostItem({ post }: Props) {
     const [user] = useAtom(usersFamily(post.user_id));
 
     return (
-        <li>
-            <Link
-                href={''}
+        <li id={`post-item-${post.id}`}>
+            <div
                 className={
                     'px-3 py-3 rounded flex items-start gap-4 transition-colors ' +
                     'hover:bg-stone-100'
@@ -40,11 +39,10 @@ export default function PostItem({ post }: Props) {
                 )}
                 <div className={'flex flex-col gap-1'}>
                     <h3 className={'flex items-center gap-3'}>
-                        {/*読み込み終わり*/}
-                        {user.state === 'hasData' &&
-                            user?.data?.displayName && (
-                                <span className={'text-sm'}>
-                                    {user.data.displayName}
+                        {/* displayName あり */}
+                        {user.state === 'hasData' && (
+                                <span className={'text-xs'}>
+                                    {user?.data?.displayName ? user.data.displayName : 'Unknown'}
                                 </span>
                             )}
                         {/*読み込み中*/}
@@ -55,9 +53,11 @@ export default function PostItem({ post }: Props) {
                             className={'text-xs text-stone-600 '}
                         >{`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}</span>
                     </h3>
-                    <p className={'whitespace-pre-wrap '}>{post.content}</p>
+                    <Markdown>
+                        {post.content}
+                    </Markdown>
                 </div>
-            </Link>
+            </div>
         </li>
     );
 }

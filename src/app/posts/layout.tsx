@@ -20,13 +20,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
                     }
                 >
                     <div className={'relative h-full'}>
-                        <div
-                            className={
-                                'absolute inset-0 bottom-0 overflow-y-scroll scroll'
-                            }
-                        >
-                            {children}
-                        </div>
+                        {children}
                     </div>
                     <div className={'shrink-0 pb-4'}>
                         <PostForm />

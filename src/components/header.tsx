@@ -39,6 +39,13 @@ export default function Header() {
                 )}
                 {user !== null && (
                     <>
+                        <Button
+                            variant={'secondary'}
+                            size={'sm'}
+                            onClick={handleSignOut}
+                        >
+                            ログアウト
+                        </Button>
                         <button className={'w-8 h-8'}>
                             {user.photoURL !== null && (
                                 <img
@@ -48,13 +55,6 @@ export default function Header() {
                                 />
                             )}
                         </button>
-                        <Button
-                            variant={'secondary'}
-                            size={'sm'}
-                            onClick={handleSignOut}
-                        >
-                            ログアウト
-                        </Button>
                     </>
                 )}
             </div>
