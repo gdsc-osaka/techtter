@@ -1,6 +1,6 @@
-import { Post } from '@/domain/post';
-import { AccountCircleIcon } from '@/components/icons';
 import Link from 'next/link';
+import { AccountCircleIcon } from '@/components/icons';
+import { Post } from '@/domain/post';
 
 interface Props {
     post: Post;

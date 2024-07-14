@@ -1,6 +1,7 @@
 import { PostQueryService } from '@/infrastructure/post/postQueryService';
-import PostItem from '@/components/postItem';
+import PostItem from '@/app/posts/[[...topicId]]/_components/postItem';
 import { TopicRepository } from '@/infrastructure/topic/topicRepository';
+import PostList from '@/app/posts/[[...topicId]]/_components/postList';
 
 const postQueryService = new PostQueryService();
 const topicRepository = new TopicRepository();
@@ -13,15 +14,22 @@ interface Props {
 
 export default async function PostListPage({ params }: Props) {
     const topicId = params.topicId.at(params.topicId.length - 1);
-    const topic =
-        topicId !== undefined ? await topicRepository.find(topicId) : undefined;
-    const posts = await postQueryService.findManyByTopic(topic);
+
+    if (topicId === undefined) {
+        return <p>Topic id not found.</p>;
+    }
+
+    const topic = await topicRepository.find(topicId);
+
+    if (topic === undefined) {
+        return <p>Topic not found.</p>;
+    }
 
     return (
-        <ol className={'h-full align-bottom'}>
-            {posts.map((post) => (
-                <PostItem post={post} key={post.id} />
-            ))}
-        </ol>
+        <PostList
+            topicId={topic.id}
+            topicRight={topic.right}
+            topicLeft={topic.left}
+        />
     );
 }

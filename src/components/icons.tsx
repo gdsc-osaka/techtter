@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import Image from 'next/image';
 
 interface MaterialSymbolProp {
     className?: string;
@@ -32,4 +33,15 @@ export const SendIcon = (props: MaterialSymbolProp) => {
 
 export const AccountCircleIcon = (props: MaterialSymbolProp) => {
     return <MaterialSymbol {...props}>account_circle</MaterialSymbol>;
+};
+
+export const GoogleIcon = ({ size = 24 }: MaterialSymbolProp) => {
+    return (
+        <Image
+            src={'/google.svg'}
+            alt={'google Logo'}
+            width={size}
+            height={size}
+        />
+    );
 };

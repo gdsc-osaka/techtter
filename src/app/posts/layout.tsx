@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import TopicSideMenu from '@/components/topicSideMenu';
-import PostForm from '@/components/postForm';
+import TopicSideMenu from '@/app/posts/_components/topicSideMenu';
+import PostForm from '@/app/posts/_components/postForm';
 import Header from '@/components/header';
 import { TopicRepository } from '@/infrastructure/topic/topicRepository';
 

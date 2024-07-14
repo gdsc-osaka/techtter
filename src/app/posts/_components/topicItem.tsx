@@ -1,5 +1,5 @@
 'use client';
-import { ReactNode, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { KeyboardArrowDownIcon } from '@/components/icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -17,14 +17,22 @@ export default function TopicItem({ children, id, label, href }: Props) {
     const [open, setOpen] = useState(!openable);
     const pathname = usePathname();
 
-    const handleClick = () => {
-        if (openable) setOpen((prev) => !prev);
-    };
+    useEffect(() => {
+        const segments = pathname.split('/');
+        if (segments.includes(id)) setOpen(true);
+    }, [pathname]);
 
     const currentTopicId = useMemo(() => {
         const splits = pathname.split('/');
         return splits[splits.length - 1];
     }, [pathname]);
+
+    const handleClick = () => {
+        if (openable && currentTopicId === id) {
+            setOpen((prev) => !prev);
+        }
+    };
+
 
     const isThisTopic = currentTopicId === id;
 
