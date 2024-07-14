@@ -7,6 +7,11 @@ on:
       environment:
         required: false
         type: string
+    secrets:
+      FIRE_CONFIG:
+        required: true
+      FIRE_SA_KEY:
+        required: true
 
 jobs:
   integration:
@@ -23,6 +28,13 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
+      - name: Create .env file
+        shell: bash
+        run: |
+          cat > .env <<EOF
+          NEXT_PUBLIC_FIRE_CONFIG=${{ secrets.FIRE_CONFIG }}
+          FIRE_SA_KEY=${{ secrets.FIRE_SA_KEY }}
+          EOF
       - name: cache-node-modules
         uses: actions/cache@v3
         id: cache-node
