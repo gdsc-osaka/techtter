@@ -15,7 +15,12 @@ const postQueryService = new PostQueryService();
 export const subscribePostsFamily = atomFamily((topicId: string) =>
     atom(null, (get, set, topic: Pick<Topic, 'left' | 'right'>) => {
         postQueryService.findManyByTopicCallback((posts) => {
-            set(postsFamily(topicId), posts.sort((a, b) => a.created_at.seconds - b.created_at.seconds));
+            set(
+                postsFamily(topicId),
+                posts.sort(
+                    (a, b) => a.created_at.seconds - b.created_at.seconds
+                )
+            );
         }, topic);
     })
 );

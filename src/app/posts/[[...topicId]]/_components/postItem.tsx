@@ -3,7 +3,7 @@ import { AccountCircleIcon } from '@/components/icons';
 import { Post } from '@/domain/post';
 import { useAtom } from 'jotai';
 import { usersFamily } from '@/app/posts/[[...topicId]]/atoms';
-import {Skeleton} from "@/components/ui/skeleton";
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
     post: Post;
@@ -36,19 +36,20 @@ export default function PostItem({ post }: Props) {
                 )}
                 {/*読み込み中*/}
                 {user.state === 'loading' && (
-                    <Skeleton className={'rounded-full w-9 h-9'}/>
+                    <Skeleton className={'rounded-full w-9 h-9'} />
                 )}
                 <div className={'flex flex-col gap-1'}>
                     <h3 className={'flex items-center gap-3'}>
                         {/*読み込み終わり*/}
-                        {user.state === 'hasData' && user?.data?.displayName && (
-                            <span className={'text-sm'}>
-                                {user.data.displayName}
-                            </span>
-                        )}
+                        {user.state === 'hasData' &&
+                            user?.data?.displayName && (
+                                <span className={'text-sm'}>
+                                    {user.data.displayName}
+                                </span>
+                            )}
                         {/*読み込み中*/}
                         {user.state === 'loading' && (
-                            <Skeleton className={'w-20 h-4'}/>
+                            <Skeleton className={'w-20 h-4'} />
                         )}
                         <span
                             className={'text-xs text-stone-600 '}

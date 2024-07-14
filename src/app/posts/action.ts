@@ -18,7 +18,6 @@ export async function createPostAction(formData: FormData) {
         schema: postFormSchema,
     });
 
-
     if (submission.status !== 'success') {
         return submission.reply();
     }
