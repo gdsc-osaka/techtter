@@ -32,7 +32,7 @@ jobs:
         shell: bash
         run: |
           cat > .env <<EOF
-          FIRE_CONFIG=${{ secrets.FIRE_CONFIG }}
+          NEXT_PUBLIC_FIRE_CONFIG=${{ secrets.FIRE_CONFIG }}
           FIRE_SA_KEY=${{ secrets.FIRE_SA_KEY }}
           EOF
       - name: cache-node-modules

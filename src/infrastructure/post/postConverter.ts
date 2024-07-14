@@ -6,6 +6,8 @@ function assertsPost(data: object): asserts data is Post {
         !(
             'id' in data &&
             typeof data.id === 'string' &&
+            'user_id' in data &&
+            typeof data.user_id === 'string' &&
             'topic_id' in data &&
             typeof data.topic_id === 'string' &&
             'topic_center' in data &&
@@ -29,7 +31,8 @@ function assertsPost(data: object): asserts data is Post {
 export const postConverter: FirestoreDataConverter<Post> = {
     fromFirestore(snapshot, options): Post {
         const data = snapshot.data(options);
-        const category = { ...data, id: snapshot.id };
+        const userId = snapshot.ref.parent.id;
+        const category = { ...data, id: snapshot.id, userId };
         assertsPost(category);
         return category;
     },
