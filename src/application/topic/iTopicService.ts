@@ -1,3 +1,1 @@
-export interface ITopicService {
-
-}
+export interface ITopicService {}

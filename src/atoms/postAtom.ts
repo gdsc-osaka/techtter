@@ -1,9 +1,9 @@
-import {atom} from 'jotai';
-import {Post} from '@/domain/post';
-import {atomFamily} from 'jotai/utils';
-import {PostQueryService} from '@/infrastructure/post/postQueryService';
-import {Unsubscribe} from "@/infrastructure/utils";
-import {Topic} from "@/domain/topic";
+import { atom } from 'jotai';
+import { Post } from '@/domain/post';
+import { atomFamily } from 'jotai/utils';
+import { PostQueryService } from '@/infrastructure/post/postQueryService';
+import { Unsubscribe } from '@/infrastructure/utils';
+import { Topic } from '@/domain/topic';
 
 /* Subscribe Queue */
 const MAX_SUBSCRIBE = 3;
@@ -20,7 +20,10 @@ const unsubscribeQueueAtom = atom(null, (get, set, unsub: Unsub) => {
 
     if (sameUnsub) {
         // 既に登録されている場合は更新
-        set(_unsubscribesAtom, (prev) => [...prev.filter((u) => u.id !== unsub.id), unsub]);
+        set(_unsubscribesAtom, (prev) => [
+            ...prev.filter((u) => u.id !== unsub.id),
+            unsub,
+        ]);
         // 古い方を返す
         return sameUnsub.unsubscribe;
     }
@@ -37,7 +40,8 @@ const unsubscribeQueueAtom = atom(null, (get, set, unsub: Unsub) => {
 });
 
 /* Post */
-const _postsFamily = atomFamily((topicId: string) => atom<Post[]>([]));
+/* eslint @typescript-eslint/no-unused-vars: 0 */
+const _postsFamily = atomFamily((_: string) => atom<Post[]>([]));
 
 const postQueryService = new PostQueryService();
 
@@ -52,7 +56,7 @@ export const lastPostFamily = atomFamily((topicId: string) =>
 export const postsFamily = atomFamily((topicId: string) =>
     atom(
         (get) => get(_postsFamily(topicId)),
-        (get, set, topic: Pick<Topic, "left" | "right">) => {
+        (get, set, topic: Pick<Topic, 'left' | 'right'>) => {
             const lastPost = get(lastPostFamily(topicId));
 
             const unsub = postQueryService.findManyByTopicCallback(
@@ -73,7 +77,10 @@ export const postsFamily = atomFamily((topicId: string) =>
             );
 
             // キューから取得した Unsubscribe を実行
-            const oldUnsub = set(unsubscribeQueueAtom, {id: topicId, unsubscribe: unsub});
+            const oldUnsub = set(unsubscribeQueueAtom, {
+                id: topicId,
+                unsubscribe: unsub,
+            });
             oldUnsub?.();
         }
     )

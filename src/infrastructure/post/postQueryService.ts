@@ -35,15 +35,12 @@ export class PostQueryService implements IPostQueryService {
             where('topic_center', '<', topic.right)
         );
         if (end !== undefined) {
-            console.log(`end:`)
-            console.log(end)
             constraints.push(endBefore(end.created_at));
         }
 
         const q = query(this.colGroupRef, ...constraints);
         return onSnapshot(q, (snapshot) => {
             const posts = snapshot.docs.map((doc) => doc.data());
-            console.log(`Fetched ${posts.length}`);
             callback(posts);
         });
     }

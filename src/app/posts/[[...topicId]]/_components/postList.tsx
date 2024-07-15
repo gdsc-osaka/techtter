@@ -15,7 +15,7 @@ export default function PostList({ topicId, topicLeft, topicRight }: Props) {
     const [posts, subscribe] = useAtom(postsFamily(topicId));
 
     useEffect(() => {
-        subscribe({left: topicLeft, right: topicRight});
+        subscribe({ left: topicLeft, right: topicRight });
 
         // return () => {
         //     console.log(`Unsub: ${unsub === undefined}`)
