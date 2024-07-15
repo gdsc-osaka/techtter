@@ -1,17 +1,21 @@
+'use client';
 import TopicItem from '@/app/posts/_components/topicItem';
 import {
     generateTopicLink,
     generateTopicTree,
     TopicTreeNode,
 } from '@/lib/topicTreeUtils';
-import { Topic } from '@/domain/topic';
+import { useAtom } from 'jotai';
+import { topicsAtom } from '@/atoms/topicAtom';
+import { useEffect, useMemo } from 'react';
 
-interface Props {
-    topics: Topic[];
-}
+export default function TopicSideMenu() {
+    const [topics, subscribe] = useAtom(topicsAtom);
+    const root = useMemo(() => generateTopicTree(topics), [topics]);
 
-export default function TopicSideMenu({ topics }: Props) {
-    const root = generateTopicTree(topics);
+    useEffect(() => {
+        subscribe();
+    }, []);
 
     return (
         <aside className={'h-full min-w-56 bg-stone-100 px-2 flex flex-col'}>

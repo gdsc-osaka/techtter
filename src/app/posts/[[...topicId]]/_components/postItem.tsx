@@ -1,9 +1,9 @@
-import {AccountCircleIcon} from '@/components/icons';
-import {Post} from '@/domain/post';
-import {useAtom} from 'jotai';
-import {usersFamily} from '@/app/posts/[[...topicId]]/atoms';
-import {Skeleton} from '@/components/ui/skeleton';
-import Markdown from "@/app/posts/[[...topicId]]/_components/markdown";
+import { AccountCircleIcon } from '@/components/icons';
+import { Post } from '@/domain/post';
+import { useAtom } from 'jotai';
+import { usersFamily } from '@/app/posts/[[...topicId]]/atoms';
+import { Skeleton } from '@/components/ui/skeleton';
+import Markdown from '@/app/posts/[[...topicId]]/_components/markdown';
 
 interface Props {
     post: Post;
@@ -41,10 +41,12 @@ export default function PostItem({ post }: Props) {
                     <h3 className={'flex items-center gap-3'}>
                         {/* displayName あり */}
                         {user.state === 'hasData' && (
-                                <span className={'text-xs'}>
-                                    {user?.data?.displayName ? user.data.displayName : 'Unknown'}
-                                </span>
-                            )}
+                            <span className={'text-xs'}>
+                                {user?.data?.displayName
+                                    ? user.data.displayName
+                                    : 'Unknown'}
+                            </span>
+                        )}
                         {/*読み込み中*/}
                         {user.state === 'loading' && (
                             <Skeleton className={'w-20 h-4'} />
@@ -53,9 +55,7 @@ export default function PostItem({ post }: Props) {
                             className={'text-xs text-stone-600 '}
                         >{`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}</span>
                     </h3>
-                    <Markdown>
-                        {post.content}
-                    </Markdown>
+                    <Markdown>{post.content}</Markdown>
                 </div>
             </div>
         </li>

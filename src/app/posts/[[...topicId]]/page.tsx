@@ -22,11 +22,5 @@ export default async function PostListPage({ params }: Props) {
         return <p>Topic not found.</p>;
     }
 
-    return (
-        <PostList
-            topicId={topic.id}
-            topicRight={topic.right}
-            topicLeft={topic.left}
-        />
-    );
+    return <PostList topicId={topic.id} topicRight={topic.right} topicLeft={topic.left} />;
 }

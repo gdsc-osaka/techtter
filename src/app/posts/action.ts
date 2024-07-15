@@ -7,11 +7,13 @@ import { Admin } from '@/firebaseAdmin';
 import { parseWithZod } from '@conform-to/zod';
 import { postFormSchema } from '@/app/posts/schema';
 import { logger } from '@/logger';
+import { TopicService } from '@/application/topic/topicService';
 
 const postService = new PostService(
     new AdminPostRepository(),
     new TopicRepository()
 );
+const topicService = new TopicService(new TopicRepository());
 
 export async function createPostAction(formData: FormData) {
     const submission = parseWithZod(formData, {
@@ -32,6 +34,7 @@ export async function createPostAction(formData: FormData) {
         content,
         tags: [],
     });
+
     logger.log(`Post created. (${post.id})`);
     return post;
 }

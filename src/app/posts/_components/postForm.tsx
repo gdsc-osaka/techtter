@@ -10,8 +10,8 @@ import { auth } from '@/firebase';
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { postFormSchema, PostFormType } from '@/app/posts/schema';
-import {userAtom} from "@/app/atoms";
-import {useAtom} from "jotai";
+import { userAtom } from '@/atoms/userAtom';
+import { useAtom } from 'jotai';
 
 export default function PostForm() {
     const pathname = usePathname();
@@ -25,7 +25,7 @@ export default function PostForm() {
     });
     const [user] = useAtom(userAtom);
 
-    const row = countLines(form.watch().content ?? "");
+    const row = countLines(form.watch().content ?? '');
 
     // Form に IdToken を設定
     useEffect(() => {
@@ -52,7 +52,7 @@ export default function PostForm() {
         if (e.nativeEvent.isComposing) return;
         if (e.key === 'Enter' && !e.shiftKey) {
             e.currentTarget.requestSubmit();
-            form.setValue('content', "");
+            form.setValue('content', '');
         }
     };
 
@@ -73,7 +73,11 @@ export default function PostForm() {
                         <FormItem className={'w-full'}>
                             <FormControl>
                                 <textarea
-                                    placeholder={disabled ? 'ログインが必要です...' : 'Type something...'}
+                                    placeholder={
+                                        disabled
+                                            ? 'ログインが必要です...'
+                                            : 'Type something...'
+                                    }
                                     className={
                                         'flex min-h-[80px] w-full rounded-md px-3 py-2 text-sm resize-none ' +
                                         'bg-transparent placeholder:text-muted-foreground focus-visible:outline-none'

@@ -1,29 +1,7 @@
 import { atom } from 'jotai';
-import { Post } from '@/domain/post';
-import { PostQueryService } from '@/infrastructure/post/postQueryService';
 import { atomFamily, loadable } from 'jotai/utils';
-import { Topic } from '@/domain/topic';
 import { FireUser, fireUserSchema } from '@/domain/fireUser';
-import { userAtom } from '@/app/atoms';
-
-/**
- * Topic ID を引数に取る Family
- */
-export const postsFamily = atomFamily(() => atom<Post[]>([]));
-
-const postQueryService = new PostQueryService();
-export const subscribePostsFamily = atomFamily((topicId: string) =>
-    atom(null, (get, set, topic: Pick<Topic, 'left' | 'right'>) => {
-        postQueryService.findManyByTopicCallback((posts) => {
-            set(
-                postsFamily(topicId),
-                posts.sort(
-                    (a, b) => a.created_at.seconds - b.created_at.seconds
-                )
-            );
-        }, topic);
-    })
-);
+import { userAtom } from '@/atoms/userAtom';
 
 export const usersFamily = atomFamily((uid: string) =>
     loadable(
