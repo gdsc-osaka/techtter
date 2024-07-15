@@ -1,5 +1,5 @@
 import { ITopicRepository } from '@/infrastructure/topic/ITopicRepository';
-import { ForCreateWithId, ForUpdate } from '@/domain/_utils';
+import { ForCreateWithId, ForUpdate, WithFieldValues } from '@/domain/_utils';
 import { Topic } from '@/domain/topic';
 import { db } from '@/firebase';
 import {
@@ -50,7 +50,7 @@ export class TopicRepository implements ITopicRepository {
         }
     }
 
-    async update(topic: ForUpdate<Topic>): Promise<void> {
+    async update(topic: ForUpdate<WithFieldValues<Topic>>): Promise<void> {
         try {
             await updateDoc(this.docRef(topic.id), topic);
         } catch (e) {

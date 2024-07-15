@@ -32,6 +32,7 @@ export async function createPostAction(formData: FormData) {
         content,
         tags: [],
     });
+
     logger.log(`Post created. (${post.id})`);
     return post;
 }

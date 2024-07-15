@@ -10,6 +10,8 @@ import { auth } from '@/firebase';
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { postFormSchema, PostFormType } from '@/app/posts/schema';
+import { userAtom } from '@/atoms/userAtom';
+import { useAtom } from 'jotai';
 
 export default function PostForm() {
     const pathname = usePathname();
@@ -21,8 +23,9 @@ export default function PostForm() {
             idToken: '',
         },
     });
+    const [user] = useAtom(userAtom);
 
-    const row = countLines(form.watch().content);
+    const row = countLines(form.watch().content ?? '');
 
     // Form に IdToken を設定
     useEffect(() => {
@@ -47,10 +50,13 @@ export default function PostForm() {
     const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
         if (e === undefined) return;
         if (e.nativeEvent.isComposing) return;
-        if (e.key === 'Enter' && e.shiftKey) {
+        if (e.key === 'Enter' && !e.shiftKey) {
             e.currentTarget.requestSubmit();
+            form.setValue('content', '');
         }
     };
+
+    const disabled = user === null;
 
     return (
         <Form {...form}>
@@ -62,11 +68,16 @@ export default function PostForm() {
                 <FormField
                     control={form.control}
                     name={'content'}
+                    disabled={disabled}
                     render={({ field }) => (
                         <FormItem className={'w-full'}>
                             <FormControl>
                                 <textarea
-                                    placeholder={'Type something...'}
+                                    placeholder={
+                                        disabled
+                                            ? 'ログインが必要です...'
+                                            : 'Type something...'
+                                    }
                                     className={
                                         'flex min-h-[80px] w-full rounded-md px-3 py-2 text-sm resize-none ' +
                                         'bg-transparent placeholder:text-muted-foreground focus-visible:outline-none'
@@ -100,7 +111,7 @@ export default function PostForm() {
                         </FormItem>
                     )}
                 />
-                <Button type={'submit'} size={'icon'}>
+                <Button type={'submit'} size={'icon'} disabled={disabled}>
                     <SendIcon />
                 </Button>
             </form>

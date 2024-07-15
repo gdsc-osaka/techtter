@@ -1,11 +1,9 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { GoogleIcon } from '@/components/icons';
-import { signInWithGoogle } from '@/infrastructure/auth/auth';
-import { userAtom } from '@/app/atoms';
+import { userAtom } from '@/atoms/userAtom';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import { redirect } from 'next/navigation';
+import { GoogleSignInButton } from '@/components/authButtons';
 
 // const formSchema = z.object({
 //     email: z.string(),
@@ -31,10 +29,6 @@ export default function SignupPage() {
             redirect('/');
         }
     }, [user]);
-
-    function handleSignupWithGoogle() {
-        signInWithGoogle();
-    }
 
     return (
         <main className={'h-screen flex flex-col items-center justify-center'}>
@@ -67,10 +61,7 @@ export default function SignupPage() {
                 {/*        </Button>*/}
                 {/*    </form>*/}
                 {/*</Form>*/}
-                <Button variant={'outline'} onClick={handleSignupWithGoogle}>
-                    <GoogleIcon />
-                    <span className={'ml-3'}>Signup with Google</span>
-                </Button>
+                <GoogleSignInButton />
             </div>
         </main>
     );

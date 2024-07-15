@@ -37,7 +37,7 @@ export default function TopicItem({ children, id, label, href }: Props) {
 
     return (
         <details open={open}>
-            <summary className={'block list-none mb-1'}>
+            <summary className={'relative block list-none mb-1'}>
                 <Link
                     href={href}
                     onClick={handleClick}
@@ -53,6 +53,11 @@ export default function TopicItem({ children, id, label, href }: Props) {
                     />
                     {label}
                 </Link>
+                {/*<div*/}
+                {/*    className={*/}
+                {/*        'absolute -top-1 -left-1 bg-red-300 w-3 h-3 rounded-full'*/}
+                {/*    }*/}
+                {/*/>*/}
             </summary>
             <div className={'ml-2 flex flex-col'}>{children}</div>
         </details>
