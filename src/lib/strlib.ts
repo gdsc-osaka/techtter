@@ -11,3 +11,8 @@ export function countLines(str: string) {
 
     return count;
 }
+
+export function extractUrls(str: string): string[] {
+    const urls = str.match(/https?:\/\/[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+/g);
+    return urls ?? [];
+}

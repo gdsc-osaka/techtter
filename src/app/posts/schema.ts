@@ -7,3 +7,11 @@ export const postFormSchema = z.object({
 });
 
 export type PostFormType = z.infer<typeof postFormSchema>;
+
+export const topicFormSchema = z.object({
+    parentId: z.string().optional(),
+    id: z.string(),
+    name: z.string(),
+});
+
+export type TopicFormType = z.infer<typeof topicFormSchema>;

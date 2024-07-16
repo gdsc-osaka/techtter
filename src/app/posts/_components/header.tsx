@@ -77,7 +77,7 @@ export default function Header() {
             <Modal open={openModal} onClose={() => setOpenModal(false)}>
                 <div
                     className={
-                        'flex flex-col justify-center items-center gap-8'
+                        'flex flex-col justify-center items-center gap-6'
                     }
                 >
                     <p className={'text-lg font-bold'}>ログイン</p>

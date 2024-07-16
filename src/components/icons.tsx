@@ -35,6 +35,10 @@ export const AccountCircleIcon = (props: MaterialSymbolProp) => {
     return <MaterialSymbol {...props}>account_circle</MaterialSymbol>;
 };
 
+export const AddIcon = (props: MaterialSymbolProp) => {
+    return <MaterialSymbol {...props}>add</MaterialSymbol>;
+};
+
 export const GoogleIcon = ({ size = 24 }: MaterialSymbolProp) => {
     return (
         <Image

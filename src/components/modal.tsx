@@ -23,7 +23,7 @@ export default function Modal({ children, open, onClose }: Props) {
             ></div>
             <div
                 className={
-                    'absolute inset-0 m-auto align-center w-96 h-60 rounded-md bg-stone-100 z-20 ' +
+                    'absolute inset-0 m-auto align-center w-fit h-fit px-10 py-8 rounded-md bg-stone-100 z-20 ' +
                     'flex justify-center'
                 }
             >
