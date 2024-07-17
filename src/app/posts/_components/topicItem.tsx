@@ -1,11 +1,11 @@
 'use client';
-import {ReactNode, useEffect, useMemo, useState} from 'react';
-import {KeyboardArrowDownIcon} from '@/components/icons';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { KeyboardArrowDownIcon } from '@/components/icons';
 import Link from 'next/link';
-import {usePathname} from 'next/navigation';
-import {newTopicModalAtom} from '@/app/posts/atoms';
-import {useSetAtom} from "jotai";
-import AddTopicButton from "@/app/posts/_components/addTopicButton";
+import { usePathname } from 'next/navigation';
+import { newTopicModalAtom } from '@/app/posts/atoms';
+import { useSetAtom } from 'jotai';
+import AddTopicButton from '@/app/posts/_components/addTopicButton';
 
 interface Props {
     id: string;
@@ -54,10 +54,10 @@ export default function TopicItem({ children, id, label, href }: Props) {
                     'transition-colors rounded hover:bg-stone-200 ' +
                     `${isThisTopic ? 'border border-stone-500' : ''}`
                 }
+                onClick={handleOpen}
             >
                 <Link
                     href={href}
-                    onClick={handleOpen}
                     className={
                         'flex gap-1 w-full text-sm text-stone-500 hover:text-stone-900 ' +
                         `${open ? 'text-stone-900' : ''} `
@@ -68,7 +68,7 @@ export default function TopicItem({ children, id, label, href }: Props) {
                     />
                     {label}
                 </Link>
-                <AddTopicButton onClick={handleAddTopic} size={16}/>
+                <AddTopicButton onClick={handleAddTopic} size={16} />
             </summary>
             <div className={'ml-2 flex flex-col'}>{children}</div>
         </details>

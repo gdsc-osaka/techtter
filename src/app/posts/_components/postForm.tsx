@@ -111,7 +111,11 @@ export default function PostForm() {
                         </FormItem>
                     )}
                 />
-                <Button type={'submit'} size={'icon'} disabled={unsignedIn || form.getValues("content") === ''}>
+                <Button
+                    type={'submit'}
+                    size={'icon'}
+                    disabled={unsignedIn || form.getValues('content') === ''}
+                >
                     <SendIcon />
                 </Button>
             </form>

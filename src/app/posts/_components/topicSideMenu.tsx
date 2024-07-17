@@ -5,12 +5,12 @@ import {
     generateTopicTree,
     TopicTreeNode,
 } from '@/lib/topicTreeUtils';
-import {useAtom} from 'jotai';
-import {topicsAtom} from '@/atoms/topicAtom';
-import {useEffect, useMemo} from 'react';
-import AddTopicButton from "@/app/posts/_components/addTopicButton";
-import {useSetAtom} from "jotai";
-import {newTopicModalAtom} from "@/app/posts/atoms";
+import { useAtom } from 'jotai';
+import { topicsAtom } from '@/atoms/topicAtom';
+import { useEffect, useMemo } from 'react';
+import AddTopicButton from '@/app/posts/_components/addTopicButton';
+import { useSetAtom } from 'jotai';
+import { newTopicModalAtom } from '@/app/posts/atoms';
 
 export default function TopicSideMenu() {
     const [topics, subscribe] = useAtom(topicsAtom);
@@ -26,7 +26,7 @@ export default function TopicSideMenu() {
             open: true,
             topicId: '',
         });
-    }
+    };
 
     return (
         <aside className={'h-full min-w-56 bg-stone-100 px-2 flex flex-col'}>
@@ -36,7 +36,7 @@ export default function TopicSideMenu() {
                 }
             >
                 Topics
-                <AddTopicButton onClick={handleAddTopic} size={20}/>
+                <AddTopicButton onClick={handleAddTopic} size={20} />
             </div>
             {generateTopicItem(root)}
         </aside>

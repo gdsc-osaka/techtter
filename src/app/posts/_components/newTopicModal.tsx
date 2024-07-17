@@ -1,15 +1,15 @@
 'use client';
 import Modal from '@/components/modal';
-import {useAtom} from 'jotai';
-import {newTopicModalAtom} from '@/app/posts/atoms';
-import {SubmitHandler, useForm} from "react-hook-form";
-import {topicFormSchema, TopicFormType} from "@/app/posts/schema";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {createTopicAction} from "@/app/posts/action";
-import {Form, FormControl, FormField, FormItem} from "@/components/ui/form";
-import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
-import {useEffect, useRef} from "react";
+import { useAtom } from 'jotai';
+import { newTopicModalAtom } from '@/app/posts/atoms';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { topicFormSchema, TopicFormType } from '@/app/posts/schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createTopicAction } from '@/app/posts/action';
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useEffect, useRef } from 'react';
 
 export default function NewTopicModal() {
     const [modal, setModal] = useAtom(newTopicModalAtom);
@@ -51,7 +51,7 @@ export default function NewTopicModal() {
     return (
         <Modal open={modal.open} onClose={handleClose}>
             <div>
-                <p className={"pb-4"}>Topic を作成</p>
+                <p className={'pb-4'}>Topic を作成</p>
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(handleSubmit)}
@@ -61,9 +61,13 @@ export default function NewTopicModal() {
                             control={form.control}
                             name={'id'}
                             render={({ field }) => (
-                                <FormItem className={"pb-2"}>
+                                <FormItem className={'pb-2'}>
                                     <FormControl>
-                                        <Input {...field} ref={inputRef} placeholder={"ID"} />
+                                        <Input
+                                            {...field}
+                                            ref={inputRef}
+                                            placeholder={'ID'}
+                                        />
                                     </FormControl>
                                 </FormItem>
                             )}
@@ -72,9 +76,12 @@ export default function NewTopicModal() {
                             control={form.control}
                             name={'name'}
                             render={({ field }) => (
-                                <FormItem className={"pb-2"}>
+                                <FormItem className={'pb-2'}>
                                     <FormControl>
-                                        <Input {...field} placeholder={"Name"} />
+                                        <Input
+                                            {...field}
+                                            placeholder={'Name'}
+                                        />
                                     </FormControl>
                                 </FormItem>
                             )}
@@ -85,16 +92,23 @@ export default function NewTopicModal() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Input {...field} type={"hidden"} />
+                                        <Input {...field} type={'hidden'} />
                                     </FormControl>
                                 </FormItem>
                             )}
                         />
-                        <div className={"flex justify-end gap-2 pt-2"}>
-                            <Button onClick={handleClose} variant={"secondary"} disabled={form.formState.isSubmitting}>
+                        <div className={'flex justify-end gap-2 pt-2'}>
+                            <Button
+                                onClick={handleClose}
+                                variant={'secondary'}
+                                disabled={form.formState.isSubmitting}
+                            >
                                 キャンセル
                             </Button>
-                            <Button type={'submit'} disabled={form.formState.isSubmitting}>
+                            <Button
+                                type={'submit'}
+                                disabled={form.formState.isSubmitting}
+                            >
                                 作成
                             </Button>
                         </div>

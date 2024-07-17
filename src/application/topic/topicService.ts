@@ -2,7 +2,7 @@ import { ITopicService } from '@/application/topic/iTopicService';
 import { ITopicRepository } from '@/infrastructure/topic/ITopicRepository';
 import { Topic } from '@/domain/topic';
 import { ITopicDomainService } from '@/domain/topic/iTopicDomainService';
-import {logger} from "@/logger";
+import { logger } from '@/logger';
 
 export class TopicService implements ITopicService {
     constructor(
@@ -10,14 +10,20 @@ export class TopicService implements ITopicService {
         private readonly topicDomainService: ITopicDomainService
     ) {}
 
-    async addTopic(parentId: string, topic: Pick<Topic, 'id' | 'name' | 'icon_path'>): Promise<void> {
-        const parent = parentId === '' ? undefined : await this.topicRepository.find(parentId);
+    async addTopic(
+        parentId: string,
+        topic: Pick<Topic, 'id' | 'name' | 'icon_path'>
+    ): Promise<void> {
+        const parent =
+            parentId === ''
+                ? undefined
+                : await this.topicRepository.find(parentId);
 
         const newTopic = await this.topicDomainService.createChildTopic(parent);
         await this.topicRepository.create({
             ...topic,
             ...newTopic,
         });
-        logger.log(`Topic created. ${topic.id}`)
+        logger.log(`Topic created. ${topic.id}`);
     }
 }

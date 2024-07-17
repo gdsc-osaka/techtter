@@ -2,13 +2,13 @@ import { ReactNode } from 'react';
 import TopicSideMenu from '@/app/posts/_components/topicSideMenu';
 import PostForm from '@/app/posts/_components/postForm';
 import Header from '@/app/posts/_components/header';
-import NewTopicModal from "@/app/posts/_components/newTopicModal";
+import NewTopicModal from '@/app/posts/_components/newTopicModal';
 
 export default async function Layout({ children }: { children: ReactNode }) {
     return (
         <div className={'h-screen flex flex-row items-stretch'}>
             <TopicSideMenu />
-            <NewTopicModal/>
+            <NewTopicModal />
             <div className={'w-full flex flex-col overflow-hidden'}>
                 <Header />
                 <main

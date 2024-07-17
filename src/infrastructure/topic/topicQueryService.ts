@@ -1,4 +1,7 @@
-import {ITopicQueryService, TopicsCallback,} from '@/infrastructure/topic/iTopicQueryService';
+import {
+    ITopicQueryService,
+    TopicsCallback,
+} from '@/infrastructure/topic/iTopicQueryService';
 import {
     collection,
     endBefore,
@@ -10,9 +13,9 @@ import {
     startAt,
     where,
 } from 'firebase/firestore';
-import {db} from '@/firebase';
-import {topicConverter} from '@/infrastructure/topic/topicConverter';
-import {Topic} from '@/domain/topic';
+import { db } from '@/firebase';
+import { topicConverter } from '@/infrastructure/topic/topicConverter';
+import { Topic } from '@/domain/topic';
 
 export class TopicQueryService implements ITopicQueryService {
     private readonly colRef = collection(db, 'topics').withConverter(
