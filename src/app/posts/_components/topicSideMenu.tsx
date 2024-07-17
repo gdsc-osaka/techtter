@@ -1,32 +1,29 @@
-'use client';
 import TopicItem from '@/app/posts/_components/topicItem';
 import {
     generateTopicLink,
     generateTopicTree,
     TopicTreeNode,
 } from '@/lib/topicTreeUtils';
-import { useAtom } from 'jotai';
-import { topicsAtom } from '@/atoms/topicAtom';
-import { useEffect, useMemo } from 'react';
+import {useAtom} from 'jotai';
+import {topicsAtom} from '@/atoms/topicAtom';
+import {useEffect, useMemo} from 'react';
 import AddTopicButton from '@/app/posts/_components/addTopicButton';
-import { useSetAtom } from 'jotai';
-import { newTopicModalAtom } from '@/app/posts/atoms';
+import {useSetAtom} from 'jotai';
+import {newTopicModalAtom} from '@/app/posts/atoms';
+import {TopicRepository} from "@/infrastructure/topic/topicRepository";
+import RootAddTopicButton from "@/app/posts/_components/rootAddTopicButton";
+import {Topic} from "@/domain/topic";
+import {getHost} from "@/lib/urlUtils";
 
-export default function TopicSideMenu() {
-    const [topics, subscribe] = useAtom(topicsAtom);
-    const setOpenModal = useSetAtom(newTopicModalAtom);
-    const root = useMemo(() => generateTopicTree(topics), [topics]);
+const topicRepository = new TopicRepository();
 
-    useEffect(() => {
-        subscribe();
-    }, []);
+export default async function TopicSideMenu() {
+    const host = getHost();
 
-    const handleAddTopic = () => {
-        setOpenModal({
-            open: true,
-            topicId: '',
-        });
-    };
+    if (host === null) return Promise.reject();
+
+    const topics: Topic[] = await fetch(`${host}/api/topics`, { next: { revalidate: 3600 } }).then((res) => res.json()).then(json => json.topics);
+    const root = generateTopicTree(topics);
 
     return (
         <aside className={'h-full min-w-56 bg-stone-100 px-2 flex flex-col'}>
@@ -36,7 +33,7 @@ export default function TopicSideMenu() {
                 }
             >
                 Topics
-                <AddTopicButton onClick={handleAddTopic} size={20} />
+                <RootAddTopicButton/>
             </div>
             {generateTopicItem(root)}
         </aside>

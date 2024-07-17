@@ -12,6 +12,7 @@ const rootTopic: Topic = {
     name: 'Root',
     left: Number.NEGATIVE_INFINITY,
     right: Number.POSITIVE_INFINITY,
+    gen: 0,
     icon_path: null,
     created_at: Timestamp.now(),
     updated_at: Timestamp.now(),

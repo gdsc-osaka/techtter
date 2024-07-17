@@ -9,6 +9,7 @@ export default function Loading() {
                     <Skeleton className={"w-36 h-4 rounded"}/>
                     <Skeleton className={"w-full h-3.5 rounded"}/>
                     <Skeleton className={"w-full h-3.5 rounded"}/>
+                    <Skeleton className={"w-full h-3.5 rounded"}/>
                 </div>
                 <Skeleton className={"w-28 h-28"}/>
             </div>
