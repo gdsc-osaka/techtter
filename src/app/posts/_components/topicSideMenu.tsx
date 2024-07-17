@@ -4,16 +4,10 @@ import {
     generateTopicTree,
     TopicTreeNode,
 } from '@/lib/topicTreeUtils';
-import {useAtom} from 'jotai';
-import {topicsAtom} from '@/atoms/topicAtom';
-import {useEffect, useMemo} from 'react';
-import AddTopicButton from '@/app/posts/_components/addTopicButton';
-import {useSetAtom} from 'jotai';
-import {newTopicModalAtom} from '@/app/posts/atoms';
-import {TopicRepository} from "@/infrastructure/topic/topicRepository";
-import RootAddTopicButton from "@/app/posts/_components/rootAddTopicButton";
-import {Topic} from "@/domain/topic";
-import {getHost} from "@/lib/urlUtils";
+import { TopicRepository } from '@/infrastructure/topic/topicRepository';
+import RootAddTopicButton from '@/app/posts/_components/rootAddTopicButton';
+import { Topic } from '@/domain/topic';
+import { getHost } from '@/lib/urlUtils';
 
 const topicRepository = new TopicRepository();
 
@@ -22,7 +16,11 @@ export default async function TopicSideMenu() {
 
     if (host === null) return Promise.reject();
 
-    const topics: Topic[] = await fetch(`${host}/api/topics`, { next: { revalidate: 3600 } }).then((res) => res.json()).then(json => json.topics);
+    const topics: Topic[] = await fetch(`${host}/api/topics`, {
+        next: { revalidate: 3600 },
+    })
+        .then((res) => res.json())
+        .then((json) => json.topics);
     const root = generateTopicTree(topics);
 
     return (
@@ -33,7 +31,7 @@ export default async function TopicSideMenu() {
                 }
             >
                 Topics
-                <RootAddTopicButton/>
+                <RootAddTopicButton />
             </div>
             {generateTopicItem(root)}
         </aside>

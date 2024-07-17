@@ -43,7 +43,7 @@ export default function NewTopicModal() {
         setModal({ open: false, topicId: '' });
     };
 
-    const handleSubmit: SubmitHandler<TopicFormType> = async (data) => {
+    const handleSubmit: SubmitHandler<TopicFormType> = async () => {
         if (formRef.current)
             await createTopicAction(new FormData(formRef.current));
     };
