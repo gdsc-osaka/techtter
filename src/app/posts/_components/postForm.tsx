@@ -56,7 +56,7 @@ export default function PostForm() {
         }
     };
 
-    const disabled = user === null;
+    const unsignedIn = user === null;
 
     return (
         <Form {...form}>
@@ -68,13 +68,13 @@ export default function PostForm() {
                 <FormField
                     control={form.control}
                     name={'content'}
-                    disabled={disabled}
+                    disabled={unsignedIn}
                     render={({ field }) => (
                         <FormItem className={'w-full'}>
                             <FormControl>
                                 <textarea
                                     placeholder={
-                                        disabled
+                                        unsignedIn
                                             ? 'ログインが必要です...'
                                             : 'Type something...'
                                     }
@@ -111,7 +111,11 @@ export default function PostForm() {
                         </FormItem>
                     )}
                 />
-                <Button type={'submit'} size={'icon'} disabled={disabled}>
+                <Button
+                    type={'submit'}
+                    size={'icon'}
+                    disabled={unsignedIn || form.getValues('content') === ''}
+                >
                     <SendIcon />
                 </Button>
             </form>

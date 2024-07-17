@@ -4,6 +4,9 @@ import { useAtom } from 'jotai';
 import { usersFamily } from '@/app/posts/[[...topicId]]/atoms';
 import { Skeleton } from '@/components/ui/skeleton';
 import Markdown from '@/app/posts/[[...topicId]]/_components/markdown';
+import { useMemo } from 'react';
+import { extractUrls } from '@/lib/strlib';
+import Embed from '@/components/embed';
 
 interface Props {
     post: Post;
@@ -12,6 +15,8 @@ interface Props {
 export default function PostItem({ post }: Props) {
     const date = post.created_at.toDate();
     const [user] = useAtom(usersFamily(post.user_id));
+
+    const urls = useMemo(() => extractUrls(post.content), [post.content]);
 
     return (
         <li id={`post-item-${post.id}`}>
@@ -37,7 +42,7 @@ export default function PostItem({ post }: Props) {
                 {user.state === 'loading' && (
                     <Skeleton className={'rounded-full w-9 h-9'} />
                 )}
-                <div className={'flex flex-col gap-1'}>
+                <div className={'w-full flex flex-col gap-1'}>
                     <h3 className={'flex items-center gap-3'}>
                         {/* displayName あり */}
                         {user.state === 'hasData' && (
@@ -56,6 +61,11 @@ export default function PostItem({ post }: Props) {
                         >{`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}</span>
                     </h3>
                     <Markdown>{post.content}</Markdown>
+                    <div className={'w-full'}>
+                        {urls.map((url) => (
+                            <Embed url={url} />
+                        ))}
+                    </div>
                 </div>
             </div>
         </li>

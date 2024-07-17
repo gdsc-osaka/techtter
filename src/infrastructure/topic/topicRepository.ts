@@ -71,6 +71,7 @@ export class TopicRepository implements ITopicRepository {
     async findMany(): Promise<Topic[]> {
         try {
             const snapshot = await getDocs(this.colRef());
+            console.log(`Fetched ${snapshot.size} topics.`);
             return snapshot.docs.map((d) => d.data());
         } catch (e) {
             console.error(e);

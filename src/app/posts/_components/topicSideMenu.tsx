@@ -1,30 +1,34 @@
-'use client';
 import TopicItem from '@/app/posts/_components/topicItem';
 import {
     generateTopicLink,
     generateTopicTree,
     TopicTreeNode,
 } from '@/lib/topicTreeUtils';
-import { useAtom } from 'jotai';
-import { topicsAtom } from '@/atoms/topicAtom';
-import { useEffect, useMemo } from 'react';
+import RootAddTopicButton from '@/app/posts/_components/rootAddTopicButton';
+import { Topic } from '@/domain/topic';
+import { getHost } from '@/lib/urlUtils';
 
-export default function TopicSideMenu() {
-    const [topics, subscribe] = useAtom(topicsAtom);
-    const root = useMemo(() => generateTopicTree(topics), [topics]);
+export default async function TopicSideMenu() {
+    const host = getHost();
 
-    useEffect(() => {
-        subscribe();
-    }, []);
+    if (host === null) return Promise.reject();
+
+    const topics: Topic[] = await fetch(`${host}/api/topics`, {
+        next: { revalidate: 3600 },
+    })
+        .then((res) => res.json())
+        .then((json) => json.topics);
+    const root = generateTopicTree(topics);
 
     return (
         <aside className={'h-full min-w-56 bg-stone-100 px-2 flex flex-col'}>
             <div
                 className={
-                    'flex items-center px-2 h-12 border-b border-stone-300'
+                    'flex items-center justify-between px-2 w-full h-12 border-b border-stone-300'
                 }
             >
                 Topics
+                <RootAddTopicButton />
             </div>
             {generateTopicItem(root)}
         </aside>

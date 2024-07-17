@@ -12,6 +12,8 @@ function assertsTopic(data: object): asserts data is Topic {
             typeof data.left === 'number' &&
             'right' in data &&
             typeof data.right === 'number' &&
+            'gen' in data &&
+            typeof data.gen === 'number' &&
             'created_at' in data &&
             typeof data.created_at === 'object' &&
             data.created_at instanceof Timestamp &&
