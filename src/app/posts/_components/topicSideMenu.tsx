@@ -4,12 +4,9 @@ import {
     generateTopicTree,
     TopicTreeNode,
 } from '@/lib/topicTreeUtils';
-import { TopicRepository } from '@/infrastructure/topic/topicRepository';
 import RootAddTopicButton from '@/app/posts/_components/rootAddTopicButton';
 import { Topic } from '@/domain/topic';
 import { getHost } from '@/lib/urlUtils';
-
-const topicRepository = new TopicRepository();
 
 export default async function TopicSideMenu() {
     const host = getHost();
