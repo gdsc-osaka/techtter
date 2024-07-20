@@ -9,12 +9,12 @@ runConfig:
 # Environment variables and secrets
 env:
   - variable: NEXT_PUBLIC_FIRE_CONFIG
-    secret: fire_config
+    secret: projects/362303499774/secrets/fire_config
     availability:
       - BUILD
       - RUNTIME
   - variable: FIRE_SA_KEY
-    secret: fire_sa_key
+    secret: projects/362303499774/secrets/fire_sa_key
     availability:
       - BUILD
       - RUNTIME
