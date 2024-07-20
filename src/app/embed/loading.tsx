@@ -15,7 +15,7 @@ export default function Loading() {
                     <Skeleton className={'w-full h-3.5 rounded'} />
                     <Skeleton className={'w-full h-3.5 rounded'} />
                 </div>
-                <Skeleton className={'w-28 h-28'} />
+                <Skeleton className={'h-28 aspect-video'} />
             </div>
         </div>
     );

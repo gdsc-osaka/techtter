@@ -45,7 +45,7 @@ const _postsFamily = atomFamily((_: string) => atom<Post[]>([]));
 
 const postQueryService = new PostQueryService();
 
-export const lastPostFamily = atomFamily((topicId: string) =>
+export const newestPostFamily = atomFamily((topicId: string) =>
     atom<Post | undefined>((get) => {
         const posts = get(_postsFamily(topicId));
         if (posts.length === 0) return;
@@ -57,7 +57,7 @@ export const postsFamily = atomFamily((topicId: string) =>
     atom(
         (get) => get(_postsFamily(topicId)),
         (get, set, topic: Pick<Topic, 'left' | 'right'>) => {
-            const lastPost = get(lastPostFamily(topicId));
+            const lastPost = get(newestPostFamily(topicId));
 
             const unsub = postQueryService.findManyByTopicCallback(
                 (posts) => {
