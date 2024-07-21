@@ -18,7 +18,9 @@ export async function GET(
 
     try {
         await Admin.auth.verifyIdToken(idToken);
+        logger.log(`User ${params.uid} verified`);
         const resultUser = await Admin.auth.getUser(params.uid);
+        logger.log(`Got user ${resultUser.uid}`);
         const fireUser: FireUser = {
             uid: resultUser.uid,
             displayName: resultUser.displayName || null,
