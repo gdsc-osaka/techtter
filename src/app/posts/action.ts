@@ -50,5 +50,9 @@ export async function createTopicAction(formData: FormData) {
     if (submission.status !== 'success') return submission.reply();
 
     const { parentId, id, name } = submission.value;
-    return await topicService.addTopic(parentId ?? '', { id, name, icon_path: null });
+    return await topicService.addTopic(parentId ?? '', {
+        id,
+        name,
+        icon_path: null,
+    });
 }

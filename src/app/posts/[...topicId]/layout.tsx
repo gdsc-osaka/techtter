@@ -1,4 +1,4 @@
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 import { Props } from '@/app/posts/[...topicId]/page';
 import { TopicRepository } from '@/infrastructure/topic/topicRepository';
 import { ReactNode } from 'react';
