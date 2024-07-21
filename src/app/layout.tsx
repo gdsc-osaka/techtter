@@ -7,7 +7,7 @@ const notoSansJP = Noto_Sans_JP({ subsets: ['latin'] });
 export const metadata: Metadata = {
     title: {
         default: 'Techtter β',
-        template: '%s | Techtter β'
+        template: '%s | Techtter β',
     },
     description: '知見をシェアするプラットフォーム',
 };

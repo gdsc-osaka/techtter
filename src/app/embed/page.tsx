@@ -25,8 +25,8 @@ export default async function Page({
     const url = new URL(searchParams.url);
 
     if (url.host === 'x.com') {
-        console.log(url.host)
-        url.host = "twitter.com";
+        console.log(url.host);
+        url.host = 'twitter.com';
     }
 
     const res = await fetch(`${host}/api/meta?url=${url.toString()}`, {

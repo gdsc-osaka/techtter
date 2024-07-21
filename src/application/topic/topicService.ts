@@ -19,7 +19,8 @@ export class TopicService implements ITopicService {
                 ? undefined
                 : await this.topicRepository.find(parentId);
 
-        const childTopic = await this.topicDomainService.createChildTopic(parent);
+        const childTopic =
+            await this.topicDomainService.createChildTopic(parent);
         await this.topicRepository.create({
             ...topic,
             ...childTopic,
