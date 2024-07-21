@@ -1,0 +1,30 @@
+name: Deploy
+description: Deploy firebase
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      environment:
+        required: false
+        type: string
+    secrets:
+      GCP_SA_KEY:
+        required: true
+
+jobs:
+  rules:
+    name: Deploy Firebase Rules
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    defaults:
+      run:
+        working-directory: firebase
+    steps:
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only firestore:rules,storage:rules
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
