@@ -13,17 +13,19 @@ export class TopicService implements ITopicService {
     async addTopic(
         parentId: string,
         topic: Pick<Topic, 'id' | 'name' | 'icon_path'>
-    ): Promise<void> {
+    ): Promise<Topic> {
         const parent =
             parentId === ''
                 ? undefined
                 : await this.topicRepository.find(parentId);
 
-        const newTopic = await this.topicDomainService.createChildTopic(parent);
-        await this.topicRepository.create({
+        const childTopic =
+            await this.topicDomainService.createChildTopic(parent);
+        const newTopic = await this.topicRepository.create({
             ...topic,
-            ...newTopic,
+            ...childTopic,
         });
-        logger.log(`Topic created. ${topic.id}`);
+        logger.log(`Topic created. ${newTopic.id}`);
+        return newTopic;
     }
 }

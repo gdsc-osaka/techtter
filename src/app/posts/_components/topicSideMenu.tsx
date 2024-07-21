@@ -21,7 +21,7 @@ export default async function TopicSideMenu() {
     const root = generateTopicTree(topics);
 
     return (
-        <aside className={'h-full min-w-56 bg-stone-100 px-2 flex flex-col'}>
+        <aside className={'h-full min-w-56 bg-stone-100 px-2'}>
             <div
                 className={
                     'flex items-center justify-between px-2 w-full h-12 border-b border-stone-300'
