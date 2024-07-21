@@ -1,11 +1,15 @@
 'use client';
 
 import PostItem from '@/app/posts/[[...topicId]]/_components/postItem';
-import {useAtom, useAtomValue, useSetAtom} from 'jotai';
-import {useEffect, useRef, useState} from 'react';
-import {existsMorePostsFamily, fetchOlderPostsFamily, postsFamily,} from '@/atoms/postAtom';
-import {ProgressActivityIcon} from '@/components/icons';
-import Divider from "@/components/divider";
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useEffect, useRef, useState } from 'react';
+import {
+    existsMorePostsFamily,
+    fetchOlderPostsFamily,
+    postsFamily,
+} from '@/atoms/postAtom';
+import { ProgressActivityIcon } from '@/components/icons';
+import Divider from '@/components/divider';
 
 interface Props {
     topicId: string;
@@ -58,7 +62,6 @@ export default function PostList({ topicId, topicLeft, topicRight }: Props) {
         };
     }, [spinnerRef.current, existsMore, fetchMore, topicLeft, topicRight]);
 
-
     // watch scrolled to bottom
     useEffect(() => {
         const list = listRef.current;
@@ -66,18 +69,23 @@ export default function PostList({ topicId, topicLeft, topicRight }: Props) {
 
         function handleScroll() {
             if (list === null) return;
-            setScrolledBottom(list.scrollHeight - list.clientHeight - list.scrollTop < 1);
+            setScrolledBottom(
+                list.scrollHeight - list.clientHeight - list.scrollTop < 1
+            );
         }
 
-        list.addEventListener("scroll", handleScroll);
+        list.addEventListener('scroll', handleScroll);
 
         return () => {
-            list.removeEventListener("scroll", handleScroll);
-        }
+            list.removeEventListener('scroll', handleScroll);
+        };
     }, []);
 
     return (
-        <div ref={listRef} className={'absolute inset-0 bottom-0 overflow-y-scroll scroll'}>
+        <div
+            ref={listRef}
+            className={'absolute inset-0 bottom-0 overflow-y-scroll scroll'}
+        >
             <ol className={'h-full align-bottom'}>
                 {existsMore && (
                     <li ref={spinnerRef} className={'w-full text-center'}>
@@ -87,8 +95,8 @@ export default function PostList({ topicId, topicLeft, topicRight }: Props) {
                     </li>
                 )}
                 {!existsMore && (
-                    <li className={"mb-4 mt-4"}>
-                        <Divider/>
+                    <li className={'mb-4 mt-4'}>
+                        <Divider />
                     </li>
                 )}
                 {posts.map((post) => (

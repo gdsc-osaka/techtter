@@ -21,7 +21,12 @@ export class PostQueryService implements IPostQueryService {
         postConverter
     );
 
-    private createQuery(topic: Pick<Topic, 'left' | 'right'>, lim: number, after?: Post, before?: Post) {
+    private createQuery(
+        topic: Pick<Topic, 'left' | 'right'>,
+        lim: number,
+        after?: Post,
+        before?: Post
+    ) {
         const constraints: QueryConstraint[] = [
             limit(lim),
             orderBy('created_at', 'desc'),
@@ -59,7 +64,7 @@ export class PostQueryService implements IPostQueryService {
         before?: Post
     ): Promise<Post[]> {
         const q = this.createQuery(topic, limit, undefined, before);
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             onSnapshot(q, (snapshot) => {
                 const posts = snapshot.docs.map((doc) => doc.data());
                 resolve(posts);
