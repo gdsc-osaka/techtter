@@ -9,6 +9,7 @@ import {
     orderBy,
     query,
     QueryConstraint,
+    startAfter,
     where,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
@@ -20,12 +21,12 @@ export class PostQueryService implements IPostQueryService {
         postConverter
     );
 
-    findManyByTopicCallback(
-        callback: (posts: Post[]) => void,
+    private createQuery(
         topic: Pick<Topic, 'left' | 'right'>,
-        lim: number = 10,
-        end?: Post
-    ): Unsubscribe {
+        lim: number,
+        after?: Post,
+        before?: Post
+    ) {
         const constraints: QueryConstraint[] = [
             limit(lim),
             orderBy('created_at', 'desc'),
@@ -34,14 +35,40 @@ export class PostQueryService implements IPostQueryService {
             where('topic_center', '>=', topic.left),
             where('topic_center', '<', topic.right)
         );
-        if (end !== undefined) {
-            constraints.push(endBefore(end.created_at));
+        if (after !== undefined) {
+            constraints.push(endBefore(after.created_at));
+        }
+        if (before !== undefined) {
+            constraints.push(startAfter(before.created_at));
         }
 
-        const q = query(this.colGroupRef, ...constraints);
+        return query(this.colGroupRef, ...constraints);
+    }
+
+    findManyByTopicCallback(
+        callback: (posts: Post[]) => void,
+        topic: Pick<Topic, 'left' | 'right'>,
+        lim: number = 10,
+        after?: Post
+    ): Unsubscribe {
+        const q = this.createQuery(topic, lim, after);
         return onSnapshot(q, (snapshot) => {
             const posts = snapshot.docs.map((doc) => doc.data());
             callback(posts);
+        });
+    }
+
+    findManyByTopic(
+        topic: Pick<Topic, 'left' | 'right'>,
+        limit: number = 10,
+        before?: Post
+    ): Promise<Post[]> {
+        const q = this.createQuery(topic, limit, undefined, before);
+        return new Promise((resolve) => {
+            onSnapshot(q, (snapshot) => {
+                const posts = snapshot.docs.map((doc) => doc.data());
+                resolve(posts);
+            });
         });
     }
 }

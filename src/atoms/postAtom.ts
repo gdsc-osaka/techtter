@@ -4,6 +4,7 @@ import { atomFamily } from 'jotai/utils';
 import { PostQueryService } from '@/infrastructure/post/postQueryService';
 import { Unsubscribe } from '@/infrastructure/utils';
 import { Topic } from '@/domain/topic';
+import { topicFamily } from '@/atoms/topicAtom';
 
 /* Subscribe Queue */
 const MAX_SUBSCRIBE = 3;
@@ -42,10 +43,15 @@ const unsubscribeQueueAtom = atom(null, (get, set, unsub: Unsub) => {
 /* Post */
 /* eslint @typescript-eslint/no-unused-vars: 0 */
 const _postsFamily = atomFamily((_: string) => atom<Post[]>([]));
+const addPostsAtom = atom(null, (get, set, posts: Post[], topicId: string) => {
+    set(_postsFamily(topicId), (prev) =>
+        prev
+            .concat(...posts)
+            .sort((a, b) => a.created_at.seconds - b.created_at.seconds)
+    );
+});
 
-const postQueryService = new PostQueryService();
-
-export const lastPostFamily = atomFamily((topicId: string) =>
+export const latestPostFamily = atomFamily((topicId: string) =>
     atom<Post | undefined>((get) => {
         const posts = get(_postsFamily(topicId));
         if (posts.length === 0) return;
@@ -53,27 +59,32 @@ export const lastPostFamily = atomFamily((topicId: string) =>
     })
 );
 
+export const oldestPostFamily = atomFamily((topicId: string) =>
+    atom<Post | undefined>((get) => {
+        const posts = get(_postsFamily(topicId));
+        if (posts.length === 0) return;
+        return posts[0];
+    })
+);
+
+const postQueryService = new PostQueryService();
+const limit = 10;
+
 export const postsFamily = atomFamily((topicId: string) =>
     atom(
         (get) => get(_postsFamily(topicId)),
         (get, set, topic: Pick<Topic, 'left' | 'right'>) => {
-            const lastPost = get(lastPostFamily(topicId));
+            const latestPost = get(latestPostFamily(topicId));
 
             const unsub = postQueryService.findManyByTopicCallback(
                 (posts) => {
                     if (posts.length === 0) return;
-                    set(_postsFamily(topicId), (prev) =>
-                        prev
-                            .concat(...posts)
-                            .sort(
-                                (a, b) =>
-                                    a.created_at.seconds - b.created_at.seconds
-                            )
-                    );
+                    set(_existsMorePostsFamily(topicId), posts.length >= limit);
+                    set(addPostsAtom, posts, topicId);
                 },
                 topic,
-                10,
-                lastPost
+                limit,
+                latestPost
             );
 
             // キューから取得した Unsubscribe を実行
@@ -84,4 +95,29 @@ export const postsFamily = atomFamily((topicId: string) =>
             oldUnsub?.();
         }
     )
+);
+
+const _existsMorePostsFamily = atomFamily((_: string) => atom(false));
+export const existsMorePostsFamily = atomFamily((topicId: string) =>
+    atom((get) => get(_existsMorePostsFamily(topicId)))
+);
+
+export const fetchOlderPostsFamily = atomFamily((topicId: string) =>
+    atom(null, async (get, set, topic: Pick<Topic, 'left' | 'right'>) => {
+        const oldestPost = get(oldestPostFamily(topicId));
+        if (oldestPost === undefined) {
+            console.warn('Cannot find oldest post.');
+            return;
+        }
+
+        const limit = 10;
+        const posts = await postQueryService.findManyByTopic(
+            topic,
+            limit,
+            oldestPost
+        );
+        set(_existsMorePostsFamily(topicId), posts.length >= limit);
+        set(addPostsAtom, posts, topicId);
+        return posts;
+    })
 );

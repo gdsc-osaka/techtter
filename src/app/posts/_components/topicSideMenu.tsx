@@ -14,7 +14,7 @@ export default async function TopicSideMenu() {
     if (host === null) return Promise.reject();
 
     const topics: Topic[] = await fetch(`${host}/api/topics`, {
-        next: { revalidate: 3600 },
+        // next: { revalidate: 3600 },
     })
         .then((res) => res.json())
         .then((json) => json.topics);
