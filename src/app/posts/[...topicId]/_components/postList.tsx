@@ -1,6 +1,6 @@
 'use client';
 
-import PostItem from '@/app/posts/[[...topicId]]/_components/postItem';
+import PostItem from '@/app/posts/[...topicId]/_components/postItem';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 import {

@@ -1,9 +1,9 @@
 import { AccountCircleIcon } from '@/components/icons';
 import { Post } from '@/domain/post';
 import { useAtom } from 'jotai';
-import { usersFamily } from '@/app/posts/[[...topicId]]/atoms';
+import { usersFamily } from '@/app/posts/[...topicId]/atoms';
 import { Skeleton } from '@/components/ui/skeleton';
-import Markdown from '@/app/posts/[[...topicId]]/_components/markdown';
+import Markdown from '@/app/posts/[...topicId]/_components/markdown';
 import { useMemo } from 'react';
 import { extractUrls } from '@/lib/strlib';
 import Embed from '@/components/embed';
