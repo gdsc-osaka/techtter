@@ -10,7 +10,7 @@ export async function GET(
     const authorization = req.headers.get('Authorization');
     const split = authorization?.split(' ');
 
-    if (authorization === null || split === undefined || split.length !== 2) {
+    if (split === undefined || split.length !== 2) {
         return NextResponse.json('Unauthorized', { status: 401 });
     }
 
