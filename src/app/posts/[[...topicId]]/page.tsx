@@ -3,7 +3,7 @@ import PostList from '@/app/posts/[[...topicId]]/_components/postList';
 
 const topicRepository = new TopicRepository();
 
-interface Props {
+export interface Props {
     params: {
         topicId: string[];
     };

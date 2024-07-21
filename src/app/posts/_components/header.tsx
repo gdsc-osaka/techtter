@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { auth } from '@/firebase';
 import Modal from '@/components/modal';
 import { GoogleSignInButton } from '@/components/authButtons';
+import Logo from "@/components/logo";
 
 export default function Header() {
     const [user, subscribe] = useAtom(userAtom);
@@ -34,7 +35,10 @@ export default function Header() {
                     'flex justify-between items-center px-4 py-1 border-b border-stone-300 min-h-12'
                 }
             >
-                <div>Techtter</div>
+                <div className={"flex items-center gap-2"}>
+                    <Logo size={24} />
+                    <span className={"text-stone-700"}>Techtter</span>
+                </div>
                 <div className={'flex gap-2'}>
                     {user === null && (
                         <>

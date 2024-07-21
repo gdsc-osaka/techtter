@@ -11,7 +11,7 @@ const rootTopic: Topic = {
     name: 'name',
     // JS の整数最大値は 2^53 - 1
     left: 0,
-    right: 2 ** 10,
+    right: 2 ** 50,
     gen: 0,
     icon_path: null,
     created_at: Timestamp.now(),

@@ -1,8 +1,9 @@
-import { ReactNode } from 'react';
+import {ReactNode} from 'react';
 import TopicSideMenu from '@/app/posts/_components/topicSideMenu';
 import PostForm from '@/app/posts/_components/postForm';
 import Header from '@/app/posts/_components/header';
 import NewTopicModal from '@/app/posts/_components/newTopicModal';
+
 
 export default async function Layout({ children }: { children: ReactNode }) {
     return (
