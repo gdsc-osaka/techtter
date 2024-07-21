@@ -63,7 +63,7 @@ export default function PostItem({ post }: Props) {
                     <Markdown>{post.content}</Markdown>
                     <div className={'w-full'}>
                         {urls.map((url) => (
-                            <Embed url={url} />
+                            <Embed url={url} key={`embed-${url}`} />
                         ))}
                     </div>
                 </div>
