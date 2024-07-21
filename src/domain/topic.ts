@@ -11,3 +11,26 @@ export interface Topic {
     created_at: Timestamp;
     updated_at: Timestamp;
 }
+
+export function assertsTopic(data: object): asserts data is Topic {
+    if (
+        !(
+            'id' in data &&
+            typeof data.id === 'string' &&
+            'name' in data &&
+            typeof data.name === 'string' &&
+            'left' in data &&
+            typeof data.left === 'number' &&
+            'right' in data &&
+            typeof data.right === 'number' &&
+            'gen' in data &&
+            typeof data.gen === 'number' &&
+            'created_at' in data &&
+            typeof data.created_at === 'object' &&
+            'updated_at' in data &&
+            typeof data.updated_at === 'object'
+        )
+    ) {
+        throw new Error(`data ${JSON.stringify(data)} is not a type of Topic`);
+    }
+}
