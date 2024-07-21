@@ -14,5 +14,5 @@ export interface ITopicService {
     addTopic(
         parentId: string,
         topic: Pick<Topic, 'id' | 'name' | 'icon_path'>
-    ): Promise<void>;
+    ): Promise<Topic>;
 }
