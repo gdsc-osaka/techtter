@@ -1,5 +1,5 @@
-import {FirestoreDataConverter} from 'firebase/firestore';
-import {assertsPost, Post} from '@/domain/post';
+import { FirestoreDataConverter } from 'firebase/firestore';
+import { assertsPost, Post } from '@/domain/post';
 
 export const postConverter: FirestoreDataConverter<Post> = {
     fromFirestore(snapshot, options): Post {

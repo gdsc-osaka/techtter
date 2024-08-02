@@ -1,8 +1,5 @@
-import { TopicRepository } from '@/infrastructure/topic/topicRepository';
 import PostList from '@/app/posts/[...topicId]/_components/postList';
-import {getHost} from "@/lib/urlUtils";
-
-const topicRepository = new TopicRepository();
+import { getHost } from '@/lib/urlUtils';
 
 export interface Props {
     params: {
@@ -19,8 +16,6 @@ export default async function PostListPage({ params }: Props) {
 
     const res = await fetch(`${host}/api/topics/${topicId}`, {
         method: 'GET',
-        // cache for one day
-        next: {revalidate: 86400}
     });
     const topic = (await res.json()).topic;
 
