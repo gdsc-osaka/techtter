@@ -1,34 +1,17 @@
-import { ITopicRepository } from '@/infrastructure/topic/ITopicRepository';
-import { Admin } from '@/firebaseAdmin';
-import * as admin from 'firebase-admin';
-import { Timestamp } from 'firebase/firestore';
-import { assertsTopic, Topic } from '@/domain/topic';
-import { ForCreateWithId, ForUpdate } from '@/domain/_utils';
-import { logger } from '@/logger';
-
-const topicConverter: admin.firestore.FirestoreDataConverter<Topic> = {
-    fromFirestore(snapshot: FirebaseFirestore.QueryDocumentSnapshot): Topic {
-        const data = snapshot.data();
-        const topic = { ...data, id: snapshot.id };
-        assertsTopic(topic);
-        return topic;
-    },
-    toFirestore(
-        modelObject:
-            | FirebaseFirestore.WithFieldValue<Topic>
-            | FirebaseFirestore.PartialWithFieldValue<Topic>
-    ) {
-        const d = Object.assign({}, modelObject);
-        delete d.id;
-        return d;
-    },
-};
+import {ITopicRepository} from '@/infrastructure/topic/ITopicRepository';
+import {Admin} from '@/firebaseAdmin';
+import {firestore} from 'firebase-admin';
+import {Timestamp} from 'firebase/firestore';
+import {Topic} from '@/domain/topic';
+import {ForCreateWithId, ForUpdate} from '@/domain/_utils';
+import {logger} from '@/logger';
+import {adminTopicConverter} from "@/infrastructure/topic/adminTopicConverter";
 
 export class AdminTopicRepository implements ITopicRepository {
     private readonly colRef = () =>
-        Admin.db.collection('topics').withConverter(topicConverter);
+        Admin.db.collection('topics').withConverter(adminTopicConverter);
     private readonly docRef = (categoryId: string) =>
-        Admin.db.doc(`topics/${categoryId}`).withConverter(topicConverter);
+        Admin.db.doc(`topics/${categoryId}`).withConverter(adminTopicConverter);
 
     async create(topic: ForCreateWithId<Topic>): Promise<Topic> {
         try {
@@ -36,8 +19,8 @@ export class AdminTopicRepository implements ITopicRepository {
                 .doc(topic.id)
                 .set({
                     ...topic,
-                    created_at: admin.firestore.FieldValue.serverTimestamp(),
-                    updated_at: admin.firestore.FieldValue.serverTimestamp(),
+                    created_at: firestore.FieldValue.serverTimestamp(),
+                    updated_at: firestore.FieldValue.serverTimestamp(),
                 });
             logger.log(`Topic created. (${topic.id})`);
             return {
@@ -83,7 +66,10 @@ export class AdminTopicRepository implements ITopicRepository {
 
     async update(topic: ForUpdate<Topic>): Promise<void> {
         try {
-            await this.docRef(topic.id).update(topic);
+            await this.docRef(topic.id).update({
+                ...topic,
+                updated_at: firestore.FieldValue.serverTimestamp(),
+            });
         } catch (e) {
             logger.error(e);
             return Promise.reject(e);
