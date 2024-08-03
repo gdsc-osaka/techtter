@@ -12,6 +12,11 @@ service cloud.firestore {
       allow write: if request.auth.uid == userId;
     }
 
+    match /roles/{roleId} {
+      allow read: if true;
+      allow write: if false; // only admin-sdk
+    }
+
     // collection group
     match /{path=**}/posts/{post} {
       allow read: if true;

@@ -1,12 +1,21 @@
-import {IRoleRepository} from "@/infrastructure/role/iRoleRepository";
-import {deleteDoc, doc, getDoc, serverTimestamp, setDoc, Timestamp, updateDoc} from "firebase/firestore";
-import {db} from "@/firebase";
-import {roleConverter} from "@/infrastructure/role/roleConverter";
-import {ForCreateWithId, ForUpdate} from "@/domain/_utils";
-import {Role} from "@/domain/role";
+import { IRoleRepository } from '@/infrastructure/role/iRoleRepository';
+import {
+    deleteDoc,
+    doc,
+    getDoc,
+    serverTimestamp,
+    setDoc,
+    Timestamp,
+    updateDoc,
+} from 'firebase/firestore';
+import { db } from '@/firebase';
+import { roleConverter } from '@/infrastructure/role/roleConverter';
+import { ForCreateWithId, ForUpdate } from '@/domain/_utils';
+import { Role } from '@/domain/role';
 
 export class RoleRepository implements IRoleRepository {
-    private readonly docRef = (id: string) => doc(db, `roles/${id}`).withConverter(roleConverter);
+    private readonly docRef = (id: string) =>
+        doc(db, `roles/${id}`).withConverter(roleConverter);
 
     async create(role: ForCreateWithId<Role>): Promise<Role> {
         try {
@@ -57,6 +66,4 @@ export class RoleRepository implements IRoleRepository {
             return Promise.reject(e);
         }
     }
-
-
 }

@@ -10,6 +10,7 @@ import {
 } from '@/atoms/postAtom';
 import { ProgressActivityIcon } from '@/components/icons';
 import Divider from '@/components/divider';
+import {setRoleAction} from "@/app/posts/action";
 
 interface Props {
     topicId: string;
@@ -103,6 +104,9 @@ export default function PostList({ topicId, topicLeft, topicRight }: Props) {
                     <PostItem post={post} key={post.id} />
                 ))}
             </ol>
+            <form action={setRoleAction}>
+                <button type={"submit"}>submit</button>
+            </form>
         </div>
     );
 }

@@ -1,11 +1,11 @@
-import { codeToHtml } from 'shiki'
-import { useEffect, useMemo, useState} from "react";
+import { codeToHtml } from 'shiki';
+import { useEffect, useMemo, useState } from 'react';
 
 interface CodeNode {
     props: {
-        children: string,
-        className: string,
-    }
+        children: string;
+        className: string;
+    };
 }
 
 function assertCode(code: unknown): code is CodeNode {
@@ -16,16 +16,15 @@ function assertCode(code: unknown): code is CodeNode {
     if (!('className' in props)) return false;
     const className = props.className;
 
-    return typeof className === "string";
+    return typeof className === 'string';
 }
 
-export default function CodeBlock({children, ...props}: JSX.IntrinsicElements['pre']) {
+export default function CodeBlock({
+    children,
+    ...props
+}: JSX.IntrinsicElements['pre']) {
     if (!assertCode(children)) {
-        return (
-            <pre {...props}>
-                {children}
-            </pre>
-        )
+        return <pre>{children}</pre>;
     }
 
     const lang = useMemo(() => {
@@ -34,26 +33,19 @@ export default function CodeBlock({children, ...props}: JSX.IntrinsicElements['p
     }, [children]);
 
     if (lang === undefined) {
-        return (
-            <pre {...props}>
-                {children}
-            </pre>
-        );
+        return <pre>{children}</pre>;
     }
 
-    const [html, setHtml] = useState("<code></code>");
+    const [html, setHtml] = useState('<code></code>');
 
     useEffect(() => {
         codeToHtml(children.props.children, {
             lang: lang,
-            theme: 'github-light'
-
+            theme: 'github-light',
         }).then((html) => {
             setHtml(html);
         });
     }, [children, lang]);
 
-    return (
-        <div dangerouslySetInnerHTML={{ __html: html }} />
-    );
+    return <div dangerouslySetInnerHTML={{ __html: html }} />;
 }

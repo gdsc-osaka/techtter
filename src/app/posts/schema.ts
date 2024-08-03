@@ -10,8 +10,8 @@ export type PostFormType = z.infer<typeof postFormSchema>;
 
 export const topicFormSchema = z.object({
     parentId: z.string().optional(),
-    id: z.string(),
-    name: z.string(),
+    id: z.string().min(1),
+    name: z.string().min(1),
 });
 
 export type TopicFormType = z.infer<typeof topicFormSchema>;

@@ -1,5 +1,5 @@
-import {assertsRole, Role} from "@/domain/role";
-import {FirestoreDataConverter} from "firebase/firestore";
+import { assertsRole, Role } from '@/domain/role';
+import { FirestoreDataConverter } from 'firebase/firestore';
 
 export const roleConverter: FirestoreDataConverter<Role> = {
     fromFirestore(snapshot, options): Role {

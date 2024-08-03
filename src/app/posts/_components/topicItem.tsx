@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { newTopicModalAtom } from '@/app/posts/atoms';
 import { useSetAtom } from 'jotai';
-import AddTopicButton from '@/app/posts/_components/addTopicButton';
+import AddTopicButton from "@/app/posts/_components/addTopicButton";
 
 interface Props {
     id: string;

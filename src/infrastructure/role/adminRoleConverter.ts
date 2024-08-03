@@ -1,5 +1,5 @@
-import {firestore} from 'firebase-admin';
-import {assertsRole, Role} from "@/domain/role";
+import { firestore } from 'firebase-admin';
+import { assertsRole, Role } from '@/domain/role';
 
 export const adminRoleConverter: firestore.FirestoreDataConverter<Role> = {
     fromFirestore(snapshot: FirebaseFirestore.QueryDocumentSnapshot): Role {
@@ -8,9 +8,13 @@ export const adminRoleConverter: firestore.FirestoreDataConverter<Role> = {
         assertsRole(topic);
         return topic;
     },
-    toFirestore(modelObject: FirebaseFirestore.WithFieldValue<Role> | FirebaseFirestore.PartialWithFieldValue<Role>, options?: FirebaseFirestore.SetOptions): any {
+    toFirestore(
+        modelObject:
+            | FirebaseFirestore.WithFieldValue<Role>
+            | FirebaseFirestore.PartialWithFieldValue<Role>
+    ) {
         const d = Object.assign({}, modelObject);
         delete d.id;
         return d;
-    }
+    },
 };

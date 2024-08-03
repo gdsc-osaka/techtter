@@ -1,5 +1,5 @@
-import {firestore} from "firebase-admin";
-import {assertsTopic, Topic} from "@/domain/topic";
+import { firestore } from 'firebase-admin';
+import { assertsTopic, Topic } from '@/domain/topic';
 
 export const adminTopicConverter: firestore.FirestoreDataConverter<Topic> = {
     fromFirestore(snapshot: FirebaseFirestore.QueryDocumentSnapshot): Topic {
