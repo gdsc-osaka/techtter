@@ -15,12 +15,11 @@ export const roleAtom = loadable(
         const idToken = await user.getIdTokenResult(true);
         const roleId = idToken.claims?.role;
 
-        if (roleId !== undefined && typeof roleId !== 'string')
-            return null;
+        if (roleId !== undefined && typeof roleId !== 'string') return null;
 
-        console.log(roleId)
+        console.log(roleId);
         const role = await roleService.getRole(roleId);
-        console.log(role)
+        console.log(role);
         return role ?? null;
     })
 );

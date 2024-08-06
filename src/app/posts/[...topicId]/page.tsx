@@ -19,9 +19,7 @@ export default async function PostListPage({ params }: Props) {
     });
 
     if (res.status >= 300) {
-        return (
-            <p>Topic not found.</p>
-        )
+        return <p>Topic not found.</p>;
     }
 
     const topic = (await res.json()).topic;

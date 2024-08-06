@@ -2,7 +2,7 @@ import {
     IAuthRepository,
     UserRecord,
 } from '@/infrastructure/auth/iAuthRepository';
-import {isAcceptable, Policy} from '@/domain/policy';
+import { isAcceptable, Policy } from '@/domain/policy';
 import { Role } from '@/domain/role';
 import { RoleService } from '@/application/role/roleService';
 

@@ -1,20 +1,20 @@
 'use server';
 
-import {PostService} from '@/application/post/postService';
-import {AdminPostRepository} from '@/infrastructure/post/adminPostRepository';
-import {parseWithZod} from '@conform-to/zod';
-import {postFormSchema, topicFormSchema} from '@/app/posts/schema';
-import {logger} from '@/logger';
-import {TopicService} from '@/application/topic/topicService';
-import {TopicDomainService} from '@/domain/topic/topicDomainService';
-import {TopicQueryService} from '@/infrastructure/topic/topicQueryService';
-import {AdminTopicRepository} from '@/infrastructure/topic/adminTopicRepository';
-import {AdminRoleRepository} from '@/infrastructure/role/adminRoleRepository';
-import {cookies} from 'next/headers';
-import {AuthRepository} from '@/infrastructure/auth/authRepository';
-import {AuthService} from '@/application/auth/authService';
-import {RoleService} from '@/application/role/roleService';
-import {Policy} from '@/domain/policy';
+import { PostService } from '@/application/post/postService';
+import { AdminPostRepository } from '@/infrastructure/post/adminPostRepository';
+import { parseWithZod } from '@conform-to/zod';
+import { postFormSchema, topicFormSchema } from '@/app/posts/schema';
+import { logger } from '@/logger';
+import { TopicService } from '@/application/topic/topicService';
+import { TopicDomainService } from '@/domain/topic/topicDomainService';
+import { TopicQueryService } from '@/infrastructure/topic/topicQueryService';
+import { AdminTopicRepository } from '@/infrastructure/topic/adminTopicRepository';
+import { AdminRoleRepository } from '@/infrastructure/role/adminRoleRepository';
+import { cookies } from 'next/headers';
+import { AuthRepository } from '@/infrastructure/auth/authRepository';
+import { AuthService } from '@/application/auth/authService';
+import { RoleService } from '@/application/role/roleService';
+import { Policy } from '@/domain/policy';
 
 const topicRepository = new AdminTopicRepository();
 const postService = new PostService(new AdminPostRepository(), topicRepository);

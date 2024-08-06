@@ -21,7 +21,6 @@ function assertCode(code: unknown): code is CodeNode {
 
 export default function CodeBlock({
     children,
-    ...props
 }: JSX.IntrinsicElements['pre']) {
     if (!assertCode(children)) {
         return <pre>{children}</pre>;

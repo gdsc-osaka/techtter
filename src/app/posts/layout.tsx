@@ -3,9 +3,9 @@ import TopicSideMenu from '@/app/posts/_components/topicSideMenu';
 import PostForm from '@/app/posts/_components/postForm';
 import Header from '@/app/posts/_components/header';
 import NewTopicModal from '@/app/posts/_components/newTopicModal';
-import {getHost} from "@/lib/urlUtils";
-import {Topic} from "@/domain/topic";
-import TopicDrawer from "@/app/posts/_components/topicDrawer";
+import { getHost } from '@/lib/urlUtils';
+import { Topic } from '@/domain/topic';
+import TopicDrawer from '@/app/posts/_components/topicDrawer';
 
 export default async function Layout({ children }: { children: ReactNode }) {
     const host = getHost();

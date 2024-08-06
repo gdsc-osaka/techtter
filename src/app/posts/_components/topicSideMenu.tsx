@@ -1,13 +1,17 @@
 import TopicItem from '@/app/posts/_components/topicItem';
-import {generateTopicLink, generateTopicTree, TopicTreeNode,} from '@/lib/topicTreeUtils';
+import {
+    generateTopicLink,
+    generateTopicTree,
+    TopicTreeNode,
+} from '@/lib/topicTreeUtils';
 import RootAddTopicButton from '@/app/posts/_components/rootAddTopicButton';
-import {Topic} from '@/domain/topic';
+import { Topic } from '@/domain/topic';
 
 interface Props {
     topics: Topic[];
 }
 
-export default async function TopicSideMenu({topics}: Props) {
+export default async function TopicSideMenu({ topics }: Props) {
     const root = generateTopicTree(topics);
 
     return (

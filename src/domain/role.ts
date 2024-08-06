@@ -1,5 +1,5 @@
 import { Timestamp } from 'firebase/firestore';
-import {Policy} from "@/domain/policy";
+import { Policy } from '@/domain/policy';
 
 export interface Role {
     id: string;
