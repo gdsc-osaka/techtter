@@ -1,7 +1,5 @@
-import { TopicRepository } from '@/infrastructure/topic/topicRepository';
 import PostList from '@/app/posts/[...topicId]/_components/postList';
-
-const topicRepository = new TopicRepository();
+import { getHost } from '@/lib/urlUtils';
 
 export interface Props {
     params: {
@@ -11,16 +9,20 @@ export interface Props {
 
 export default async function PostListPage({ params }: Props) {
     const topicId = params.topicId.at(params.topicId.length - 1);
+    if (topicId === undefined) return <p>Topic id not found.</p>;
 
-    if (topicId === undefined) {
-        return <p>Topic id not found.</p>;
-    }
+    const host = getHost();
+    if (host === null) return Promise.reject();
 
-    const topic = await topicRepository.find(topicId);
+    const res = await fetch(`${host}/api/topics/${topicId}`, {
+        method: 'GET',
+    });
 
-    if (topic === undefined) {
+    if (res.status >= 300) {
         return <p>Topic not found.</p>;
     }
+
+    const topic = (await res.json()).topic;
 
     return (
         <PostList

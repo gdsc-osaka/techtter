@@ -1,20 +1,28 @@
 import { Metadata } from 'next';
 import { Props } from '@/app/posts/[...topicId]/page';
-import { TopicRepository } from '@/infrastructure/topic/topicRepository';
 import { ReactNode } from 'react';
-
-const topicRepository = new TopicRepository();
+import { getHost } from '@/lib/urlUtils';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const topicId = params.topicId.at(params.topicId.length - 1);
-    const topic =
-        topicId === undefined ? undefined : await topicRepository.find(topicId);
+    const host = getHost();
+    if (host === null) {
+        return {
+            title: 'Error',
+        };
+    }
 
-    if (topic === undefined) {
+    const res = await fetch(`${host}/api/topics/${topicId}`, {
+        method: 'GET',
+    });
+
+    if (res.status >= 300) {
         return {
             title: 'Topic not found.',
         };
     }
+
+    const topic = (await res.json()).topic;
 
     return {
         title: topic.name,

@@ -1,10 +1,10 @@
-import {IPostRepository} from '@/infrastructure/post/iPostRepository';
-import {ForCreate} from '@/domain/_utils';
-import {assertsPost, Post} from '@/domain/post';
-import {Timestamp,} from 'firebase/firestore';
-import {logger} from '@/logger';
-import * as admin from "firebase-admin";
-import {Admin} from "@/firebaseAdmin";
+import { IPostRepository } from '@/infrastructure/post/iPostRepository';
+import { ForCreate } from '@/domain/_utils';
+import { assertsPost, Post } from '@/domain/post';
+import { Timestamp } from 'firebase/firestore';
+import { logger } from '@/logger';
+import * as admin from 'firebase-admin';
+import { Admin } from '@/firebaseAdmin';
 
 const postConverter: admin.firestore.FirestoreDataConverter<Post> = {
     fromFirestore(snapshot: FirebaseFirestore.QueryDocumentSnapshot): Post {
@@ -26,9 +26,13 @@ const postConverter: admin.firestore.FirestoreDataConverter<Post> = {
 
 export class AdminPostRepository implements IPostRepository {
     private readonly colRef = (userId: string) =>
-        Admin.db.collection(`users/${userId}/posts`).withConverter(postConverter);
+        Admin.db
+            .collection(`users/${userId}/posts`)
+            .withConverter(postConverter);
     private readonly docRef = (userId: string, postId: string) =>
-        Admin.db.doc(`users/${userId}/posts/${postId}`).withConverter(postConverter);
+        Admin.db
+            .doc(`users/${userId}/posts/${postId}`)
+            .withConverter(postConverter);
 
     async create(post: ForCreate<Post>): Promise<Post> {
         try {

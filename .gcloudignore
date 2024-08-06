@@ -1,0 +1,13 @@
+.gcloudignore
+.gitignore
+
+.github/
+node_modules/
+log/
+firebase/
+src/
+test/
+
+components.json
+package.json
+pnpm-lock.yaml

@@ -43,6 +43,10 @@ export const ProgressActivityIcon = (props: MaterialSymbolProp) => {
     return <MaterialSymbol {...props}>progress_activity</MaterialSymbol>;
 };
 
+export const MenuIcon = (props: MaterialSymbolProp) => {
+    return <MaterialSymbol {...props}>menu</MaterialSymbol>;
+};
+
 export const GoogleIcon = ({ size = 24 }: MaterialSymbolProp) => {
     return (
         <Image

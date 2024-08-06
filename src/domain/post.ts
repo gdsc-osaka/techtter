@@ -1,6 +1,6 @@
-import {Timestamp} from 'firebase/firestore';
-import {ForCreate} from '@/domain/_utils';
-import {Topic} from '@/domain/topic';
+import { Timestamp } from 'firebase/firestore';
+import { ForCreate } from '@/domain/_utils';
+import { Topic } from '@/domain/topic';
 
 export interface Post {
     id: string;

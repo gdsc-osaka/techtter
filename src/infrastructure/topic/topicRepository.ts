@@ -52,7 +52,10 @@ export class TopicRepository implements ITopicRepository {
 
     async update(topic: ForUpdate<WithFieldValues<Topic>>): Promise<void> {
         try {
-            await updateDoc(this.docRef(topic.id), topic);
+            await updateDoc(this.docRef(topic.id), {
+                ...topic,
+                updated_at: serverTimestamp(),
+            });
         } catch (e) {
             console.error(e);
             return Promise.reject(e);
