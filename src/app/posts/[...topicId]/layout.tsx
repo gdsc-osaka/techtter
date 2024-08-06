@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         method: 'GET',
     });
 
-    if (res.status === 404) {
+    if (res.status >= 300) {
         return {
             title: 'Topic not found.',
         };

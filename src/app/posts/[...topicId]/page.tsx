@@ -17,6 +17,13 @@ export default async function PostListPage({ params }: Props) {
     const res = await fetch(`${host}/api/topics/${topicId}`, {
         method: 'GET',
     });
+
+    if (res.status >= 300) {
+        return (
+            <p>Topic not found.</p>
+        )
+    }
+
     const topic = (await res.json()).topic;
 
     return (

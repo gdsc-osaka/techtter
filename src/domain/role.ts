@@ -1,9 +1,10 @@
 import { Timestamp } from 'firebase/firestore';
+import {Policy} from "@/domain/policy";
 
 export interface Role {
     id: string;
     name: string;
-    policies: string[];
+    policies: Policy[];
     created_at: Timestamp;
     updated_at: Timestamp;
 }

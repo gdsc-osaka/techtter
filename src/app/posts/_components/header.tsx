@@ -1,16 +1,19 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { useAtom } from 'jotai';
+import {useAtom, useSetAtom} from 'jotai';
 import { userAtom } from '@/atoms/userAtom';
 import { useEffect, useState } from 'react';
 import { auth } from '@/firebase';
 import Modal from '@/components/modal';
 import { GoogleSignInButton } from '@/components/authButtons';
 import Logo from '@/components/logo';
+import {MenuIcon} from "@/components/icons";
+import {topicDrawerOpenAtom} from "@/app/posts/atoms";
 
 export default function Header() {
     const [user, subscribe] = useAtom(userAtom);
     const [openModal, setOpenModal] = useState(false);
+    const setOpenDrawer = useSetAtom(topicDrawerOpenAtom);
 
     useEffect(() => {
         subscribe();
@@ -28,16 +31,25 @@ export default function Header() {
         setOpenModal(true);
     };
 
+    const handleOpenDrawer = () => {
+        setOpenDrawer(true);
+    }
+
     return (
         <>
             <header
                 className={
-                    'flex justify-between items-center px-4 py-1 border-b border-stone-300 min-h-12'
+                    'flex justify-between items-center px-2 md:px-4 py-1 border-b border-stone-300 min-h-12'
                 }
             >
-                <div className={'flex items-center gap-2'}>
-                    <Logo size={24} />
-                    <span className={'text-stone-700'}>Techtter β</span>
+                <div className={"flex gap-1"}>
+                    <Button size={"icon"} variant={"ghost"} className={"md:hidden"} onClick={handleOpenDrawer}>
+                        <MenuIcon/>
+                    </Button>
+                    <div className={'flex items-center gap-2'}>
+                        <Logo size={24} />
+                        <span className={'text-stone-700'}>Techtter β</span>
+                    </div>
                 </div>
                 <div className={'flex gap-2'}>
                     {user === null && (

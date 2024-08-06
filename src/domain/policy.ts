@@ -4,12 +4,14 @@ export enum Policy {
     POST_UPDATE_SELF = 'post.update.self',
     POST_DELETE = 'post.delete',
     POST_DELETE_SELF = 'post.delete.self',
+    POST = 'post.*',
     TOPIC_CREATE = 'topic.create',
     TOPIC_UPDATE = 'topic.update',
     TOPIC_DELETE = 'topic.delete',
+    TOPIC = 'topic.*',
 }
 
-export function isAcceptable(policies: string[], required: string) {
+export function isAcceptable(policies: Policy[], required: Policy) {
     for (const policy of policies) {
         if (policy === required) {
             return true;
