@@ -1,5 +1,5 @@
 import EmbedCard from '@/app/embed/_components/embedCard';
-import { getHost } from '@/lib/urlUtils';
+import { sfetch } from '@/lib/fetchUtils';
 
 export interface Meta {
     metadata: {
@@ -18,10 +18,7 @@ export default async function Page({
 }: {
     searchParams: { url: string };
 }) {
-    const host = getHost();
-    if (host === null) return Promise.reject();
-
-    const res = await fetch(`${host}/api/meta?url=${searchParams.url}`, {
+    const res = await sfetch(`/api/meta?url=${searchParams.url}`, {
         method: 'GET',
         // cache for one day
         next: { revalidate: 86400 },

@@ -1,5 +1,5 @@
 import PostList from '@/app/posts/[...topicId]/_components/postList';
-import { getHost } from '@/lib/urlUtils';
+import {sfetch} from '@/lib/fetchUtils';
 
 export interface Props {
     params: {
@@ -11,10 +11,7 @@ export default async function PostListPage({ params }: Props) {
     const topicId = params.topicId.at(params.topicId.length - 1);
     if (topicId === undefined) return <p>Topic id not found.</p>;
 
-    const host = getHost();
-    if (host === null) return Promise.reject();
-
-    const res = await fetch(`${host}/api/topics/${topicId}`, {
+    const res = await sfetch(`/api/topics/${topicId}`, {
         method: 'GET',
     });
 
