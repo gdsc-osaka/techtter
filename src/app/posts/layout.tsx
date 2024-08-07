@@ -4,12 +4,12 @@ import PostForm from '@/app/posts/_components/postForm';
 import TopicDrawer from '@/app/posts/_components/topicDrawer';
 import TopicSideMenu from '@/app/posts/_components/topicSideMenu';
 import { Topic } from '@/domain/topic';
-import { AdminTopicRepository } from "@/infrastructure/topic/adminTopicRepository";
+import { findManyTopics } from "@/infrastructure/topic/adminTopicRepository";
 import { ReactNode } from 'react';
 
 export default async function Layout({ children }: { children: ReactNode }) {
-    const topicRepository = new AdminTopicRepository();
-    const topics: Topic[] = await topicRepository.findMany();
+    // const topicRepository = new AdminTopicRepository();
+    const topics: Topic[] = await findManyTopics();
 
     return (
         <div className={'h-screen flex flex-row items-stretch'}>
