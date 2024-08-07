@@ -8,12 +8,11 @@ import { Topic } from '@/domain/topic';
 import TopicDrawer from '@/app/posts/_components/topicDrawer';
 
 export default async function Layout({ children }: { children: ReactNode }) {
-    // const topics: Topic[] = await sfetch(`/api/topics`, {
-    //     // next: { revalidate: 3600 },
-    // })
-    //     .then((res) => res.json())
-    //     .then((json) => json.topics);
-    const topics: Topic[] = [];
+    const topics: Topic[] = await sfetch(`/api/topics`, {
+        // next: { revalidate: 3600 },
+    })
+        .then((res) => res.json())
+        .then((json) => json.topics);
 
     return (
         <div className={'h-screen flex flex-row items-stretch'}>
