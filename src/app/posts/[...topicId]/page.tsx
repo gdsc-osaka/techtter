@@ -13,15 +13,11 @@ export default async function PostListPage({ params }: Props) {
     const topic = await topicRepository.find(topicId);
     if (topic === undefined) return <p>Topic not found.</p>;
 
-    // return (
-    //     <div>PostListPage</div>
-    // );
-
     return (
         <PostList
             topicId={topicId}
-            // topicRight={topic.right}
-            // topicLeft={topic.left}
+            topicRight={topic.right}
+            topicLeft={topic.left}
         />
     );
 }
