@@ -46,13 +46,13 @@ async function findTopic(id: string): Promise<Topic | undefined> {
     } as Topic;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const topicId = params.topicId[params.topicId.length - 1];
-    // const topicRepository = new AdminTopicRepository();
-    const topic = await findTopic(topicId);
-    if (topic === undefined) return { title: 'Topic not found.' };
-
-    return {
-        title: topic.name,
-    };
-}
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+//     const topicId = params.topicId[params.topicId.length - 1];
+//     // const topicRepository = new AdminTopicRepository();
+//     const topic = await findTopic(topicId);
+//     if (topic === undefined) return { title: 'Topic not found.' };
+//
+//     return {
+//         title: topic.name,
+//     };
+// }
