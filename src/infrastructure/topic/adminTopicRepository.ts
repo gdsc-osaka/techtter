@@ -1,21 +1,38 @@
-import { ITopicRepository } from '@/infrastructure/topic/ITopicRepository';
+import { ForCreateWithId, ForUpdate } from '@/domain/_utils';
+import { Topic } from '@/domain/topic';
 import { Admin } from '@/firebaseAdmin';
+import { adminTopicConverter } from '@/infrastructure/topic/adminTopicConverter';
+import { ITopicRepository } from '@/infrastructure/topic/ITopicRepository';
+import { logger } from '@/logger';
 import { firestore } from 'firebase-admin';
 import { Timestamp } from 'firebase/firestore';
-import { Topic } from '@/domain/topic';
-import { ForCreateWithId, ForUpdate } from '@/domain/_utils';
-import { logger } from '@/logger';
-import { adminTopicConverter } from '@/infrastructure/topic/adminTopicConverter';
+
+const colRef = () =>
+    Admin.db.collection('topics').withConverter(adminTopicConverter);
+const docRef = (topicId: string) =>
+    Admin.db.doc(`topics/${topicId}`).withConverter(adminTopicConverter);
+
+export async function findTopic(id: string): Promise<Topic | undefined> {
+    return {
+        created_at: Timestamp.now(),
+        gen: 0,
+        icon_path: null,
+        id: id,
+        left: 0,
+        name: 'Test',
+        right: 0,
+        updated_at: Timestamp.now(),
+    };
+}
+
+export async function findManyTopics(): Promise<Topic[]> {
+    return [];
+}
 
 export class AdminTopicRepository implements ITopicRepository {
-    private readonly colRef = () =>
-        Admin.db.collection('topics').withConverter(adminTopicConverter);
-    private readonly docRef = (topicId: string) =>
-        Admin.db.doc(`topics/${topicId}`).withConverter(adminTopicConverter);
-
     async create(topic: ForCreateWithId<Topic>): Promise<Topic> {
         try {
-            await this.colRef()
+            await colRef()
                 .doc(topic.id)
                 .set({
                     ...topic,
@@ -37,7 +54,7 @@ export class AdminTopicRepository implements ITopicRepository {
 
     async delete(id: string): Promise<void> {
         try {
-            await this.docRef(id).delete();
+            await docRef(id).delete();
         } catch (e) {
             logger.error(e);
             return Promise.reject(e);
@@ -47,7 +64,7 @@ export class AdminTopicRepository implements ITopicRepository {
     async find(id: string): Promise<Topic | undefined> {
         try {
             console.log('Getting topic...');
-            const snapshot = await this.docRef(id).get();
+            const snapshot = await docRef(id).get();
             console.log('Got topic.');
             return snapshot.data();
         } catch (e) {
@@ -58,7 +75,7 @@ export class AdminTopicRepository implements ITopicRepository {
 
     async findMany(): Promise<Topic[]> {
         try {
-            const snapshot = await this.colRef().get();
+            const snapshot = await colRef().get();
             return snapshot.docs.map((doc) => doc.data());
         } catch (e) {
             logger.error(e);
@@ -68,7 +85,7 @@ export class AdminTopicRepository implements ITopicRepository {
 
     async update(topic: ForUpdate<Topic>): Promise<void> {
         try {
-            await this.docRef(topic.id).update({
+            await docRef(topic.id).update({
                 ...topic,
                 updated_at: firestore.FieldValue.serverTimestamp(),
             });

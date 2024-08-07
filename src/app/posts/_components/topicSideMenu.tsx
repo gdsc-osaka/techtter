@@ -11,7 +11,7 @@ interface Props {
     topics: Topic[];
 }
 
-export default async function TopicSideMenu({ topics }: Props) {
+export default function TopicSideMenu({ topics }: Props) {
     const root = generateTopicTree(topics);
 
     return (
