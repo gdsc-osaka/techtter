@@ -9,7 +9,7 @@ import { ReactNode } from 'react';
 
 export default async function Layout({ children }: { children: ReactNode }) {
     const topicRepository = new AdminTopicRepository();
-    const topics: Topic[] = await topicRepository.findMany();
+    const topics: Topic[] = [];
 
     return (
         <div className={'h-screen flex flex-row items-stretch'}>
