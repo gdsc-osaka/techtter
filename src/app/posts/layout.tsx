@@ -8,7 +8,7 @@ import { AdminTopicRepository } from "@/infrastructure/topic/adminTopicRepositor
 import { ReactNode } from 'react';
 
 export default async function Layout({ children }: { children: ReactNode }) {
-    const topicRepository = new AdminTopicRepository();
+    // const topicRepository = new AdminTopicRepository();
     const topics: Topic[] = [];
 
     return (
