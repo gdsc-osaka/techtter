@@ -1,6 +1,5 @@
 import PostList from '@/app/posts/[...topicId]/_components/postList';
 import { Topic } from "@/domain/topic";
-import { Timestamp } from "firebase/firestore";
 
 export interface Props {
     params: {
