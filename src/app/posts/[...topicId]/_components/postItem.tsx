@@ -1,14 +1,13 @@
-import { AccountCircleIcon, MoreHorizIcon } from '@/components/icons';
-import { Post } from '@/domain/post';
-import { useAtom } from 'jotai';
-import { usersFamily } from '@/app/posts/[...topicId]/atoms';
-import { Skeleton } from '@/components/ui/skeleton';
 import Markdown from '@/app/posts/[...topicId]/_components/markdown';
-import { useMemo } from 'react';
-import { extractUrls } from '@/lib/strlib';
-import Embed from '@/components/embed';
-import { Button } from '@/components/ui/button';
 import PostDropDownMenu from '@/app/posts/[...topicId]/_components/postDropDownMenu';
+import Embed from '@/components/embed';
+import { MoreHorizIcon } from '@/components/icons';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Post } from '@/domain/post';
+import { extractUrls } from '@/lib/strlib';
+import useFetchUser from "@/fetcbers/useFetchUser";
+import { useMemo } from 'react';
 
 interface Props {
     post: Post;
@@ -17,8 +16,7 @@ interface Props {
 
 export default function PostItem({ post, hideMenu = false }: Props) {
     const date = post.created_at.toDate();
-    const [user] = useAtom(usersFamily(post.user_id));
-
+    const user = useFetchUser(post.user_id);
     const urls = useMemo(() => extractUrls(post.content), [post.content]);
 
     return (
@@ -29,19 +27,15 @@ export default function PostItem({ post, hideMenu = false }: Props) {
             }
         >
             {/* user データありかつ photoUrl あり*/}
-            {user.state === 'hasData' && user?.data?.photoUrl && (
+            {!user.isLoading && user?.data?.photoUrl && (
                 <img
                     src={user.data.photoUrl}
                     alt={'User Icon'}
                     className={'rounded-full w-9 h-9'}
                 />
             )}
-            {/* user データありかつ photoUrl なし*/}
-            {user.state === 'hasData' && !user?.data?.photoUrl && (
-                <AccountCircleIcon className={'w-9 h-9'} />
-            )}
             {/* user 読み込み中 */}
-            {user.state === 'loading' && (
+            {user.isLoading && (
                 <Skeleton className={'rounded-full w-9 h-9'} />
             )}
             <div className={'w-full flex flex-col gap-1'}>
@@ -49,7 +43,7 @@ export default function PostItem({ post, hideMenu = false }: Props) {
                     <div className={'w-full flex flex-col gap-1'}>
                         <h3 className={'flex items-center gap-3'}>
                             {/* displayName あり */}
-                            {user.state === 'hasData' && (
+                            {!user.isLoading && (
                                 <span className={'text-xs'}>
                                     {user?.data?.displayName
                                         ? user.data.displayName
@@ -57,7 +51,7 @@ export default function PostItem({ post, hideMenu = false }: Props) {
                                 </span>
                             )}
                             {/*読み込み中*/}
-                            {user.state === 'loading' && (
+                            {user.isLoading && (
                                 <Skeleton className={'w-20 h-4'} />
                             )}
                             <span
