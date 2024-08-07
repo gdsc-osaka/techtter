@@ -3,14 +3,14 @@ import {
     IAuthRepository,
     UserRecord,
 } from '@/infrastructure/auth/iAuthRepository';
-import { Admin } from '@/firebaseAdmin';
+import { auth } from '@/firebaseAdmin';
 
 export class AuthRepository implements IAuthRepository {
     getUser(uid: string): Promise<UserRecord> {
-        return Admin.auth.getUser(uid);
+        return auth.getUser(uid);
     }
 
     verifyIdToken(idToken: string): Promise<DecodedIdToken> {
-        return Admin.auth.verifyIdToken(idToken);
+        return auth.verifyIdToken(idToken);
     }
 }

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Admin } from '@/firebaseAdmin';
+import { auth } from '@/firebaseAdmin';
 import { FireUser } from '@/domain/fireUser';
 import { logger } from '@/logger';
 
@@ -8,7 +8,7 @@ export async function GET(
     { params }: { params: { uid: string } }
 ) {
     try {
-        const resultUser = await Admin.auth.getUser(params.uid);
+        const resultUser = await auth.getUser(params.uid);
         logger.log(`Got user ${resultUser.uid}`);
         const fireUser: FireUser = {
             uid: resultUser.uid,
