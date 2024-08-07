@@ -4,7 +4,11 @@ import { ReactNode } from 'react';
 import { sfetch } from '@/lib/fetchUtils';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const topicId = params.topicId.at(params.topicId.length - 1);
+    const topicId = params.topicId.pop();
+    if (topicId === undefined) {
+        return {title: 'Topic id not found.'};
+    }
+
     const res = await sfetch(`/api/topics/${topicId}`, {
         method: 'GET',
     });

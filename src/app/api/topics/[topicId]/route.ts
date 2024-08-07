@@ -1,3 +1,5 @@
+import { Topic } from "@/domain/topic";
+import { Timestamp } from "firebase/firestore";
 import { NextRequest, NextResponse } from 'next/server';
 import { AdminTopicRepository } from '@/infrastructure/topic/adminTopicRepository';
 
@@ -7,7 +9,17 @@ export async function GET(
     req: NextRequest,
     { params }: { params: { topicId: string } }
 ) {
-    const topic = await topicRepository.find(params.topicId);
+    // const topic = await topicRepository.find(params.topicId);
+    const topic: Topic = {
+        created_at: Timestamp.now(),
+        gen: 0,
+        icon_path: null,
+        id: "general",
+        left: 0,
+        name: "General",
+        right: 0,
+        updated_at: Timestamp.now()
+    }
 
     if (topic === undefined) {
         return NextResponse.json(

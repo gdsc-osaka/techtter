@@ -8,7 +8,7 @@ export interface Props {
 }
 
 export default async function PostListPage({ params }: Props) {
-    const topicId = params.topicId.at(params.topicId.length - 1);
+    const topicId = params.topicId.pop();
     if (topicId === undefined) return <p>Topic id not found.</p>;
 
     const res = await sfetch(`/api/topics/${topicId}`, {

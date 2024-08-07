@@ -17,9 +17,7 @@ export const roleAtom = loadable(
 
         if (roleId !== undefined && typeof roleId !== 'string') return null;
 
-        console.log(roleId);
         const role = await roleService.getRole(roleId);
-        console.log(role);
         return role ?? null;
     })
 );
