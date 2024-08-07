@@ -1,12 +1,23 @@
 import PostList from '@/app/posts/[...topicId]/_components/postList';
-import {
-    AdminTopicRepository,
-    findTopic,
-} from '@/infrastructure/topic/adminTopicRepository';
+import { Topic } from "@/domain/topic";
+import { Timestamp } from "firebase/firestore";
 
 export interface Props {
     params: {
         topicId: string[];
+    };
+}
+
+async function findTopic(id: string): Promise<Topic | undefined> {
+    return {
+        created_at: Timestamp.now(),
+        gen: 0,
+        icon_path: null,
+        id: id,
+        left: 0,
+        name: 'Test',
+        right: 0,
+        updated_at: Timestamp.now(),
     };
 }
 
