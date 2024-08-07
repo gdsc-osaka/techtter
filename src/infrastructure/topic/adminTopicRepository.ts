@@ -10,8 +10,8 @@ import { adminTopicConverter } from '@/infrastructure/topic/adminTopicConverter'
 export class AdminTopicRepository implements ITopicRepository {
     private readonly colRef = () =>
         Admin.db.collection('topics').withConverter(adminTopicConverter);
-    private readonly docRef = (categoryId: string) =>
-        Admin.db.doc(`topics/${categoryId}`).withConverter(adminTopicConverter);
+    private readonly docRef = (topicId: string) =>
+        Admin.db.doc(`topics/${topicId}`);
 
     async create(topic: ForCreateWithId<Topic>): Promise<Topic> {
         try {
@@ -47,7 +47,7 @@ export class AdminTopicRepository implements ITopicRepository {
     async find(id: string): Promise<Topic | undefined> {
         try {
             const snapshot = await this.docRef(id).get();
-            return snapshot.data();
+            return snapshot.data() as Topic | undefined;
         } catch (e) {
             logger.error(e);
             return Promise.reject(e);
