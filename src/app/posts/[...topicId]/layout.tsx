@@ -12,6 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const res = await sfetch(`/api/topics/${topicId}`, {
         method: 'GET',
     });
+    console.log(res.body);
 
     if (res.status >= 300) {
         return {

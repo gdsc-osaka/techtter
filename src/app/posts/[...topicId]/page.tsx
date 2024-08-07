@@ -14,6 +14,7 @@ export default async function PostListPage({ params }: Props) {
     const res = await sfetch(`/api/topics/${topicId}`, {
         method: 'GET',
     });
+    console.log(res.body);
 
     if (res.status >= 300) {
         return <p>Topic not found.</p>;
