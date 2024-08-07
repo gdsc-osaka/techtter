@@ -9,11 +9,11 @@ import { ReactNode } from 'react';
 
 export default async function Layout({ children }: { children: ReactNode }) {
     // const topicRepository = new AdminTopicRepository();
-    const topics: Topic[] = await findManyTopics();
+    // const topics: Topic[] = await findManyTopics();
 
     return (
         <div className={'h-screen flex flex-row items-stretch'}>
-            <TopicSideMenu topics={topics} />
+            {/*<TopicSideMenu topics={topics} />*/}
             <TopicDrawer />
             <NewTopicDialog />
             <div className={'w-full flex flex-col overflow-hidden'}>
