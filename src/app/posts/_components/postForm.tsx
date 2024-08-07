@@ -1,25 +1,24 @@
 'use client';
+import { createPostAction } from '@/app/posts/action';
+import { postFormSchema, PostFormType } from '@/app/posts/schema';
+import { userAtom } from '@/atoms/userAtom';
+import { AddIcon, SendIcon, UploadFileIcon } from '@/components/icons';
+import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { FileInfo, getFileData } from '@/lib/formUtils';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
-import { useForm } from 'react-hook-form';
 import { countLines } from '@/lib/strlib';
-import { Button } from '@/components/ui/button';
-import { AddIcon, SendIcon, UploadFileIcon } from '@/components/icons';
-import { createPostAction } from '@/app/posts/action';
-import { auth } from '@/firebase';
-import { useEffect, useRef, useState } from 'react';
-import { usePathname } from 'next/navigation';
-import { postFormSchema, PostFormType } from '@/app/posts/schema';
-import { userAtom } from '@/atoms/userAtom';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useAtom } from 'jotai';
+import { usePathname } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 export default function PostForm() {
     const pathname = usePathname();
@@ -49,7 +48,7 @@ export default function PostForm() {
             e.preventDefault();
             e.currentTarget.requestSubmit();
         }
-    }
+    };
 
     const handleSubmit = () => {
         form.reset();
@@ -84,7 +83,11 @@ export default function PostForm() {
                                     src={previewUrl}
                                     className={'w-24 h-24 object-fill rounded'}
                                 />
-                                <p className={'max-w-24 text-xs text-muted-foreground truncate'}>
+                                <p
+                                    className={
+                                        'max-w-24 text-xs text-muted-foreground truncate'
+                                    }
+                                >
                                     {file.name}
                                 </p>
                             </div>
@@ -93,7 +96,7 @@ export default function PostForm() {
                 )}
                 <div className={'flex items-start'}>
                     <DropdownMenu dir={'ltr'}>
-                        <DropdownMenuTrigger>
+                        <DropdownMenuTrigger asChild>
                             <Button size={'icon'} variant={'ghost'}>
                                 <AddIcon />
                             </Button>
@@ -107,7 +110,7 @@ export default function PostForm() {
                     </DropdownMenu>
                     <FormField
                         name={'files'}
-                        render={({ field: { onChange, value, ...rest } }) => (
+                        render={({ field: { onChange, ...rest } }) => (
                             <FormItem>
                                 <FormControl>
                                     <Input

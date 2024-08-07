@@ -1,7 +1,10 @@
 import { RoleService } from '@/application/role/roleService';
 import { isPolicyAllowed, Policy } from '@/domain/policy';
 import { Role } from '@/domain/role';
-import { IAuthRepository, UserRecord, } from '@/infrastructure/auth/iAuthRepository';
+import {
+    IAuthRepository,
+    UserRecord,
+} from '@/infrastructure/auth/iAuthRepository';
 import { cookies } from 'next/headers';
 
 interface AuthorizeResult {
@@ -30,7 +33,10 @@ export class AuthService {
                 accepted: false,
             };
 
-        const policy = typeof requiredPolicy === 'string' ? requiredPolicy : requiredPolicy(_user);
+        const policy =
+            typeof requiredPolicy === 'string'
+                ? requiredPolicy
+                : requiredPolicy(_user);
 
         return {
             user: _user,

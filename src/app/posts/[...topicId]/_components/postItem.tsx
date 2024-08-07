@@ -1,11 +1,11 @@
 import Markdown from '@/app/posts/[...topicId]/_components/markdown';
 import PostDropDownMenu from '@/app/posts/[...topicId]/_components/postDropDownMenu';
 import Embed from '@/components/embed';
-import { MoreHorizIcon } from '@/components/icons';
+import { MoreHorizIcon, SentimentStressedIcon } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Post } from '@/domain/post';
-import useFetchFileUrl from "@/fetcbers/useFetchFileUrl";
+import useFetchFileUrl from '@/fetcbers/useFetchFileUrl';
 import { extractUrls } from '@/lib/strlib';
 import useFetchUser from '@/fetcbers/useFetchUser';
 import { Fragment, useMemo } from 'react';
@@ -16,7 +16,11 @@ interface Props {
     size?: 'small' | 'default';
 }
 
-export default function PostItem({ post, hideMenu = false, size = 'default' }: Props) {
+export default function PostItem({
+    post,
+    hideMenu = false,
+    size = 'default',
+}: Props) {
     const date = post.created_at.toDate();
     const user = useFetchUser(post.user_id);
     const urls = useMemo(() => extractUrls(post.content), [post.content]);
@@ -61,18 +65,44 @@ export default function PostItem({ post, hideMenu = false, size = 'default' }: P
                         </h3>
                         <Markdown>{post.content}</Markdown>
                         {size === 'default' && fileUrls.length > 0 && (
-                            <div className={"flex gap-1 h-28"}>
-                                {fileUrls.map(({isLoading, data, error}, index) => (
-                                    <Fragment key={`${post.id}-file-${index}`}>
-                                        {isLoading && (
-                                            <Skeleton className={'aspect-square flex-none rounded'} />
-                                        )}
-                                        {data !== undefined && (
-                                            <img src={data} alt={`${post.id}-file-${index}`} className={'aspect-square max-w-28 object-cover rounded'}
-                                                 loading={"lazy"}/>
-                                        )}
-                                    </Fragment>
-                                ))}
+                            <div className={'flex gap-1 h-28 mt-1'}>
+                                {fileUrls.map(
+                                    ({ isLoading, data, error }, index) => (
+                                        <Fragment
+                                            key={`${post.id}-file-${index}`}
+                                        >
+                                            {isLoading && (
+                                                <Skeleton
+                                                    className={
+                                                        'aspect-square flex-none rounded'
+                                                    }
+                                                />
+                                            )}
+                                            {data !== undefined && (
+                                                <img
+                                                    src={data}
+                                                    alt={`${post.id}-file-${index}`}
+                                                    className={
+                                                        'aspect-square max-w-28 object-cover rounded'
+                                                    }
+                                                    loading={'lazy'}
+                                                />
+                                            )}
+                                            {error && (
+                                                <div
+                                                    className={
+                                                        'w-28 h-28 rounded border border-primary text-primary ' +
+                                                        'flex justify-center items-center'
+                                                    }
+                                                >
+                                                    <SentimentStressedIcon
+                                                        size={48}
+                                                    />
+                                                </div>
+                                            )}
+                                        </Fragment>
+                                    )
+                                )}
                             </div>
                         )}
                     </div>

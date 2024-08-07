@@ -38,7 +38,8 @@ export async function createPostAction(formData: FormData) {
         schema: postFormSchema,
     });
 
-    if (submission.status !== 'success') return Promise.reject(submission.reply().error);
+    if (submission.status !== 'success')
+        return Promise.reject(submission.reply().error);
 
     const { content, topicId, files } = submission.value;
 

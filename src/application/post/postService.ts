@@ -1,5 +1,5 @@
-import { AuthService } from "@/application/auth/authService";
-import { Policy } from "@/domain/policy";
+import { AuthService } from '@/application/auth/authService';
+import { Policy } from '@/domain/policy';
 import { initPost, Post } from '@/domain/post';
 import { IPostRepository } from '@/infrastructure/post/iPostRepository';
 import { IStorageRepository } from '@/infrastructure/storage/iStorageRepository';
@@ -13,15 +13,16 @@ export class PostService {
         private readonly topicRepository: ITopicRepository,
         private readonly storageRepository: IStorageRepository,
         private readonly authService: AuthService
-    ) {
-    }
+    ) {}
 
     async createPost(
         post: Pick<Post, 'topic_id' | 'tags' | 'content'>,
         files: File | FileList
     ): Promise<Post> {
         try {
-            const authorized = await this.authService.authorize(Policy.POST_CREATE);
+            const authorized = await this.authService.authorize(
+                Policy.POST_CREATE
+            );
             if (!authorized.accepted) {
                 return Promise.reject('Permission denied.');
             }
@@ -31,16 +32,18 @@ export class PostService {
                 return Promise.reject('topic not found');
             }
 
-            const id = new ShortUniqueId({length: 10}).randomUUID();
+            const id = new ShortUniqueId({ length: 10 }).randomUUID();
             const user_id = authorized.user.uid;
-            const _files = (files instanceof File ? [files] : Array.from(files)).filter(f => f.size > 0);
+            const _files = (
+                files instanceof File ? [files] : Array.from(files)
+            ).filter((f) => f.size > 0);
             const filePaths = _files.map(
                 (file) => `users/${user_id}/posts/${id}/files/${file.name}`
             );
 
             const promises: [Promise<Post>, ...Promise<void>[]] = [
                 this.postRepository.create(
-                    initPost(id, {...post, user_id}, topic, filePaths)
+                    initPost(id, { ...post, user_id }, topic, filePaths)
                 ),
                 ..._files.map(async (file, index) => {
                     const data = await file.arrayBuffer();
@@ -70,21 +73,24 @@ export class PostService {
                 return Promise.reject('Post not found');
             }
 
-            const authorized = await this.authService.authorize((user) => post.user_id === user.uid
-                ? Policy.POST_DELETE_SELF
-                : Policy.POST_DELETE, user);
+            const authorized = await this.authService.authorize(
+                (user) =>
+                    post.user_id === user.uid
+                        ? Policy.POST_DELETE_SELF
+                        : Policy.POST_DELETE,
+                user
+            );
 
             if (!authorized.accepted) {
                 return Promise.reject('Permission denied.');
             }
 
             await Promise.all([
-                    ...post.files.map((file) =>
-                        this.storageRepository.delete(file)
-                    ),
-                    this.postRepository.delete(user.uid, postId)
-                ]
-            )
+                ...post.files.map((file) =>
+                    this.storageRepository.delete(file)
+                ),
+                this.postRepository.delete(user.uid, postId),
+            ]);
 
             logger.log(`Post deleted. (${postId})`);
         } catch (e) {

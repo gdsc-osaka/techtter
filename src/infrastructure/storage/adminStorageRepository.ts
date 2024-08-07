@@ -1,6 +1,6 @@
 import { Admin } from '@/firebaseAdmin';
 import { IStorageRepository } from '@/infrastructure/storage/iStorageRepository';
-import { logger } from "@/logger";
+import { logger } from '@/logger';
 
 export class AdminStorageRepository implements IStorageRepository {
     async upload(path: string, buf: Buffer) {
