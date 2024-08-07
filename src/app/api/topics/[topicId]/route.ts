@@ -10,15 +10,15 @@ export async function GET(
     { params }: { params: { topicId: string } }
 ) {
     // const topic = await topicRepository.find(params.topicId);
-    const topic: Topic = {
-        created_at: Timestamp.now(),
+    const topic = {
+        created_at: Timestamp.now().toDate().toISOString(),
         gen: 0,
         icon_path: null,
-        id: "general",
+        id: params.topicId,
         left: 0,
         name: "General",
         right: 0,
-        updated_at: Timestamp.now()
+        updated_at: Timestamp.now().toDate().toISOString()
     }
 
     if (topic === undefined) {
