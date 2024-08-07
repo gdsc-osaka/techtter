@@ -1,20 +1,21 @@
 'use client';
 
 import PostItem from '@/app/posts/[...topicId]/_components/postItem';
+import { topicFamily, topicsAtom } from "@/atoms/topicAtom";
+import CircularProgressIndicator from '@/components/circularProgressIndicator';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useEffect, useRef, useState } from 'react';
 import {
     existsMorePostsFamily,
     fetchOlderPostsFamily,
     postsFamily,
 } from '@/atoms/postAtom';
-import CircularProgressIndicator from '@/components/circularProgressIndicator';
 import Divider from '@/components/divider';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { useEffect, useRef, useState } from 'react';
 
 interface Props {
     topicId: string;
-    topicLeft: number;
-    topicRight: number;
+    // topicLeft: number;
+    // topicRight: number;
 }
 
 function scrollAt(postId: string) {
@@ -23,17 +24,29 @@ function scrollAt(postId: string) {
         ?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-export default function PostList({ topicId, topicLeft, topicRight }: Props) {
+export default function PostList({ topicId }: Props) {
     const [posts, subscribe] = useAtom(postsFamily(topicId));
+    const subscribeTopics = useSetAtom(topicsAtom);
+    const topic = useAtomValue(topicFamily(topicId));
     const fetchMore = useSetAtom(fetchOlderPostsFamily(topicId));
     const existsMore = useAtomValue(existsMorePostsFamily(topicId));
     const spinnerRef = useRef<HTMLLIElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
     const [scrolledBottom, setScrolledBottom] = useState(true);
 
+    if (topic === undefined) return null;
+
+    // subscribe topics
+    useEffect(() => {
+        const unsub = subscribeTopics();
+        return () => {
+            unsub();
+        };
+    }, []);
+
     // subscribe latest posts
     useEffect(() => {
-        subscribe({ left: topicLeft, right: topicRight });
+        subscribe(topic);
     }, [topicId, posts]);
 
     // scroll at proper posts
@@ -52,7 +65,7 @@ export default function PostList({ topicId, topicLeft, topicRight }: Props) {
 
         const observer = new IntersectionObserver(([entry]) => {
             if (!entry.isIntersecting || !existsMore) return;
-            fetchMore({ left: topicLeft, right: topicRight });
+            fetchMore(topic);
         });
 
         if (spinner) observer.observe(spinner);
@@ -60,7 +73,7 @@ export default function PostList({ topicId, topicLeft, topicRight }: Props) {
         return () => {
             if (spinner) observer.unobserve(spinner);
         };
-    }, [spinnerRef.current, existsMore, fetchMore, topicLeft, topicRight]);
+    }, [spinnerRef.current, existsMore, fetchMore, topic]);
 
     // watch scrolled to bottom
     useEffect(() => {
