@@ -3,7 +3,7 @@ import TopicSideMenu from '@/app/posts/_components/topicSideMenu';
 import PostForm from '@/app/posts/_components/postForm';
 import Header from '@/app/posts/_components/header';
 import NewTopicModal from '@/app/posts/_components/newTopicModal';
-import { sfetch} from '@/lib/fetchUtils';
+import { sfetch } from '@/lib/fetchUtils';
 import { Topic } from '@/domain/topic';
 import TopicDrawer from '@/app/posts/_components/topicDrawer';
 

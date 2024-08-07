@@ -7,18 +7,7 @@ export async function GET(
     req: NextRequest,
     { params }: { params: { uid: string } }
 ) {
-    const authorization = req.headers.get('Authorization');
-    const split = authorization?.split(' ');
-
-    if (split === undefined || split.length !== 2) {
-        return NextResponse.json('Unauthorized', { status: 401 });
-    }
-
-    const idToken = split[1];
-
     try {
-        await Admin.auth.verifyIdToken(idToken);
-        logger.log(`User ${params.uid} verified`);
         const resultUser = await Admin.auth.getUser(params.uid);
         logger.log(`Got user ${resultUser.uid}`);
         const fireUser: FireUser = {

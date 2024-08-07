@@ -1,5 +1,5 @@
 import PostList from '@/app/posts/[...topicId]/_components/postList';
-import {sfetch} from '@/lib/fetchUtils';
+import { sfetch } from '@/lib/fetchUtils';
 
 export interface Props {
     params: {

@@ -17,9 +17,9 @@ export function getHost(): string | null {
  */
 export function sfetch(
     input: string | URL | globalThis.Request,
-    init?: RequestInit,
+    init?: RequestInit
 ): Promise<Response> {
     const host = getHost();
-    if (host === null) return Promise.reject(new Error("Host not found."));
+    if (host === null) return Promise.reject(new Error('Host not found.'));
     return fetch(host + input, init);
 }

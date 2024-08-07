@@ -11,7 +11,7 @@ export enum Policy {
     TOPIC = 'topic.*',
 }
 
-export function isAcceptable(policies: Policy[], required: Policy) {
+export function isPolicyAllowed(policies: Policy[], required: Policy) {
     for (const policy of policies) {
         if (policy === required) {
             return true;

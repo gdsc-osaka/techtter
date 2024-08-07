@@ -1,6 +1,6 @@
 import { AddIcon } from '@/components/icons';
 import { roleAtom } from '@/atoms/roleAtom';
-import { isAcceptable, Policy } from '@/domain/policy';
+import { isPolicyAllowed, Policy } from '@/domain/policy';
 import { useAtomValue } from 'jotai';
 
 interface Props {
@@ -13,7 +13,7 @@ export default function AddTopicButton({ onClick, size = 16 }: Props) {
 
     if (
         role.state === 'hasData' &&
-        isAcceptable(role.data?.policies ?? [], Policy.TOPIC_CREATE)
+        isPolicyAllowed(role.data?.policies ?? [], Policy.TOPIC_CREATE)
     ) {
         return (
             <button

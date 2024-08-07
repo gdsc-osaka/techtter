@@ -1,6 +1,7 @@
 'use client';
 
 import PostItem from '@/app/posts/[...topicId]/_components/postItem';
+import CircularProgressIndicator from "@/components/circularProgressIndicator";
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -89,9 +90,7 @@ export default function PostList({ topicId, topicLeft, topicRight }: Props) {
             <ol className={'h-full align-bottom'}>
                 {existsMore && (
                     <li ref={spinnerRef} className={'w-full text-center'}>
-                        <ProgressActivityIcon
-                            className={'mx-auto animate-spin'}
-                        />
+                        <CircularProgressIndicator/>
                     </li>
                 )}
                 {!existsMore && (

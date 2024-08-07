@@ -16,7 +16,9 @@ export default function Header() {
     const setOpenDrawer = useSetAtom(topicDrawerOpenAtom);
 
     useEffect(() => {
-        subscribe();
+        const unsub = subscribe();
+
+        return () => unsub();
     }, []);
 
     useEffect(() => {

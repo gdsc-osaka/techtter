@@ -52,6 +52,7 @@
     background-color: transparent;
     color: #0969da;
     text-decoration: none;
+    word-break: break-all;
 }
 
 .markdown-body abbr[title] {
