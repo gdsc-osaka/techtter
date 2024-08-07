@@ -44,12 +44,16 @@ export default function PostForm() {
     }, [pathname]);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
-        if (e === undefined) return;
         if (e.nativeEvent.isComposing) return;
         if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
             e.currentTarget.requestSubmit();
-            form.setValue('content', '');
         }
+    }
+
+    const handleSubmit = () => {
+        form.reset();
+        setFiles([]);
     };
 
     const handleUploadFile = () => {
@@ -64,6 +68,7 @@ export default function PostForm() {
                 action={createPostAction}
                 className={'bg-card px-2 py-1 flex flex-col gap-2'}
                 onKeyDown={handleKeyDown}
+                onSubmit={handleSubmit}
             >
                 {files.length > 0 && (
                     <div
