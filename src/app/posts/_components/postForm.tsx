@@ -84,7 +84,7 @@ export default function PostForm() {
                                     src={previewUrl}
                                     className={'w-24 h-24 object-fill rounded'}
                                 />
-                                <p className={'text-xs text-muted-foreground'}>
+                                <p className={'max-w-24 text-xs text-muted-foreground truncate'}>
                                     {file.name}
                                 </p>
                             </div>

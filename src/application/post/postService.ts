@@ -33,7 +33,7 @@ export class PostService {
 
             const id = new ShortUniqueId({length: 10}).randomUUID();
             const user_id = authorized.user.uid;
-            const _files = files instanceof File ? [files] : Array.from(files);
+            const _files = (files instanceof File ? [files] : Array.from(files)).filter(f => f.size > 0);
             const filePaths = _files.map(
                 (file) => `users/${user_id}/posts/${id}/files/${file.name}`
             );
