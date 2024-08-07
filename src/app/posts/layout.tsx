@@ -1,18 +1,15 @@
-import { ReactNode } from 'react';
-import TopicSideMenu from '@/app/posts/_components/topicSideMenu';
-import PostForm from '@/app/posts/_components/postForm';
 import Header from '@/app/posts/_components/header';
 import NewTopicDialog from '@/app/posts/_components/newTopicDialog';
-import { sfetch } from '@/lib/fetchUtils';
-import { Topic } from '@/domain/topic';
+import PostForm from '@/app/posts/_components/postForm';
 import TopicDrawer from '@/app/posts/_components/topicDrawer';
+import TopicSideMenu from '@/app/posts/_components/topicSideMenu';
+import { Topic } from '@/domain/topic';
+import { AdminTopicRepository } from '@/infrastructure/topic/adminTopicRepository';
+import { ReactNode } from 'react';
 
 export default async function Layout({ children }: { children: ReactNode }) {
-    const topics: Topic[] = await sfetch(`/api/topics`, {
-        // next: { revalidate: 3600 },
-    })
-        .then((res) => res.json())
-        .then((json) => json.topics);
+    const topicRepository = new AdminTopicRepository();
+    const topics: Topic[] = await topicRepository.findMany();
 
     return (
         <div className={'h-screen flex flex-row items-stretch'}>

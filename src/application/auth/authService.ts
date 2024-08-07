@@ -20,7 +20,7 @@ export class AuthService {
     ) {}
 
     async authorize(
-        requiredPolicy: Policy,
+        requiredPolicy: Policy | ((user: UserRecord) => Policy),
         user?: UserRecord
     ): Promise<AuthorizeResult> {
         const _user = user ?? (await this.getUser());
@@ -33,14 +33,19 @@ export class AuthService {
                 accepted: false,
             };
 
+        const policy =
+            typeof requiredPolicy === 'string'
+                ? requiredPolicy
+                : requiredPolicy(_user);
+
         return {
             user: _user,
             role,
-            accepted: isPolicyAllowed(role.policies, requiredPolicy),
+            accepted: isPolicyAllowed(role.policies, policy),
         };
     }
 
-    private async getUser() {
+    async getUser() {
         const idToken = cookies().get('idToken')?.value;
 
         if (idToken === undefined) {

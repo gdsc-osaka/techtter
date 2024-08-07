@@ -4,6 +4,7 @@ declare module 'process' {
             interface ProcessEnv {
                 NEXT_PUBLIC_FIRE_CONFIG: string;
                 FIRE_SA_KEY: string;
+                FIRE_STORAGE_BUCKET: string;
             }
         }
     }

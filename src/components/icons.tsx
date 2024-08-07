@@ -55,6 +55,14 @@ export const DeleteIcon = (props: MaterialSymbolProp) => {
     return <MaterialSymbol {...props}>delete</MaterialSymbol>;
 };
 
+export const UploadFileIcon = (props: MaterialSymbolProp) => {
+    return <MaterialSymbol {...props}>upload_file</MaterialSymbol>;
+};
+
+export const SentimentStressedIcon = (props: MaterialSymbolProp) => {
+    return <MaterialSymbol {...props}>sentiment_stressed</MaterialSymbol>;
+};
+
 export const GoogleIcon = ({ size = 24 }: MaterialSymbolProp) => {
     return (
         <Image

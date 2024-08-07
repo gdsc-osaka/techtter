@@ -1,4 +1,4 @@
-import { ForCreate } from '@/domain/_utils';
+import { ForCreateWithId } from '@/domain/_utils';
 import { Post } from '@/domain/post';
 import { Admin } from '@/firebaseAdmin';
 import { adminPostConverter } from '@/infrastructure/post/adminPostConverter';
@@ -17,19 +17,16 @@ export class AdminPostRepository implements IPostRepository {
             .doc(`users/${userId}/posts/${postId}`)
             .withConverter(adminPostConverter);
 
-    async create(post: ForCreate<Post>): Promise<Post> {
+    async create(post: ForCreateWithId<Post>): Promise<Post> {
         try {
-            const ref = this.colRef(post.user_id).doc();
-            await ref.set({
+            await this.docRef(post.user_id, post.id).set({
                 ...post,
-                id: ref.id,
                 created_at: admin.firestore.FieldValue.serverTimestamp(),
                 updated_at: admin.firestore.FieldValue.serverTimestamp(),
             });
-            logger.log(`Post created. (${ref.id})`);
+            logger.log(`Post created. (${post.id})`);
             return {
                 ...post,
-                id: ref.id,
                 created_at: Timestamp.now(),
                 updated_at: Timestamp.now(),
             };

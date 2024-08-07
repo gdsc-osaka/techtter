@@ -1,13 +1,19 @@
-import { TopicRepository } from '@/infrastructure/topic/topicRepository';
+import { AdminTopicRepository } from '@/infrastructure/topic/adminTopicRepository';
 import { NextResponse } from 'next/server';
-
-const topicRepository = new TopicRepository();
 
 export async function GET() {
     try {
+        const topicRepository = new AdminTopicRepository();
         const topics = await topicRepository.findMany();
         return NextResponse.json({ topics: topics }, { status: 200 });
     } catch (e) {
-        return NextResponse.error();
+        return NextResponse.json(
+            {
+                topic: [],
+                message:
+                    e instanceof Error ? e.message : 'Internal server error',
+            },
+            { status: 500 }
+        );
     }
 }

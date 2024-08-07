@@ -47,7 +47,7 @@ export default function PostDeleteDialog({ open, onOpenChange, post }: Props) {
                     投稿を削除します。よろしいですか？
                 </DialogDescription>
                 <div className={'bg-stone-50 drop-shadow rounded w-full'}>
-                    <PostItem post={post} hideMenu />
+                    <PostItem post={post} hideMenu size={'small'} />
                 </div>
                 <DialogFooter>
                     <DialogClose asChild>
