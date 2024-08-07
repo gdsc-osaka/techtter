@@ -1,6 +1,6 @@
-import PostItem from "@/app/posts/[...topicId]/_components/postItem";
-import { deletePostAtom } from "@/atoms/postAtom";
-import CircularProgressIndicator from "@/components/circularProgressIndicator";
+import PostItem from '@/app/posts/[...topicId]/_components/postItem';
+import { deletePostAtom } from '@/atoms/postAtom';
+import CircularProgressIndicator from '@/components/circularProgressIndicator';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -11,8 +11,8 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { Post } from '@/domain/post';
-import { useSetAtom } from "jotai";
-import { useState } from "react";
+import { useSetAtom } from 'jotai';
+import { useState } from 'react';
 
 interface Props {
     open: boolean;
@@ -46,16 +46,24 @@ export default function PostDeleteDialog({ open, onOpenChange, post }: Props) {
                 <DialogDescription>
                     投稿を削除します。よろしいですか？
                 </DialogDescription>
-                <div className={"bg-stone-50 drop-shadow rounded w-full"}>
+                <div className={'bg-stone-50 drop-shadow rounded w-full'}>
                     <PostItem post={post} hideMenu />
                 </div>
                 <DialogFooter>
                     <DialogClose asChild>
                         <Button variant={'ghost'}>キャンセル</Button>
                     </DialogClose>
-                    <Button variant={'destructive'} disabled={deleting}
-                            onClick={handleDelete}>
-                        {deleting && <CircularProgressIndicator size={20} className={"mr-2"}/>}
+                    <Button
+                        variant={'destructive'}
+                        disabled={deleting}
+                        onClick={handleDelete}
+                    >
+                        {deleting && (
+                            <CircularProgressIndicator
+                                size={20}
+                                className={'mr-2'}
+                            />
+                        )}
                         削除
                     </Button>
                 </DialogFooter>

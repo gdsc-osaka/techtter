@@ -50,11 +50,14 @@ const addPostsAtom = atom(null, (get, set, posts: Post[], topicId: string) => {
             .sort((a, b) => a.created_at.seconds - b.created_at.seconds)
     );
 });
-export const deletePostAtom = atom(null, (get, set, postId: string, topicId: string) => {
-    set(_postsFamily(topicId), (prev) =>
-        prev.filter((post) => post.id !== postId)
-    );
-});
+export const deletePostAtom = atom(
+    null,
+    (get, set, postId: string, topicId: string) => {
+        set(_postsFamily(topicId), (prev) =>
+            prev.filter((post) => post.id !== postId)
+        );
+    }
+);
 
 export const latestPostFamily = atomFamily((topicId: string) =>
     atom<Post | undefined>((get) => {

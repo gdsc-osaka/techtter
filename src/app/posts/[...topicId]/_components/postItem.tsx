@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Post } from '@/domain/post';
 import { extractUrls } from '@/lib/strlib';
-import useFetchUser from "@/fetcbers/useFetchUser";
+import useFetchUser from '@/fetcbers/useFetchUser';
 import { useMemo } from 'react';
 
 interface Props {
@@ -35,9 +35,7 @@ export default function PostItem({ post, hideMenu = false }: Props) {
                 />
             )}
             {/* user 読み込み中 */}
-            {user.isLoading && (
-                <Skeleton className={'rounded-full w-9 h-9'} />
-            )}
+            {user.isLoading && <Skeleton className={'rounded-full w-9 h-9'} />}
             <div className={'w-full flex flex-col gap-1'}>
                 <div className={'flex items-start gap-1'}>
                     <div className={'w-full flex flex-col gap-1'}>

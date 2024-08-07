@@ -3,7 +3,13 @@ import { createTopicAction } from '@/app/posts/action';
 import { newTopicModalAtom } from '@/app/posts/atoms';
 import { topicFormSchema, TopicFormType } from '@/app/posts/schema';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from "@/components/ui/dialog";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogTitle,
+} from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -49,7 +55,10 @@ export default function NewTopicDialog() {
     };
 
     return (
-        <Dialog open={modal.open} onOpenChange={(open) => setModal(prev => ({...prev, open}))}>
+        <Dialog
+            open={modal.open}
+            onOpenChange={(open) => setModal((prev) => ({ ...prev, open }))}
+        >
             <DialogContent>
                 <DialogTitle>Topic を作成</DialogTitle>
                 <Form {...form}>

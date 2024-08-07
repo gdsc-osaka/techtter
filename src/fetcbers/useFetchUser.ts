@@ -1,5 +1,5 @@
-import { FireUser, fireUserSchema } from "@/domain/fireUser";
-import useSWR from "swr";
+import { FireUser, fireUserSchema } from '@/domain/fireUser';
+import useSWR from 'swr';
 
 interface Result {
     data: FireUser | undefined;
@@ -13,7 +13,7 @@ export default function useFetchUser(userId: string): Result {
         const parsed = fireUserSchema.safeParse(res.user);
 
         if (!parsed.success) {
-            return Promise.reject(new Error("User type is invalid."));
+            return Promise.reject(new Error('User type is invalid.'));
         }
 
         return parsed.data;

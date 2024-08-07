@@ -47,7 +47,11 @@ export default function PostDropDownMenu({ trigger, post }: Props) {
                     )}
                 </DropdownMenuContent>
             </DropdownMenu>
-            <PostDeleteDialog open={openDialog} onOpenChange={setOpenDialog} post={post} />
+            <PostDeleteDialog
+                open={openDialog}
+                onOpenChange={setOpenDialog}
+                post={post}
+            />
         </>
     );
 }
