@@ -11,10 +11,10 @@ export interface Props {
 const topicRepository = new AdminTopicRepository();
 
 export default async function PostListPage({ params }: Props) {
-    const topicId = params.topicId.pop();
+    // const topicId = params.topicId.pop();
     return (
         <PostList
-            topicId={topicId  ?? "test"}
+            topicId={"test"}
             topicRight={-100000}
             topicLeft={100000}
         />
