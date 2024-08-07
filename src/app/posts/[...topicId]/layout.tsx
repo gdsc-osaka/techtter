@@ -4,10 +4,9 @@ import { Metadata } from 'next';
 import { ReactNode } from 'react';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const topicId = params.topicId.pop();
+    const topicId = params.topicId[params.topicId.length - 1];
     const topicRepository = new AdminTopicRepository();
-    const topic =
-        topicId === undefined ? undefined : await topicRepository.find(topicId);
+    const topic = await topicRepository.find(topicId);
     if (topic === undefined) return { title: 'Topic not found.' };
 
     return {
