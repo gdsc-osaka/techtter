@@ -43,10 +43,8 @@ export function assertsPost(data: object): asserts data is Post {
             typeof data.content === 'string' &&
             'created_at' in data &&
             typeof data.created_at === 'object' &&
-            data.created_at instanceof Timestamp &&
             'updated_at' in data &&
-            typeof data.updated_at === 'object' &&
-            data.updated_at instanceof Timestamp
+            typeof data.updated_at === 'object'
         )
     ) {
         throw new Error('data is not a type of Post');

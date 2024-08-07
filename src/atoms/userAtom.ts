@@ -1,6 +1,6 @@
-import { atom } from 'jotai';
-import { User } from 'firebase/auth';
 import { auth } from '@/firebase';
+import { User } from 'firebase/auth';
+import { atom } from 'jotai';
 import Cookies from 'js-cookie';
 
 const _userAtom = atom<User | null>(null);
@@ -10,9 +10,9 @@ export const userAtom = atom(
     (get) => get(_userAtom),
     (get, set) => {
         const subscribed = get(alreadySubscribedAtom);
-        if (subscribed) return;
+        if (subscribed) return () => {};
 
-        auth.onAuthStateChanged(async (user) => {
+        return auth.onAuthStateChanged(async (user) => {
             set(_userAtom, user);
 
             if (user === null) return;

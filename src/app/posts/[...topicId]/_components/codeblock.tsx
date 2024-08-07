@@ -19,9 +19,7 @@ function assertCode(code: unknown): code is CodeNode {
     return typeof className === 'string';
 }
 
-export default function CodeBlock({
-    children,
-}: JSX.IntrinsicElements['pre']) {
+export default function CodeBlock({ children }: JSX.IntrinsicElements['pre']) {
     if (!assertCode(children)) {
         return <pre>{children}</pre>;
     }

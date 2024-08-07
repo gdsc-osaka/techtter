@@ -2,16 +2,13 @@ import { ReactNode } from 'react';
 import TopicSideMenu from '@/app/posts/_components/topicSideMenu';
 import PostForm from '@/app/posts/_components/postForm';
 import Header from '@/app/posts/_components/header';
-import NewTopicModal from '@/app/posts/_components/newTopicModal';
-import { getHost } from '@/lib/urlUtils';
+import NewTopicDialog from '@/app/posts/_components/newTopicDialog';
+import { sfetch } from '@/lib/fetchUtils';
 import { Topic } from '@/domain/topic';
 import TopicDrawer from '@/app/posts/_components/topicDrawer';
 
 export default async function Layout({ children }: { children: ReactNode }) {
-    const host = getHost();
-    if (host === null) return Promise.reject();
-
-    const topics: Topic[] = await fetch(`${host}/api/topics`, {
+    const topics: Topic[] = await sfetch(`/api/topics`, {
         // next: { revalidate: 3600 },
     })
         .then((res) => res.json())
@@ -21,7 +18,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
         <div className={'h-screen flex flex-row items-stretch'}>
             <TopicSideMenu topics={topics} />
             <TopicDrawer />
-            <NewTopicModal />
+            <NewTopicDialog />
             <div className={'w-full flex flex-col overflow-hidden'}>
                 <Header />
                 <main

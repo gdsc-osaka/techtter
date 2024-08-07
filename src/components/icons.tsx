@@ -47,6 +47,14 @@ export const MenuIcon = (props: MaterialSymbolProp) => {
     return <MaterialSymbol {...props}>menu</MaterialSymbol>;
 };
 
+export const MoreHorizIcon = (props: MaterialSymbolProp) => {
+    return <MaterialSymbol {...props}>more_horiz</MaterialSymbol>;
+};
+
+export const DeleteIcon = (props: MaterialSymbolProp) => {
+    return <MaterialSymbol {...props}>delete</MaterialSymbol>;
+};
+
 export const GoogleIcon = ({ size = 24 }: MaterialSymbolProp) => {
     return (
         <Image

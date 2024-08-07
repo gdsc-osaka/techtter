@@ -1,38 +1,21 @@
-import { IPostRepository } from '@/infrastructure/post/iPostRepository';
 import { ForCreate } from '@/domain/_utils';
-import { assertsPost, Post } from '@/domain/post';
-import { Timestamp } from 'firebase/firestore';
+import { Post } from '@/domain/post';
+import { Admin } from '@/firebaseAdmin';
+import { adminPostConverter } from '@/infrastructure/post/adminPostConverter';
+import { IPostRepository } from '@/infrastructure/post/iPostRepository';
 import { logger } from '@/logger';
 import * as admin from 'firebase-admin';
-import { Admin } from '@/firebaseAdmin';
-
-const postConverter: admin.firestore.FirestoreDataConverter<Post> = {
-    fromFirestore(snapshot: FirebaseFirestore.QueryDocumentSnapshot): Post {
-        const data = snapshot.data();
-        const topic = { ...data, id: snapshot.id };
-        assertsPost(topic);
-        return topic;
-    },
-    toFirestore(
-        modelObject:
-            | FirebaseFirestore.WithFieldValue<Post>
-            | FirebaseFirestore.PartialWithFieldValue<Post>
-    ) {
-        const d = Object.assign({}, modelObject);
-        delete d.id;
-        return d;
-    },
-};
+import { Timestamp } from 'firebase/firestore';
 
 export class AdminPostRepository implements IPostRepository {
     private readonly colRef = (userId: string) =>
         Admin.db
             .collection(`users/${userId}/posts`)
-            .withConverter(postConverter);
+            .withConverter(adminPostConverter);
     private readonly docRef = (userId: string, postId: string) =>
         Admin.db
             .doc(`users/${userId}/posts/${postId}`)
-            .withConverter(postConverter);
+            .withConverter(adminPostConverter);
 
     async create(post: ForCreate<Post>): Promise<Post> {
         try {
@@ -60,6 +43,17 @@ export class AdminPostRepository implements IPostRepository {
         try {
             const snapshot = await this.docRef(userId, postId).get();
             return snapshot.data();
+        } catch (e) {
+            logger.error(e);
+            return Promise.reject(e);
+        }
+    }
+
+    async delete(userId: string, id: string): Promise<void> {
+        try {
+            const ref = this.docRef(userId, id);
+            await ref.delete();
+            logger.log(`Post deleted. (${id})`);
         } catch (e) {
             logger.error(e);
             return Promise.reject(e);

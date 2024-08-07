@@ -1,10 +1,11 @@
+import { RoleService } from '@/application/role/roleService';
+import { isPolicyAllowed, Policy } from '@/domain/policy';
+import { Role } from '@/domain/role';
 import {
     IAuthRepository,
     UserRecord,
 } from '@/infrastructure/auth/iAuthRepository';
-import { isAcceptable, Policy } from '@/domain/policy';
-import { Role } from '@/domain/role';
-import { RoleService } from '@/application/role/roleService';
+import { cookies } from 'next/headers';
 
 interface AuthorizeResult {
     user: UserRecord;
@@ -19,24 +20,34 @@ export class AuthService {
     ) {}
 
     async authorize(
-        idToken: string,
-        requiredPolicy: Policy
+        requiredPolicy: Policy,
+        user?: UserRecord
     ): Promise<AuthorizeResult> {
-        const decodedIdToken = await this.authRepository.verifyIdToken(idToken);
-        const user = await this.authRepository.getUser(decodedIdToken.uid);
-        const role = await this.roleService.getRole(user.customClaims?.role);
+        const _user = user ?? (await this.getUser());
+        const role = await this.roleService.getRole(_user.customClaims?.role);
 
         if (role === undefined)
             return {
-                user,
+                user: _user,
                 role: undefined,
                 accepted: false,
             };
 
         return {
-            user,
+            user: _user,
             role,
-            accepted: isAcceptable(role.policies, requiredPolicy),
+            accepted: isPolicyAllowed(role.policies, requiredPolicy),
         };
+    }
+
+    private async getUser() {
+        const idToken = cookies().get('idToken')?.value;
+
+        if (idToken === undefined) {
+            return Promise.reject(new Error('Unauthorized'));
+        }
+
+        const decodedIdToken = await this.authRepository.verifyIdToken(idToken);
+        return await this.authRepository.getUser(decodedIdToken.uid);
     }
 }
