@@ -10,7 +10,7 @@ const topicQueryService = new TopicQueryService();
 export const topicsAtom = atom(
     (get) => get(_topicsAtom),
     (get, set) => {
-        topicQueryService.subscribeTopics((topics) => {
+        return topicQueryService.subscribeTopics((topics) => {
             set(_topicsAtom, (prev) =>
                 prev
                     .filter((p) => !topics.map((t) => t.id).includes(p.id))

@@ -2,6 +2,7 @@ import {
     ITopicQueryService,
     TopicsCallback,
 } from '@/infrastructure/topic/iTopicQueryService';
+import { Unsubscribe } from "@/infrastructure/utils";
 import {
     collection,
     endBefore,
@@ -22,8 +23,8 @@ export class TopicQueryService implements ITopicQueryService {
         topicConverter
     );
 
-    subscribeTopics(callback: TopicsCallback): void {
-        onSnapshot(this.colRef, (snapshot) => {
+    subscribeTopics(callback: TopicsCallback): Unsubscribe {
+        return onSnapshot(this.colRef, (snapshot) => {
             const topics = snapshot.docs.map((d) => d.data());
             callback(topics);
         });
