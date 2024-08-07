@@ -8,17 +8,13 @@ export interface Props {
     };
 }
 
-const topicRepository = new AdminTopicRepository();
+// const topicRepository = new AdminTopicRepository();
 
 export default async function PostListPage({ params }: Props) {
-    // const topicId = params.topicId.pop();
     return (
-        <PostList
-            topicId={"test"}
-            topicRight={-100000}
-            topicLeft={100000}
-        />
+        <div>PostListPage</div>
     );
+    // const topicId = params.topicId.pop();
     // const topic =
     //     topicId === undefined ? undefined : await topicRepository.find(topicId);
     // if (topic === undefined) return <p>Topic not found.</p>;

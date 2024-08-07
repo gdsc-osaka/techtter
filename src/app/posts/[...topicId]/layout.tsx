@@ -3,7 +3,7 @@ import { AdminTopicRepository } from '@/infrastructure/topic/adminTopicRepositor
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
 
-const topicRepository = new AdminTopicRepository();
+// const topicRepository = new AdminTopicRepository();
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
