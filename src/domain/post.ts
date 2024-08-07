@@ -1,6 +1,6 @@
-import { Timestamp } from 'firebase/firestore';
-import { ForCreate } from '@/domain/_utils';
+import { ForCreateWithId } from '@/domain/_utils';
 import { Topic } from '@/domain/topic';
+import { Timestamp } from 'firebase/firestore';
 
 export interface Post {
     id: string;
@@ -9,15 +9,20 @@ export interface Post {
     topic_center: number;
     tags: string[];
     content: string;
+    files: string[];
     created_at: Timestamp;
     updated_at: Timestamp;
 }
 
 export function initPost(
+    id: string,
     post: Pick<Post, 'user_id' | 'topic_id' | 'tags' | 'content'>,
-    topic: Topic
-): ForCreate<Post> {
+    topic: Topic,
+    files: string[]
+): ForCreateWithId<Post> {
     return {
+        id,
+        files,
         user_id: post.user_id,
         topic_id: post.topic_id,
         topic_center: topic.left,

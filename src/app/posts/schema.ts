@@ -1,9 +1,19 @@
 import { z } from 'zod';
 
+const availableFileTypes = ['image/png', 'image/jpg'];
+
 export const postFormSchema = z.object({
     topicId: z.string(),
     content: z.string(),
-    idToken: z.string(),
+    files: z
+        .custom<FileList | File>()
+        .refine(
+            (files) =>
+                (files instanceof File ? [files] : Array.from(files)).every((file) =>
+                    availableFileTypes.includes(file.type)
+                ),
+            { message: 'jpg または png ファイルを選択して下さい' }
+        ),
 });
 
 export type PostFormType = z.infer<typeof postFormSchema>;

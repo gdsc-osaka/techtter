@@ -14,4 +14,5 @@ export namespace Admin {
     export const auth = app.auth();
     export const messaging = app.messaging();
     export const db = app.firestore();
+    export const storage = app.storage().bucket(process.env.FIRE_STORAGE_BUCKET);
 }
