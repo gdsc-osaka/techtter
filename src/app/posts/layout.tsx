@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import TopicSideMenu from '@/app/posts/_components/topicSideMenu';
 import PostForm from '@/app/posts/_components/postForm';
 import Header from '@/app/posts/_components/header';
-import NewTopicModal from '@/app/posts/_components/newTopicModal';
+import NewTopicDialog from '@/app/posts/_components/newTopicDialog';
 import { sfetch } from '@/lib/fetchUtils';
 import { Topic } from '@/domain/topic';
 import TopicDrawer from '@/app/posts/_components/topicDrawer';
@@ -18,7 +18,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
         <div className={'h-screen flex flex-row items-stretch'}>
             <TopicSideMenu topics={topics} />
             <TopicDrawer />
-            <NewTopicModal />
+            <NewTopicDialog />
             <div className={'w-full flex flex-col overflow-hidden'}>
                 <Header />
                 <main
