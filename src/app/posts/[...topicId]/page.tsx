@@ -1,5 +1,8 @@
-import PostList from "@/app/posts/[...topicId]/_components/postList";
-import { AdminTopicRepository, findTopic } from "@/infrastructure/topic/adminTopicRepository";
+import PostList from '@/app/posts/[...topicId]/_components/postList';
+import {
+    AdminTopicRepository,
+    findTopic,
+} from '@/infrastructure/topic/adminTopicRepository';
 
 export interface Props {
     params: {

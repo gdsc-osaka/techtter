@@ -1,11 +1,11 @@
-import { ITopicRepository } from '@/infrastructure/topic/ITopicRepository';
+import { ForCreateWithId, ForUpdate } from '@/domain/_utils';
+import { Topic } from '@/domain/topic';
 import { Admin } from '@/firebaseAdmin';
+import { adminTopicConverter } from '@/infrastructure/topic/adminTopicConverter';
+import { ITopicRepository } from '@/infrastructure/topic/ITopicRepository';
+import { logger } from '@/logger';
 import { firestore } from 'firebase-admin';
 import { Timestamp } from 'firebase/firestore';
-import { Topic } from '@/domain/topic';
-import { ForCreateWithId, ForUpdate } from '@/domain/_utils';
-import { logger } from '@/logger';
-import { adminTopicConverter } from '@/infrastructure/topic/adminTopicConverter';
 
 const colRef = () =>
     Admin.db.collection('topics').withConverter(adminTopicConverter);
@@ -13,24 +13,20 @@ const docRef = (topicId: string) =>
     Admin.db.doc(`topics/${topicId}`).withConverter(adminTopicConverter);
 
 export async function findTopic(id: string): Promise<Topic | undefined> {
-    try {
-        console.log('Getting topic...');
-        const snapshot = await docRef(id).get();
-        console.log('Got topic.');
-        return snapshot.data();
-    } catch (e) {
-        logger.error(e);
-        return Promise.reject(e);
-    }
+    return {
+        created_at: Timestamp.now(),
+        gen: 0,
+        icon_path: null,
+        id: id,
+        left: 0,
+        name: 'Test',
+        right: 0,
+        updated_at: Timestamp.now(),
+    };
 }
+
 export async function findManyTopics(): Promise<Topic[]> {
-    try {
-        const snapshot = await colRef().get();
-        return snapshot.docs.map((doc) => doc.data());
-    } catch (e) {
-        logger.error(e);
-        return Promise.reject(e);
-    }
+    return [];
 }
 
 export class AdminTopicRepository implements ITopicRepository {

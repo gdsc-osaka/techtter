@@ -4,7 +4,7 @@ import PostForm from '@/app/posts/_components/postForm';
 import TopicDrawer from '@/app/posts/_components/topicDrawer';
 import TopicSideMenu from '@/app/posts/_components/topicSideMenu';
 import { Topic } from '@/domain/topic';
-import { findManyTopics } from "@/infrastructure/topic/adminTopicRepository";
+import { findManyTopics } from '@/infrastructure/topic/adminTopicRepository';
 import { ReactNode } from 'react';
 
 export default async function Layout({ children }: { children: ReactNode }) {

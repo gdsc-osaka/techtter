@@ -1,7 +1,11 @@
 'use client';
 
 import PostItem from '@/app/posts/[...topicId]/_components/postItem';
-import { existsMorePostsFamily, fetchOlderPostsFamily, postsFamily, } from '@/atoms/postAtom';
+import {
+    existsMorePostsFamily,
+    fetchOlderPostsFamily,
+    postsFamily,
+} from '@/atoms/postAtom';
 import CircularProgressIndicator from '@/components/circularProgressIndicator';
 import Divider from '@/components/divider';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';

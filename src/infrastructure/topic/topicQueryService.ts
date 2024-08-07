@@ -2,7 +2,7 @@ import {
     ITopicQueryService,
     TopicsCallback,
 } from '@/infrastructure/topic/iTopicQueryService';
-import { Unsubscribe } from "@/infrastructure/utils";
+import { Unsubscribe } from '@/infrastructure/utils';
 import {
     collection,
     endBefore,

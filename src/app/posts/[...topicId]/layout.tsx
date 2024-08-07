@@ -1,12 +1,10 @@
 import { Props } from '@/app/posts/[...topicId]/page';
-import { findTopic } from "@/infrastructure/topic/adminTopicRepository";
+import { findTopic } from '@/infrastructure/topic/adminTopicRepository';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
 
 export default function Layout({ children }: { children: ReactNode }) {
-    return (
-        <>{children}</>
-    );
+    return <>{children}</>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

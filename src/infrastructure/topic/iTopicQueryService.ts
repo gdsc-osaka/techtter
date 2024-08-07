@@ -1,5 +1,5 @@
 import { Topic } from '@/domain/topic';
-import { Unsubscribe } from "@/infrastructure/utils";
+import { Unsubscribe } from '@/infrastructure/utils';
 
 export type TopicsCallback = (topics: Topic[]) => void;
 
