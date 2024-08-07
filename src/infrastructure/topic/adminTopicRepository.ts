@@ -13,6 +13,8 @@ const docRef = (topicId: string) =>
     Admin.db.doc(`topics/${topicId}`).withConverter(adminTopicConverter);
 
 export class AdminTopicRepository implements ITopicRepository {
+    constructor() {}
+
     async create(topic: ForCreateWithId<Topic>): Promise<Topic> {
         try {
             await colRef()
