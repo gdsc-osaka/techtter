@@ -1,4 +1,5 @@
 import PostList from '@/app/posts/[...topicId]/_components/postList';
+import { AdminTopicRepository } from '@/infrastructure/topic/adminTopicRepository';
 import { sfetch } from '@/lib/fetchUtils';
 
 export interface Props {
@@ -7,20 +8,13 @@ export interface Props {
     };
 }
 
+const topicRepository = new AdminTopicRepository();
+
 export default async function PostListPage({ params }: Props) {
     const topicId = params.topicId.pop();
-    if (topicId === undefined) return <p>Topic id not found.</p>;
-
-    const res = await sfetch(`/api/topics/${topicId}`, {
-        method: 'GET',
-    });
-    console.log(res.body);
-
-    if (res.status >= 300) {
-        return <p>Topic not found.</p>;
-    }
-
-    const topic = (await res.json()).topic;
+    const topic =
+        topicId === undefined ? undefined : await topicRepository.find(topicId);
+    if (topic === undefined) return <p>Topic not found.</p>;
 
     return (
         <PostList

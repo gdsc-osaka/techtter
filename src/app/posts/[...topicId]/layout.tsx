@@ -1,26 +1,15 @@
-import { Metadata } from 'next';
 import { Props } from '@/app/posts/[...topicId]/page';
+import { AdminTopicRepository } from '@/infrastructure/topic/adminTopicRepository';
+import { Metadata } from 'next';
 import { ReactNode } from 'react';
-import { sfetch } from '@/lib/fetchUtils';
+
+const topicRepository = new AdminTopicRepository();
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const topicId = params.topicId.pop();
-    if (topicId === undefined) {
-        return {title: 'Topic id not found.'};
-    }
-
-    const res = await sfetch(`/api/topics/${topicId}`, {
-        method: 'GET',
-    });
-    console.log(res.body);
-
-    if (res.status >= 300) {
-        return {
-            title: 'Topic not found.',
-        };
-    }
-
-    const topic = (await res.json()).topic;
+    const topic =
+        topicId === undefined ? undefined : await topicRepository.find(topicId);
+    if (topic === undefined) return { title: 'Topic not found.' };
 
     return {
         title: topic.name,
