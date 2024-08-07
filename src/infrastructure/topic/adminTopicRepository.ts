@@ -1,6 +1,6 @@
 import { ForCreateWithId, ForUpdate } from '@/domain/_utils';
 import { Topic } from '@/domain/topic';
-import { Admin } from '@/firebaseAdmin';
+import { db } from '@/firebaseAdmin';
 import { adminTopicConverter } from '@/infrastructure/topic/adminTopicConverter';
 import { ITopicRepository } from '@/infrastructure/topic/ITopicRepository';
 import { logger } from '@/logger';
@@ -8,9 +8,9 @@ import { firestore } from 'firebase-admin';
 import { Timestamp } from 'firebase/firestore';
 
 const colRef = () =>
-    Admin.db.collection('topics').withConverter(adminTopicConverter);
+    db.collection('topics').withConverter(adminTopicConverter);
 const docRef = (topicId: string) =>
-    Admin.db.doc(`topics/${topicId}`).withConverter(adminTopicConverter);
+    db.doc(`topics/${topicId}`).withConverter(adminTopicConverter);
 
 export async function findTopic(id: string): Promise<Topic | undefined> {
     return {

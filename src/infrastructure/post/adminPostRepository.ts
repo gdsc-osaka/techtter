@@ -1,6 +1,6 @@
 import { ForCreateWithId } from '@/domain/_utils';
 import { Post } from '@/domain/post';
-import { Admin } from '@/firebaseAdmin';
+import { db } from '@/firebaseAdmin';
 import { adminPostConverter } from '@/infrastructure/post/adminPostConverter';
 import { IPostRepository } from '@/infrastructure/post/iPostRepository';
 import { logger } from '@/logger';
@@ -9,11 +9,11 @@ import { Timestamp } from 'firebase/firestore';
 
 export class AdminPostRepository implements IPostRepository {
     private readonly colRef = (userId: string) =>
-        Admin.db
+        db
             .collection(`users/${userId}/posts`)
             .withConverter(adminPostConverter);
     private readonly docRef = (userId: string, postId: string) =>
-        Admin.db
+        db
             .doc(`users/${userId}/posts/${postId}`)
             .withConverter(adminPostConverter);
 
