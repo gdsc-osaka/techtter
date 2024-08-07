@@ -11,7 +11,7 @@ export class AdminTopicRepository implements ITopicRepository {
     private readonly colRef = () =>
         Admin.db.collection('topics').withConverter(adminTopicConverter);
     private readonly docRef = (topicId: string) =>
-        Admin.db.doc(`topics/${topicId}`);
+        Admin.db.doc(`topics/${topicId}`).withConverter(adminTopicConverter);
 
     async create(topic: ForCreateWithId<Topic>): Promise<Topic> {
         try {
@@ -46,8 +46,10 @@ export class AdminTopicRepository implements ITopicRepository {
 
     async find(id: string): Promise<Topic | undefined> {
         try {
+            console.log("Getting topic...")
             const snapshot = await this.docRef(id).get();
-            return snapshot.data() as Topic | undefined;
+            console.log("Got topic.");
+            return snapshot.data();
         } catch (e) {
             logger.error(e);
             return Promise.reject(e);
