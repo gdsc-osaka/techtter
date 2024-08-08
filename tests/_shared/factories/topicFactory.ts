@@ -11,4 +11,5 @@ export const topicFactory = Factory.define<Topic>(({ sequence }) => ({
     icon_path: null,
     created_at: Timestamp.now(),
     updated_at: Timestamp.now(),
+    webhooks: [],
 }));
