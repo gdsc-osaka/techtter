@@ -46,9 +46,7 @@ export class AdminTopicRepository implements ITopicRepository {
 
     async find(id: string): Promise<Topic | undefined> {
         try {
-            console.log('Getting topic...');
             const snapshot = await docRef(id).get();
-            console.log('Got topic.');
             return snapshot.data();
         } catch (e) {
             logger.error(e);

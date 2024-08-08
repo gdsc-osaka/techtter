@@ -1,6 +1,7 @@
 import { AuthService } from '@/application/auth/authService';
 import { Policy } from '@/domain/policy';
 import { initPost, Post } from '@/domain/post';
+import { IDiscordRepository } from "@/infrastructure/discord/iDiscordRepository";
 import { IPostRepository } from '@/infrastructure/post/iPostRepository';
 import { IStorageRepository } from '@/infrastructure/storage/iStorageRepository';
 import { ITopicRepository } from '@/infrastructure/topic/ITopicRepository';
@@ -12,7 +13,8 @@ export class PostService {
         private readonly postRepository: IPostRepository,
         private readonly topicRepository: ITopicRepository,
         private readonly storageRepository: IStorageRepository,
-        private readonly authService: AuthService
+        private readonly authService: AuthService,
+        private readonly discordRepository: IDiscordRepository,
     ) {}
 
     async createPost(
@@ -57,6 +59,14 @@ export class PostService {
             const [newPost] = await Promise.all(promises);
 
             logger.log(`Post created. (${id})`);
+
+            for (const webhook of topic.webhooks) {
+                this.discordRepository.send(webhook, {
+                    content: newPost.content,
+                    username: authorized.user.displayName,
+                    avatar_url: authorized.user.photoURL,
+                });
+            }
 
             return newPost;
         } catch (e) {

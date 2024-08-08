@@ -2,6 +2,7 @@ import { AuthService } from '@/application/auth/authService';
 import { PostService } from '@/application/post/postService';
 import { RoleService } from '@/application/role/roleService';
 import { AuthRepository } from '@/infrastructure/auth/authRepository';
+import { DiscordRepository } from "@/infrastructure/discord/discordRepository";
 import { AdminPostRepository } from '@/infrastructure/post/adminPostRepository';
 import { AdminRoleRepository } from '@/infrastructure/role/adminRoleRepository';
 import { AdminStorageRepository } from '@/infrastructure/storage/adminStorageRepository';
@@ -15,7 +16,8 @@ const postService = new PostService(
     new AuthService(
         new AuthRepository(),
         new RoleService(new AdminRoleRepository())
-    )
+    ),
+    new DiscordRepository()
 );
 
 export async function DELETE(
