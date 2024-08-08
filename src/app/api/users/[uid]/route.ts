@@ -1,14 +1,22 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/firebaseAdmin';
 import { FireUser } from '@/domain/fireUser';
 import { logger } from '@/logger';
+import { NextRequest, NextResponse } from 'next/server';
+
+async function getUser(uid: string) {
+    return {
+        uid: uid,
+        displayName: 'test',
+        photoURL: 'https://example.com',
+    };
+}
 
 export async function GET(
     req: NextRequest,
     { params }: { params: { uid: string } }
 ) {
     try {
-        const resultUser = await auth.getUser(params.uid);
+        // const resultUser = await auth.getUser(params.uid);
+        const resultUser = await getUser(params.uid);
         logger.log(`Got user ${resultUser.uid}`);
         const fireUser: FireUser = {
             uid: resultUser.uid,
