@@ -2,7 +2,7 @@ import { FireUser } from '@/domain/fireUser';
 import { logger } from '@/logger';
 import { NextRequest, NextResponse } from 'next/server';
 
-async function getUser(uid: string) {
+function getUser(uid: string) {
     return {
         uid: uid,
         displayName: 'test',
@@ -16,7 +16,7 @@ export async function GET(
 ) {
     try {
         // const resultUser = await auth.getUser(params.uid);
-        const resultUser = await getUser(params.uid);
+        const resultUser = getUser(params.uid);
         logger.log(`Got user ${resultUser.uid}`);
         const fireUser: FireUser = {
             uid: resultUser.uid,
