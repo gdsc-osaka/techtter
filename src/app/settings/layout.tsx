@@ -1,12 +1,12 @@
 import Divider from '@/components/divider';
-import { UserIcon } from 'lucide-react';
+import { AccountCircleIcon } from '@/components/icons';
 import { headers } from 'next/headers';
 import Link from 'next/link';
 
 const links: { link: string; icon: React.ReactNode; label: string }[] = [
     {
         link: '/settings/profile',
-        icon: <UserIcon />,
+        icon: <AccountCircleIcon />,
         label: 'プロフィール',
     },
     // {

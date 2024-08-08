@@ -1,4 +1,4 @@
-import { ForCreateWithId } from '@/domain/_utils';
+import { ForCreateWithId, ForUpdate } from '@/domain/_utils';
 import { Post } from '@/domain/post';
 import { db } from '@/firebaseAdmin';
 import { adminPostConverter } from '@/infrastructure/post/adminPostConverter';
@@ -51,6 +51,32 @@ export class AdminPostRepository implements IPostRepository {
             const ref = this.docRef(userId, id);
             await ref.delete();
             logger.log(`Post deleted. (${id})`);
+        } catch (e) {
+            logger.error(e);
+            return Promise.reject(e);
+        }
+    }
+
+    async update(userId: string, post: ForUpdate<Post>): Promise<Post> {
+        try {
+            const oldPost = await this.find(userId, post.id);
+
+            if (oldPost === undefined) {
+                return Promise.reject('Post not found');
+            }
+
+            if ('created_at' in post)
+                delete post.created_at;
+            await this.docRef(userId, post.id).update({
+                ...post,
+                updated_at: admin.firestore.FieldValue.serverTimestamp(),
+            });
+            logger.log(`Post updated. (${post.id})`);
+            return {
+                ...oldPost,
+                ...post,
+                updated_at: Timestamp.now(),
+            };
         } catch (e) {
             logger.error(e);
             return Promise.reject(e);

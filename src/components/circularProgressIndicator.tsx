@@ -1,4 +1,4 @@
-import { LoaderCircle } from 'lucide-react';
+import { ProgressActivityIcon } from '@/components/icons';
 
 interface Props {
     size?: number;
@@ -10,7 +10,7 @@ export default function CircularProgressIndicator({
     className = '',
 }: Props) {
     return (
-        <LoaderCircle
+        <ProgressActivityIcon
             className={`mx-auto animate-spin ${className}`}
             size={size}
         />
