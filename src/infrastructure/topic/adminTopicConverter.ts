@@ -6,7 +6,7 @@ export const adminTopicConverter: firestore.FirestoreDataConverter<Topic> = {
         const data = snapshot.data();
         const topic = { ...data, id: snapshot.id };
         assertsTopic(topic);
-        return topic;
+        return { ...topic, webhooks: topic.webhooks ?? [] };
     },
     toFirestore(
         modelObject:

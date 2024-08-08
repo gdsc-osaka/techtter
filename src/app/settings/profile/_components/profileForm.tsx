@@ -1,9 +1,19 @@
 'use client';
-import { ProfileFormSchema, profileFormSchema, } from '@/app/settings/profile/schema';
+import {
+    ProfileFormSchema,
+    profileFormSchema,
+} from '@/app/settings/profile/schema';
 import { userAtom } from '@/atoms/userAtom';
 import CircularProgressIndicator from '@/components/circularProgressIndicator';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { updateProfile } from 'firebase/auth';
@@ -62,13 +72,18 @@ export default function ProfileForm() {
                             <FormControl>
                                 <Input id={'name'} {...field} />
                             </FormControl>
-                            <FormMessage/>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
                 <div>
                     <Button type={'submit'} disabled={submitting}>
-                        {submitting && <CircularProgressIndicator className={"mr-1"} size={20} />}
+                        {submitting && (
+                            <CircularProgressIndicator
+                                className={'mr-1'}
+                                size={20}
+                            />
+                        )}
                         更新
                     </Button>
                 </div>
