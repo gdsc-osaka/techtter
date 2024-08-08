@@ -19,7 +19,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
                 <Header />
                 <main
                     className={
-                        'h-full px-4 w-full relative flex flex-col flex-auto'
+                        'h-full px-2 md:px-4 w-full relative flex flex-col flex-auto'
                     }
                 >
                     <div className={'relative h-full'}>{children}</div>

@@ -33,7 +33,7 @@ export default function PostItem({
         <li
             id={`post-item-${post.id}`}
             className={
-                'px-3 py-3 rounded flex items-start gap-4 transition-colors'
+                'px-1 md:px-3 py-3 rounded flex items-start gap-2 md:gap-4 transition-colors'
             }
         >
             {/* user データありかつ photoUrl あり*/}
@@ -66,7 +66,14 @@ export default function PostItem({
                                 className={'text-xs text-stone-600 '}
                             >{`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}</span>
                         </h3>
-                        {!editing && <Markdown>{post.content}</Markdown>}
+                        {!editing && (
+                            <Markdown>
+                                {size === 'small'
+                                    ? post.content.slice(0, 80) +
+                                      (post.content.length > 80 ? '...' : '')
+                                    : post.content}
+                            </Markdown>
+                        )}
                         {editing && (
                             <PostEdit
                                 post={post}
@@ -75,17 +82,25 @@ export default function PostItem({
                         )}
                         {size === 'default' && <FileList fileUrls={fileUrls} />}
                     </div>
-                    {hideMenu || (
-                        <PostDropDownMenu
-                            post={post}
-                            trigger={
-                                <Button variant={'ghost'} size={'icon'}>
-                                    <MoreHorizIcon size={20} />
-                                </Button>
-                            }
-                            onEdit={() => setEditing(true)}
-                        />
-                    )}
+                    <div className={'relative'}>
+                        {hideMenu || (
+                            <PostDropDownMenu
+                                post={post}
+                                trigger={
+                                    <Button
+                                        variant={'ghost'}
+                                        size={'icon'}
+                                        className={
+                                            'absolute -top-3 right-0 z-10'
+                                        }
+                                    >
+                                        <MoreHorizIcon size={20} />
+                                    </Button>
+                                }
+                                onEdit={() => setEditing(true)}
+                            />
+                        )}
+                    </div>
                 </div>
                 {size === 'default' && (
                     <div className={'w-full'}>

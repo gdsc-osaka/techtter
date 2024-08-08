@@ -29,7 +29,7 @@ export default function TopicSideMenu({ topics }: Props) {
     );
 }
 
-function generateTopicItem(node: TopicTreeNode) {
+export function generateTopicItem(node: TopicTreeNode) {
     if (node.children.length === 0) return;
 
     return (
