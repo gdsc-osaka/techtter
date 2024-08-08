@@ -12,6 +12,4 @@ const app =
 
 export const auth = app.auth();
 export const db = app.firestore();
-export const storage = app
-    .storage()
-    .bucket(process.env.FIRE_STORAGE_BUCKET);
+export const storage = app.storage().bucket(process.env.FIRE_STORAGE_BUCKET);

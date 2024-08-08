@@ -38,3 +38,14 @@ export function assertsTopic(data: object): asserts data is Topic {
         throw new Error(`data ${JSON.stringify(data)} is not a type of Topic`);
     }
 }
+
+export function initTopic(
+    topic: Pick<Topic, 'id' | 'name' | 'icon_path'>,
+    generated: Pick<Topic, 'left' | 'right' | 'gen'>
+): Omit<Topic, 'created_at' | 'updated_at'> {
+    return {
+        ...topic,
+        ...generated,
+        webhooks: [],
+    };
+}

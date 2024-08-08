@@ -7,8 +7,7 @@ import { logger } from '@/logger';
 import { firestore } from 'firebase-admin';
 import { Timestamp } from 'firebase/firestore';
 
-const colRef = () =>
-    db.collection('topics').withConverter(adminTopicConverter);
+const colRef = () => db.collection('topics').withConverter(adminTopicConverter);
 const docRef = (topicId: string) =>
     db.doc(`topics/${topicId}`).withConverter(adminTopicConverter);
 

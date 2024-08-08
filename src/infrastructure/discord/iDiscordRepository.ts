@@ -1,4 +1,4 @@
-import { DiscordRequest } from "@/domain/discord";
+import { DiscordRequest } from '@/domain/discord';
 
 export interface IDiscordRepository {
     send(url: string, request: DiscordRequest): Promise<void>;

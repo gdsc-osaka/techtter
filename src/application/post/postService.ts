@@ -1,11 +1,11 @@
 import { AuthService } from '@/application/auth/authService';
 import { Policy } from '@/domain/policy';
 import { initPost, Post } from '@/domain/post';
-import { IDiscordRepository } from "@/infrastructure/discord/iDiscordRepository";
+import { IDiscordRepository } from '@/infrastructure/discord/iDiscordRepository';
 import { IPostRepository } from '@/infrastructure/post/iPostRepository';
 import { IStorageRepository } from '@/infrastructure/storage/iStorageRepository';
 import { ITopicRepository } from '@/infrastructure/topic/ITopicRepository';
-import { getHost } from "@/lib/fetchUtils";
+import { getHost } from '@/lib/fetchUtils';
 import { logger } from '@/logger';
 import ShortUniqueId from 'short-unique-id';
 
@@ -15,7 +15,7 @@ export class PostService {
         private readonly topicRepository: ITopicRepository,
         private readonly storageRepository: IStorageRepository,
         private readonly authService: AuthService,
-        private readonly discordRepository: IDiscordRepository,
+        private readonly discordRepository: IDiscordRepository
     ) {}
 
     async createPost(
@@ -62,10 +62,13 @@ export class PostService {
             logger.log(`Post created. (${id})`);
 
             const host = getHost();
-            const postUrl = host === null ? null : `${host}/posts/${newPost.id}`;
+            const postUrl =
+                host === null ? null : `${host}/posts/${newPost.id}`;
             for (const webhook of topic.webhooks) {
                 this.discordRepository.send(webhook, {
-                    content: newPost.content + (postUrl ? `\n\nfrom ${postUrl}` : ""),
+                    content:
+                        newPost.content +
+                        (postUrl ? `\n\nfrom ${postUrl}` : ''),
                     username: `${authorized.user.displayName} - Techtter`,
                     avatar_url: authorized.user.photoURL,
                 });

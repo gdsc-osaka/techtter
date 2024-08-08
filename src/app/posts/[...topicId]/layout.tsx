@@ -1,5 +1,5 @@
 import { Props } from '@/app/posts/[...topicId]/page';
-import { AdminTopicRepository } from "@/infrastructure/topic/adminTopicRepository";
+import { AdminTopicRepository } from '@/infrastructure/topic/adminTopicRepository';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
 
