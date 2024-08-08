@@ -12,23 +12,6 @@ const colRef = () =>
 const docRef = (topicId: string) =>
     db.doc(`topics/${topicId}`).withConverter(adminTopicConverter);
 
-export async function findTopic(id: string): Promise<Topic | undefined> {
-    return {
-        created_at: Timestamp.now(),
-        gen: 0,
-        icon_path: null,
-        id: id,
-        left: 0,
-        name: 'Test',
-        right: 0,
-        updated_at: Timestamp.now(),
-    };
-}
-
-export async function findManyTopics(): Promise<Topic[]> {
-    return [];
-}
-
 export class AdminTopicRepository implements ITopicRepository {
     async create(topic: ForCreateWithId<Topic>): Promise<Topic> {
         try {

@@ -1,21 +1,16 @@
 'use client';
 
 import PostItem from '@/app/posts/[...topicId]/_components/postItem';
-import { topicFamily, topicsAtom } from "@/atoms/topicAtom";
+import { existsMorePostsFamily, fetchOlderPostsFamily, postsFamily, } from '@/atoms/postAtom';
 import CircularProgressIndicator from '@/components/circularProgressIndicator';
+import Divider from '@/components/divider';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
-import {
-    existsMorePostsFamily,
-    fetchOlderPostsFamily,
-    postsFamily,
-} from '@/atoms/postAtom';
-import Divider from '@/components/divider';
 
 interface Props {
     topicId: string;
-    // topicLeft: number;
-    // topicRight: number;
+    topicLeft: number;
+    topicRight: number;
 }
 
 function scrollAt(postId: string) {
@@ -24,25 +19,15 @@ function scrollAt(postId: string) {
         ?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-export default function PostList({ topicId }: Props) {
+export default function PostList({ topicId, topicLeft, topicRight }: Props) {
     const [posts, subscribe] = useAtom(postsFamily(topicId));
-    const subscribeTopics = useSetAtom(topicsAtom);
-    const topic = useAtomValue(topicFamily(topicId));
     const fetchMore = useSetAtom(fetchOlderPostsFamily(topicId));
     const existsMore = useAtomValue(existsMorePostsFamily(topicId));
     const spinnerRef = useRef<HTMLLIElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
     const [scrolledBottom, setScrolledBottom] = useState(true);
 
-    if (topic === undefined) return null;
-
-    // subscribe topics
-    useEffect(() => {
-        const unsub = subscribeTopics();
-        return () => {
-            unsub();
-        };
-    }, []);
+    const topic = {left: topicLeft, right: topicRight};
 
     // subscribe latest posts
     useEffect(() => {
@@ -73,7 +58,7 @@ export default function PostList({ topicId }: Props) {
         return () => {
             if (spinner) observer.unobserve(spinner);
         };
-    }, [spinnerRef.current, existsMore, fetchMore, topic]);
+    }, [spinnerRef.current, existsMore, fetchMore, topicId]);
 
     // watch scrolled to bottom
     useEffect(() => {
