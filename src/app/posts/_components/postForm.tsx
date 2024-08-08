@@ -13,6 +13,7 @@ import {
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { FileInfo, getFileData } from '@/lib/formUtils';
+import { isMobile } from '@/lib/responsiveLib';
 import { countLines } from '@/lib/strlib';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAtom } from 'jotai';
@@ -44,7 +45,7 @@ export default function PostForm() {
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
         if (e.nativeEvent.isComposing) return;
-        if (e.key === 'Enter' && !e.shiftKey) {
+        if (e.key === 'Enter' && !e.shiftKey && !isMobile()) {
             e.preventDefault();
             e.currentTarget.requestSubmit();
         }
