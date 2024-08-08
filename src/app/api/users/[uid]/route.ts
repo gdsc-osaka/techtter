@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/firebaseAdmin';
 import { FireUser } from '@/domain/fireUser';
-import { logger } from '@/logger';
+import { auth } from "@/firebaseAdmin";
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
     req: NextRequest,
@@ -9,7 +8,6 @@ export async function GET(
 ) {
     try {
         const resultUser = await auth.getUser(params.uid);
-        logger.log(`Got user ${resultUser.uid}`);
         const fireUser: FireUser = {
             uid: resultUser.uid,
             displayName: resultUser.displayName || null,
@@ -20,7 +18,6 @@ export async function GET(
             user: fireUser,
         });
     } catch (e) {
-        logger.error(e);
         return NextResponse.json(
             { error: 'Internal server error' },
             { status: 500 }
