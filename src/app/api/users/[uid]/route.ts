@@ -1,5 +1,5 @@
 import { FireUser } from '@/domain/fireUser';
-import { auth } from "@/firebaseAdmin";
+import { auth } from '@/firebaseAdmin';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(

@@ -16,6 +16,7 @@ const rootTopic: Topic = {
     icon_path: null,
     created_at: Timestamp.now(),
     updated_at: Timestamp.now(),
+    webhooks: [],
 };
 
 const initialLength = 16;

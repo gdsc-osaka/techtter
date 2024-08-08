@@ -1,5 +1,5 @@
 import EmbedCard from '@/app/embed/_components/embedCard';
-import metaFetcher from "meta-fetcher";
+import metaFetcher from 'meta-fetcher';
 
 export interface Meta {
     metadata: {
@@ -18,7 +18,7 @@ export default async function Page({
 }: {
     searchParams: { url: string };
 }) {
-    const {metadata} = await metaFetcher(searchParams.url);
+    const { metadata } = await metaFetcher(searchParams.url);
 
     return (
         <EmbedCard

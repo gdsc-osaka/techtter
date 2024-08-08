@@ -2,7 +2,7 @@ import { AuthService } from '@/application/auth/authService';
 import { ITopicService } from '@/application/topic/iTopicService';
 import { Policy } from '@/domain/policy';
 import { ITopicRepository } from '@/infrastructure/topic/ITopicRepository';
-import { Topic } from '@/domain/topic';
+import { initTopic, Topic } from '@/domain/topic';
 import { ITopicDomainService } from '@/domain/topic/iTopicDomainService';
 import { logger } from '@/logger';
 
@@ -32,10 +32,9 @@ export class TopicService implements ITopicService {
 
         const childTopic =
             await this.topicDomainService.createChildTopic(parent);
-        const newTopic = await this.topicRepository.create({
-            ...topic,
-            ...childTopic,
-        });
+        const newTopic = await this.topicRepository.create(
+            initTopic(topic, childTopic)
+        );
         logger.log(`Topic created. ${newTopic.id}`);
         return newTopic;
     }

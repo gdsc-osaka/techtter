@@ -1,19 +1,23 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { useAtom, useSetAtom } from 'jotai';
-import { userAtom } from '@/atoms/userAtom';
-import { useEffect, useState } from 'react';
-import { auth } from '@/firebase';
-import Modal from '@/components/modal';
-import { GoogleSignInButton } from '@/components/authButtons';
-import Logo from '@/components/logo';
-import { MenuIcon } from '@/components/icons';
 import { topicDrawerOpenAtom } from '@/app/posts/atoms';
+import { userAtom } from '@/atoms/userAtom';
+import { GoogleSignInButton } from '@/components/authButtons';
+import { MenuIcon } from '@/components/icons';
+import Logo from '@/components/logo';
+import { Button } from '@/components/ui/button';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
+import { auth } from '@/firebase';
+import { useAtom, useSetAtom } from 'jotai';
+import { useEffect } from 'react';
 
 export default function Header() {
     const [user, subscribe] = useAtom(userAtom);
-    const [openModal, setOpenModal] = useState(false);
     const setOpenDrawer = useSetAtom(topicDrawerOpenAtom);
 
     useEffect(() => {
@@ -22,16 +26,8 @@ export default function Header() {
         return () => unsub();
     }, []);
 
-    useEffect(() => {
-        if (user !== null) setOpenModal(false);
-    }, [user]);
-
     const handleSignOut = () => {
         auth.signOut();
-    };
-
-    const handleSignIn = () => {
-        setOpenModal(true);
     };
 
     const handleOpenDrawer = () => {
@@ -64,16 +60,14 @@ export default function Header() {
                         <>
                             <Dialog>
                                 <DialogTrigger asChild>
-                                    <Button
-                                        variant={'secondary'}
-                                        size={'sm'}
-                                        onClick={handleSignIn}
-                                    >
+                                    <Button variant={'secondary'} size={'sm'}>
                                         ログイン
                                     </Button>
                                 </DialogTrigger>
                                 <DialogContent>
-                                    <DialogTitle className={"text-center py-2"}>ログイン</DialogTitle>
+                                    <DialogTitle className={'text-center py-2'}>
+                                        ログイン
+                                    </DialogTitle>
                                     <DialogDescription>
                                         <GoogleSignInButton />
                                     </DialogDescription>
