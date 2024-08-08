@@ -1,5 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useAtom, useSetAtom } from 'jotai';
 import { userAtom } from '@/atoms/userAtom';
 import { useEffect, useState } from 'react';
@@ -61,18 +62,23 @@ export default function Header() {
                 <div className={'flex gap-2'}>
                     {user === null && (
                         <>
-                            <Button
-                                variant={'secondary'}
-                                size={'sm'}
-                                onClick={handleSignIn}
-                            >
-                                ログイン
-                            </Button>
-                            {/*<Link href={'/signup'}>*/}
-                            {/*    <Button variant={'outline'} size={'sm'}>*/}
-                            {/*        登録*/}
-                            {/*    </Button>*/}
-                            {/*</Link>*/}
+                            <Dialog>
+                                <DialogTrigger asChild>
+                                    <Button
+                                        variant={'secondary'}
+                                        size={'sm'}
+                                        onClick={handleSignIn}
+                                    >
+                                        ログイン
+                                    </Button>
+                                </DialogTrigger>
+                                <DialogContent>
+                                    <DialogTitle className={"text-center py-2"}>ログイン</DialogTitle>
+                                    <DialogDescription>
+                                        <GoogleSignInButton />
+                                    </DialogDescription>
+                                </DialogContent>
+                            </Dialog>
                         </>
                     )}
                     {user !== null && (
@@ -97,16 +103,6 @@ export default function Header() {
                     )}
                 </div>
             </header>
-            <Modal open={openModal} onClose={() => setOpenModal(false)}>
-                <div
-                    className={
-                        'flex flex-col justify-center items-center gap-6'
-                    }
-                >
-                    <p className={'text-lg font-bold'}>ログイン</p>
-                    <GoogleSignInButton />
-                </div>
-            </Modal>
         </>
     );
 }
