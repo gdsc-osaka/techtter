@@ -1,7 +1,7 @@
 import PostDeleteDialog from '@/app/posts/[...topicId]/_components/postDeleteDialog';
 import { roleAtom } from '@/atoms/roleAtom';
 import { userAtom } from '@/atoms/userAtom';
-import { DeleteIcon } from '@/components/icons';
+import { DeleteIcon, PencilIcon } from '@/components/icons';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -16,9 +16,10 @@ import { ReactNode, useState } from 'react';
 interface Props {
     trigger: ReactNode;
     post: Post;
+    onEdit: () => void;
 }
 
-export default function PostDropDownMenu({ trigger, post }: Props) {
+export default function PostDropDownMenu({ trigger, post, onEdit }: Props) {
     const [openDialog, setOpenDialog] = useState(false);
     const user = useAtomValue(userAtom);
     const role = useAtomValue(roleAtom);
@@ -31,6 +32,16 @@ export default function PostDropDownMenu({ trigger, post }: Props) {
             <DropdownMenu>
                 <DropdownMenuTrigger>{trigger}</DropdownMenuTrigger>
                 <DropdownMenuContent>
+                    {post.user_id === user.uid &&
+                        isPolicyAllowed(
+                            role.data.policies,
+                            Policy.POST_UPDATE_SELF
+                        ) && (
+                            <DropdownMenuItem className={''} onClick={onEdit}>
+                                <PencilIcon size={20} className={'mr-2'} />
+                                投稿を編集
+                            </DropdownMenuItem>
+                        )}
                     {isPolicyAllowed(
                         role.data.policies,
                         post.user_id === user.uid

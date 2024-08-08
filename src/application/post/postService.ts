@@ -114,4 +114,27 @@ export class PostService {
             return Promise.reject(e);
         }
     }
+
+    async updatePost(post: Post): Promise<Post> {
+        try {
+            const user = await this.authService.getUser();
+
+            const authorized = await this.authService.authorize(
+                Policy.POST_UPDATE_SELF,
+                user
+            );
+
+            if (post.user_id !== user.uid || !authorized.accepted) {
+                return Promise.reject('Permission denied.');
+            }
+
+            const newPost = await this.postRepository.update(user.uid, post);
+            logger.log(`Post updated. (${post.id})`);
+
+            return newPost;
+        } catch (e) {
+            logger.error(e);
+            return Promise.reject(e);
+        }
+    }
 }

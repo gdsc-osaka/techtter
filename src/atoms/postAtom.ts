@@ -59,6 +59,18 @@ export const deletePostAtom = atom(
     }
 );
 
+export const updatePostAtom = atom(
+    null,
+    (get, set, post: Partial<Post>, topicId: string) => {
+        console.log(post);
+        console.log(topicId);
+        set(_postsFamily(topicId), (prev) => {
+            console.log(prev);
+            return prev.map((p) => (p.id === post.id ? { ...p, ...post } : p));
+        });
+    }
+);
+
 export const latestPostFamily = atomFamily((topicId: string) =>
     atom<Post | undefined>((get) => {
         const posts = get(_postsFamily(topicId));

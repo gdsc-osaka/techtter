@@ -1,14 +1,16 @@
+import FileList from '@/app/posts/[...topicId]/_components/fileList';
 import Markdown from '@/app/posts/[...topicId]/_components/markdown';
 import PostDropDownMenu from '@/app/posts/[...topicId]/_components/postDropDownMenu';
+import PostEdit from '@/app/posts/[...topicId]/_components/postEdit';
 import Embed from '@/components/embed';
-import { MoreHorizIcon, SentimentStressedIcon } from '@/components/icons';
+import { MoreHorizIcon } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Post } from '@/domain/post';
 import useFetchFileUrl from '@/fetcbers/useFetchFileUrl';
-import { extractUrls } from '@/lib/strlib';
 import useFetchUser from '@/fetcbers/useFetchUser';
-import { Fragment, useMemo } from 'react';
+import { extractUrls } from '@/lib/strlib';
+import { useMemo, useState } from 'react';
 
 interface Props {
     post: Post;
@@ -25,6 +27,7 @@ export default function PostItem({
     const user = useFetchUser(post.user_id);
     const urls = useMemo(() => extractUrls(post.content), [post.content]);
     const fileUrls = post.files.map((file) => useFetchFileUrl(file));
+    const [editing, setEditing] = useState(false);
 
     return (
         <li
@@ -63,48 +66,14 @@ export default function PostItem({
                                 className={'text-xs text-stone-600 '}
                             >{`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}</span>
                         </h3>
-                        <Markdown>{post.content}</Markdown>
-                        {size === 'default' && fileUrls.length > 0 && (
-                            <div className={'flex gap-1 h-28 mt-1'}>
-                                {fileUrls.map(
-                                    ({ isLoading, data, error }, index) => (
-                                        <Fragment
-                                            key={`${post.id}-file-${index}`}
-                                        >
-                                            {isLoading && (
-                                                <Skeleton
-                                                    className={
-                                                        'aspect-square flex-none rounded'
-                                                    }
-                                                />
-                                            )}
-                                            {data !== undefined && (
-                                                <img
-                                                    src={data}
-                                                    alt={`${post.id}-file-${index}`}
-                                                    className={
-                                                        'aspect-square max-w-28 object-cover rounded'
-                                                    }
-                                                    loading={'lazy'}
-                                                />
-                                            )}
-                                            {error && (
-                                                <div
-                                                    className={
-                                                        'w-28 h-28 rounded border border-primary text-primary ' +
-                                                        'flex justify-center items-center'
-                                                    }
-                                                >
-                                                    <SentimentStressedIcon
-                                                        size={48}
-                                                    />
-                                                </div>
-                                            )}
-                                        </Fragment>
-                                    )
-                                )}
-                            </div>
+                        {!editing && <Markdown>{post.content}</Markdown>}
+                        {editing && (
+                            <PostEdit
+                                post={post}
+                                onClose={() => setEditing(false)}
+                            />
                         )}
+                        {size === 'default' && <FileList fileUrls={fileUrls} />}
                     </div>
                     {hideMenu || (
                         <PostDropDownMenu
@@ -114,6 +83,7 @@ export default function PostItem({
                                     <MoreHorizIcon size={20} />
                                 </Button>
                             }
+                            onEdit={() => setEditing(true)}
                         />
                     )}
                 </div>

@@ -1,3 +1,9 @@
+import {
+    LoaderCircleIcon,
+    UserIcon,
+    PencilIcon as L_PencilIcon,
+    Trash2Icon,
+} from 'lucide-react';
 import { ReactNode } from 'react';
 import Image from 'next/image';
 
@@ -32,7 +38,7 @@ export const SendIcon = (props: MaterialSymbolProp) => {
 };
 
 export const AccountCircleIcon = (props: MaterialSymbolProp) => {
-    return <MaterialSymbol {...props}>account_circle</MaterialSymbol>;
+    return <UserIcon {...props} />;
 };
 
 export const AddIcon = (props: MaterialSymbolProp) => {
@@ -40,7 +46,7 @@ export const AddIcon = (props: MaterialSymbolProp) => {
 };
 
 export const ProgressActivityIcon = (props: MaterialSymbolProp) => {
-    return <MaterialSymbol {...props}>progress_activity</MaterialSymbol>;
+    return <LoaderCircleIcon {...props} />;
 };
 
 export const MenuIcon = (props: MaterialSymbolProp) => {
@@ -52,7 +58,7 @@ export const MoreHorizIcon = (props: MaterialSymbolProp) => {
 };
 
 export const DeleteIcon = (props: MaterialSymbolProp) => {
-    return <MaterialSymbol {...props}>delete</MaterialSymbol>;
+    return <Trash2Icon {...props} />;
 };
 
 export const UploadFileIcon = (props: MaterialSymbolProp) => {
@@ -61,6 +67,10 @@ export const UploadFileIcon = (props: MaterialSymbolProp) => {
 
 export const SentimentStressedIcon = (props: MaterialSymbolProp) => {
     return <MaterialSymbol {...props}>sentiment_stressed</MaterialSymbol>;
+};
+
+export const PencilIcon = (props: MaterialSymbolProp) => {
+    return <L_PencilIcon {...props} size={props.size} />;
 };
 
 export const GoogleIcon = ({ size = 24 }: MaterialSymbolProp) => {

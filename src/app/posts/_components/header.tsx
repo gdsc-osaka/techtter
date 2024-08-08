@@ -12,8 +12,15 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { auth } from '@/firebase';
 import { useAtom, useSetAtom } from 'jotai';
+import Link from 'next/link';
 import { useEffect } from 'react';
 
 export default function Header() {
@@ -84,15 +91,26 @@ export default function Header() {
                             >
                                 ログアウト
                             </Button>
-                            <button className={'w-8 h-8'}>
-                                {user.photoURL !== null && (
-                                    <img
-                                        src={user.photoURL}
-                                        alt={'User Icon'}
-                                        className={'rounded-full'}
-                                    />
-                                )}
-                            </button>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <button className={'w-8 h-8'}>
+                                        {user.photoURL !== null && (
+                                            <img
+                                                src={user.photoURL}
+                                                alt={'User Icon'}
+                                                className={'rounded-full'}
+                                            />
+                                        )}
+                                    </button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent>
+                                    <DropdownMenuItem asChild>
+                                        <Link href={'/settings/profile'}>
+                                            プロフィール
+                                        </Link>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
                         </>
                     )}
                 </div>
