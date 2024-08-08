@@ -1,4 +1,3 @@
-import { firestore } from "firebase-admin";
 import { Timestamp } from 'firebase/firestore';
 
 function isTimestamp(obj: unknown): obj is Timestamp {
@@ -19,11 +18,13 @@ function isTimestamp(obj: unknown): obj is Timestamp {
 
 export function convertTimestampInObject<T extends {}>(obj: T) {
     const entries = Object.entries(obj);
-    return Object.fromEntries(entries.map(([k, v]) => {
-        if (!isTimestamp(v)) {
-            return [k, v];
-        }
+    return Object.fromEntries(
+        entries.map(([k, v]) => {
+            if (!isTimestamp(v)) {
+                return [k, v];
+            }
 
-        return [k, new Timestamp(v.seconds, v.nanoseconds)];
-    }));
+            return [k, new Timestamp(v.seconds, v.nanoseconds)];
+        })
+    );
 }

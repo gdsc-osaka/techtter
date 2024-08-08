@@ -65,8 +65,7 @@ export class AdminPostRepository implements IPostRepository {
                 return Promise.reject('Post not found');
             }
 
-            if ('created_at' in post)
-                delete post.created_at;
+            if ('created_at' in post) delete post.created_at;
             await this.docRef(userId, post.id).update({
                 ...post,
                 updated_at: admin.firestore.FieldValue.serverTimestamp(),

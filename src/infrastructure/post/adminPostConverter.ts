@@ -1,9 +1,11 @@
 import { assertsPost, Post } from '@/domain/post';
 import * as admin from 'firebase-admin';
-import { Timestamp } from "firebase/firestore";
+import { Timestamp } from 'firebase/firestore';
 
 function convertAdminTimestamp(t: unknown) {
-    return t instanceof admin.firestore.Timestamp ? Timestamp.fromDate(t.toDate()) : t
+    return t instanceof admin.firestore.Timestamp
+        ? Timestamp.fromDate(t.toDate())
+        : t;
 }
 
 export const adminPostConverter: admin.firestore.FirestoreDataConverter<Post> =

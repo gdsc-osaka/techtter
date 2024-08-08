@@ -1,6 +1,5 @@
 import { updatePostAtom } from '@/atoms/postAtom';
-import { assertsPost, Post } from '@/domain/post';
-import { convertTimestampInObject } from "@/lib/timestampUtils";
+import { Post } from '@/domain/post';
 import { useSetAtom } from 'jotai';
 import { useRef } from 'react';
 
@@ -17,11 +16,13 @@ export default function PostEdit({ post, onClose }: Props) {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             const content = preRef.current?.textContent || '';
-            const topicId = new URL(window.location.href).pathname.split("/").pop();
+            const topicId = new URL(window.location.href).pathname
+                .split('/')
+                .pop();
             if (topicId !== undefined) {
-                updatePost({id: post.id, content}, topicId);
+                updatePost({ id: post.id, content }, topicId);
             } else {
-                console.error("Topic ID is not found.")
+                console.error('Topic ID is not found.');
             }
             onClose();
 
@@ -45,7 +46,7 @@ export default function PostEdit({ post, onClose }: Props) {
             >
                 {post.content}
             </pre>
-            <p className={"text-xs text-stone-700"}>
+            <p className={'text-xs text-stone-700'}>
                 Esc でキャンセル, Enter で保存
             </p>
         </div>

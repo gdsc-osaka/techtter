@@ -65,8 +65,8 @@ export const updatePostAtom = atom(
         console.log(post);
         console.log(topicId);
         set(_postsFamily(topicId), (prev) => {
-            console.log(prev)
-            return prev.map((p) => (p.id === post.id ? {...p, ...post} : p))
+            console.log(prev);
+            return prev.map((p) => (p.id === post.id ? { ...p, ...post } : p));
         });
     }
 );
