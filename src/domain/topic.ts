@@ -8,6 +8,7 @@ export interface Topic {
     // 世代. 1 が最上位レイヤーのトピック
     gen: number;
     icon_path: string | null;
+    webhooks: string[];
     created_at: Timestamp;
     updated_at: Timestamp;
 }
@@ -28,7 +29,10 @@ export function assertsTopic(data: object): asserts data is Topic {
             'created_at' in data &&
             typeof data.created_at === 'object' &&
             'updated_at' in data &&
-            typeof data.updated_at === 'object'
+            typeof data.updated_at === 'object' &&
+            'icon_path' in data &&
+            (data.icon_path === null || typeof data.icon_path === 'string') &&
+            (!('webhooks' in data) || data.webhooks instanceof Array)
         )
     ) {
         throw new Error(`data ${JSON.stringify(data)} is not a type of Topic`);

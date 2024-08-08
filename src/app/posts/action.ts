@@ -7,6 +7,7 @@ import { RoleService } from '@/application/role/roleService';
 import { TopicService } from '@/application/topic/topicService';
 import { TopicDomainService } from '@/domain/topic/topicDomainService';
 import { AuthRepository } from '@/infrastructure/auth/authRepository';
+import { DiscordRepository } from "@/infrastructure/discord/discordRepository";
 import { AdminPostRepository } from '@/infrastructure/post/adminPostRepository';
 import { AdminRoleRepository } from '@/infrastructure/role/adminRoleRepository';
 import { AdminStorageRepository } from '@/infrastructure/storage/adminStorageRepository';
@@ -25,7 +26,8 @@ const postService = new PostService(
     new AdminPostRepository(),
     topicRepository,
     new AdminStorageRepository(),
-    authService
+    authService,
+    new DiscordRepository()
 );
 const topicService = new TopicService(
     topicRepository,

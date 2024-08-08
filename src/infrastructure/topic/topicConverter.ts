@@ -6,7 +6,8 @@ export const topicConverter: FirestoreDataConverter<Topic> = {
         const data = snapshot.data(options);
         const topic = { ...data, id: snapshot.id };
         assertsTopic(topic);
-        return topic;
+        // webhooks が未定義なら初期値を入れておく
+        return {...topic, webhooks: topic.webhooks ?? []};
     },
     toFirestore(modelObject) {
         const d = Object.assign({}, modelObject);
