@@ -1,10 +1,17 @@
-import { firestore } from 'firebase-admin';
 import { assertsTopic, Topic } from '@/domain/topic';
+import {
+    replaceAdminTimestampWithTimestamp,
+    replaceTimestampWithAdminTimestamp,
+} from '@/lib/timestamp/timestampUtils';
+import { firestore } from 'firebase-admin';
 
 export const adminTopicConverter: firestore.FirestoreDataConverter<Topic> = {
     fromFirestore(snapshot: FirebaseFirestore.QueryDocumentSnapshot): Topic {
         const data = snapshot.data();
-        const topic = { ...data, id: snapshot.id };
+        const topic = replaceAdminTimestampWithTimestamp({
+            ...data,
+            id: snapshot.id,
+        });
         assertsTopic(topic);
         return { ...topic, webhooks: topic.webhooks ?? [] };
     },
@@ -15,6 +22,6 @@ export const adminTopicConverter: firestore.FirestoreDataConverter<Topic> = {
     ) {
         const d = Object.assign({}, modelObject);
         delete d.id;
-        return d;
+        return replaceTimestampWithAdminTimestamp(d);
     },
 };

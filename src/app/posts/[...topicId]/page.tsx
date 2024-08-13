@@ -1,5 +1,5 @@
 import PostList from '@/app/posts/[...topicId]/_components/postList';
-import { AdminTopicRepository } from '@/infrastructure/topic/adminTopicRepository';
+import fetchTopic from '@/fetcbers/fetchTopic';
 
 export interface Props {
     params: {
@@ -9,8 +9,7 @@ export interface Props {
 
 export default async function PostListPage({ params }: Props) {
     const topicId = params.topicId[params.topicId.length - 1];
-    const topicRepository = new AdminTopicRepository();
-    const topic = await topicRepository.find(topicId);
+    const topic = await fetchTopic(topicId);
     if (topic === undefined) return <p>Topic not found.</p>;
 
     return (
