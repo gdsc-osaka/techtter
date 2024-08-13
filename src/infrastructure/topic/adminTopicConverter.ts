@@ -2,7 +2,7 @@ import { assertsTopic, Topic } from '@/domain/topic';
 import {
     replaceAdminTimestampWithTimestamp,
     replaceTimestampWithAdminTimestamp,
-} from '@/lib/timestamp/timestampUtils';
+} from '@/lib/timestampUtils';
 import { firestore } from 'firebase-admin';
 
 export const adminTopicConverter: firestore.FirestoreDataConverter<Topic> = {
