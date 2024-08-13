@@ -8,7 +8,7 @@ import { AdminPostRepository } from '@/infrastructure/post/adminPostRepository';
 import { AdminRoleRepository } from '@/infrastructure/role/adminRoleRepository';
 import { AdminStorageRepository } from '@/infrastructure/storage/adminStorageRepository';
 import { AdminTopicRepository } from '@/infrastructure/topic/adminTopicRepository';
-import { convertTimestampInObject } from '@/lib/timestampUtils';
+import { replacePlainObjWithTimestamp } from '@/lib/timestampUtils';
 import { NextRequest, NextResponse } from 'next/server';
 
 const postService = new PostService(
@@ -39,7 +39,9 @@ export async function PUT(
     { params }: { params: { postId: string } }
 ) {
     try {
-        const post = await req.json().then((d) => convertTimestampInObject(d));
+        const post = await req
+            .json()
+            .then((d) => replacePlainObjWithTimestamp(d));
         assertsPost(post);
         if (post.id !== params.postId) {
             return NextResponse.json(

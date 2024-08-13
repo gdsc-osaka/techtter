@@ -1,5 +1,5 @@
 'use client';
-import { generateTopicItem, } from '@/app/posts/_components/topicSideMenu';
+import { generateTopicItem } from '@/app/posts/_components/topicSideMenu';
 import { topicsAtom } from '@/atoms/topicAtom';
 import { generateTopicTree } from '@/lib/topicTreeUtils';
 import { useAtom } from 'jotai';

@@ -1,6 +1,17 @@
+import { firestore } from 'firebase-admin';
 import { Timestamp } from 'firebase/firestore';
 
-function isTimestamp(obj: unknown): obj is Timestamp {
+interface ClientTimestamp {
+    seconds: number;
+    nanoseconds: number;
+}
+
+interface AdminTimestamp {
+    _seconds: number;
+    _nanoseconds: number;
+}
+
+function isClientTimestamp(obj: unknown): obj is ClientTimestamp {
     return (
         typeof obj === 'object' &&
         obj !== null &&
@@ -12,19 +23,52 @@ function isTimestamp(obj: unknown): obj is Timestamp {
     );
 }
 
-// type Timestamped<T extends {}> = {
-//     [K in keyof T]: T[K] extends {} ? ('seconds' & keyof T[K]) extends string ? Timestamp : T[K] : T[K]
-// }
+function isAdminTimestamp(obj: unknown): obj is AdminTimestamp {
+    return (
+        typeof obj === 'object' &&
+        obj !== null &&
+        '_seconds' in obj &&
+        '_nanoseconds' in obj &&
+        typeof obj._seconds === 'number' &&
+        typeof obj._nanoseconds === 'number' &&
+        Object.keys(obj).length === 2
+    );
+}
 
-export function convertTimestampInObject<T extends {}>(obj: T) {
-    const entries = Object.entries(obj);
+export function replaceAdminTimestampWithTimestamp(obj: object) {
     return Object.fromEntries(
-        entries.map(([k, v]) => {
-            if (!isTimestamp(v)) {
-                return [k, v];
+        Object.entries(obj).map(([k, v]) => {
+            if (isAdminTimestamp(v)) {
+                return [k, new Timestamp(v._seconds, v._nanoseconds)];
             }
 
-            return [k, new Timestamp(v.seconds, v.nanoseconds)];
+            return [k, v];
+        })
+    );
+}
+
+export function replaceTimestampWithAdminTimestamp(obj: object) {
+    return Object.fromEntries(
+        Object.entries(obj).map(([k, v]) => {
+            if (isClientTimestamp(v)) {
+                return [k, new firestore.Timestamp(v.seconds, v.nanoseconds)];
+            }
+
+            return [k, v];
+        })
+    );
+}
+
+export function replacePlainObjWithTimestamp(obj: object) {
+    return Object.fromEntries(
+        Object.entries(obj).map(([k, v]) => {
+            if (typeof v === 'object' && v !== null) {
+                if (isClientTimestamp(v)) {
+                    return [k, new Timestamp(v.seconds, v.nanoseconds)];
+                }
+            }
+
+            return [k, v];
         })
     );
 }
