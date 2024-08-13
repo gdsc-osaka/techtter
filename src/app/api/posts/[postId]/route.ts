@@ -39,7 +39,9 @@ export async function PUT(
     { params }: { params: { postId: string } }
 ) {
     try {
-        const post = await req.json().then((d) => replacePlainObjWithTimestamp(d));
+        const post = await req
+            .json()
+            .then((d) => replacePlainObjWithTimestamp(d));
         assertsPost(post);
         if (post.id !== params.postId) {
             return NextResponse.json(

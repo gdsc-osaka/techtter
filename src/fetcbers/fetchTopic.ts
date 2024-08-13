@@ -1,9 +1,9 @@
 import { assertsTopic, Topic } from '@/domain/topic';
 import { sfetch } from '@/lib/fetchUtils';
-import { replacePlainObjWithTimestamp } from "@/lib/timestampUtils";
+import { replacePlainObjWithTimestamp } from '@/lib/timestampUtils';
 
 export default function fetchTopic(topicId: string): Promise<Topic> {
-    return sfetch(`/api/topics/${topicId}`, {cache: 'force-cache'})
+    return sfetch(`/api/topics/${topicId}`, { cache: 'force-cache' })
         .then((res) => res.json())
         .then((d) => {
             const topic = replacePlainObjWithTimestamp(d.topic);

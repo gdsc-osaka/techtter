@@ -9,7 +9,9 @@ interface Result {
 
 export default function useFetchUser(userId: string): Result {
     return useSWR<FireUser, Error>(userId, async (id: string) => {
-        const res = await fetch(`/api/users/${id}`).then((res) => res.json());
+        const res = await fetch(`/api/users/${id}`, {
+            cache: 'force-cache',
+        }).then((res) => res.json());
         const parsed = fireUserSchema.safeParse(res.user);
 
         if (!parsed.success) {

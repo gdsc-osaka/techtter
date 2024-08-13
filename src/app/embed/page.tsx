@@ -1,24 +1,12 @@
 import EmbedCard from '@/app/embed/_components/embedCard';
-import metaFetcher from 'meta-fetcher';
-
-export interface Meta {
-    metadata: {
-        website: string;
-        title: string;
-        description: string | undefined;
-        banner: string | undefined;
-        themeColor: string | undefined;
-    };
-    socials: Record<string, string | undefined>;
-    favicons: string[];
-}
+import fetchMeta from '@/fetcbers/fetchMeta';
 
 export default async function Page({
     searchParams,
 }: {
     searchParams: { url: string };
 }) {
-    const { metadata } = await metaFetcher(searchParams.url);
+    const { metadata } = await fetchMeta(searchParams.url);
 
     return (
         <EmbedCard
